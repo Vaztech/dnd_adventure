@@ -1,5 +1,6 @@
-# quests.py
+# dnd35e/core/quests.py
 
+# Structured, persistent quest data for use in the 3.5e text RPG
 DND_35E_QUESTS = {
     "Adventure_Types": {
         "Dungeon_Crawl": {
@@ -49,6 +50,7 @@ DND_35E_QUESTS = {
             }
         }
     },
+
     "Quest_Archetypes": {
         "Rescue_Mission": {
             "template": {
@@ -105,6 +107,7 @@ DND_35E_QUESTS = {
             }
         }
     },
+
     "Campaign_Structures": {
         "The_Red_Hand": {
             "name": "The Red Hand of Doom",
@@ -140,6 +143,7 @@ DND_35E_QUESTS = {
             "source": "Red Hand of Doom"
         }
     },
+
     "Random_Quest_Generator": {
         "Hooks": [
             "Local ruler needs deniable agents for...",

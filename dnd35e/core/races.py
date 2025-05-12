@@ -15,7 +15,7 @@ class Race:
     racial_traits: List[RacialTrait]
     favored_class: str
     languages: List[str]
-    
+
     def apply_modifiers(self, ability_scores: 'AbilityScores'):
         for ability, modifier in self.ability_modifiers.items():
             setattr(ability_scores, ability.lower(), 
@@ -36,7 +36,7 @@ RACES = {
     ),
     "Elf": Race(
         name="Elf",
-        ability_modifiers={"Dexterity": 2, "Constitution": -2},
+        ability_modifiers={"dexterity": 2, "constitution": -2},
         size="Medium",
         speed=30,
         racial_traits=[
@@ -49,5 +49,7 @@ RACES = {
 }
 
 def get_default_race() -> Race:
-    """Return a default race (Human)."""
     return RACES["Human"]
+
+def get_race_by_name(name: str) -> Race:
+    return RACES.get(name, get_default_race())

@@ -5,7 +5,7 @@ from .character import Character
 import json
 from pathlib import Path
 
-SAVE_PATH = Path("dnd35e/save/quests_save.json")
+SAVE_PATH = Path("dnd_adventure/dnd35e/save/quests_save.json")
 
 class Quest:
     def __init__(self, data: Dict):
@@ -44,7 +44,7 @@ class Quest:
 
     def __str__(self):
         status = "✅ Complete" if self.is_complete else "🕒 In Progress"
-        details = (
+        return (
             f"\n📜 {self.name} [{status}]\n"
             f"Hook: {self.hook}\n"
             f"Source: {self.source}\n"
@@ -54,7 +54,6 @@ class Quest:
                 for obj in self.objectives
             )
         )
-        return details
 
 
 class QuestManager:
@@ -99,7 +98,7 @@ class QuestManager:
             print("📦 Items Found:")
             for item in items:
                 print(f"- {item}")
-        # TODO: Add GP or items to player inventory system
+        # TODO: Add GP/items to actual inventory system
 
     def list_quests(self):
         if not self.active_quests and not self.completed_quests:
@@ -125,8 +124,7 @@ class QuestManager:
             for obj in quest.objectives:
                 status = "✓" if obj in quest.completed_objectives else " "
                 print(f"  [{status}] {obj}")
-        print()
-        print("📜 Type 'quest list' to see all quest details.")
+        print("\n📜 Type 'quest list' to see full quest details.")
 
     def save(self):
         """Save quests to file."""
@@ -154,24 +152,31 @@ class QuestManager:
         self.completed_quests.clear()
 
         for quest_data in data.get("active", []):
-            quest = Quest({
-                "name": quest_data["name"],
-                "hook": quest_data["hook"],
-                "objectives": quest_data["objectives"],
-                "rewards": quest_data["rewards"],
-                "source": quest_data.get("source", "Unknown"),
-                "completed_objectives": quest_data.get("completed_objectives", [])
-            })
+            quest = Quest(quest_data)
             self.active_quests.append(quest)
 
         for name in data.get("completed", []):
-            quest = Quest({
-                "name": name,
-                "hook": "",
-                "objectives": [],
-                "rewards": {},
-                "source": "Unknown",
-                "completed_objectives": []
-            })
-            quest.is_complete = True
-            self.completed_quests.append(quest)
+            # Try to find matching completed quest info from definitions
+            found = None
+            for cat in DND_35E_QUESTS.values():
+                for sub in cat.values():
+                    for q_id, q_data in sub.items():
+                        if isinstance(q_data, dict) and q_data.get("name") == name:
+                            found = Quest(q_data)
+                            break
+            if found:
+                found.is_complete = True
+                self.completed_quests.append(found)
+            else:
+                # Fallback stub if not found in definitions
+                quest = Quest({
+                    "name": name,
+                    "hook": "",
+                    "objectives": [],
+                    "rewards": {},
+                    "source": "Unknown",
+                    "completed_objectives": []
+                })
+                quest.is_complete = True
+                self.completed_quests.append(quest)
+                print(f"⚠️ Quest '{name}' not found in definitions, loaded as incomplete.")

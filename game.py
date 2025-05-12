@@ -2,25 +2,30 @@ import sys
 import random
 
 from .character import Character
-from .world import GameWorld
-from .dnd35e.core.combat import CombatSystem
-from .dnd35e.core.monsters import get_monster_by_name
+from .dnd35e.core.world import GameWorld
+from .dnd35e.mechanics.combat import CombatSystem
 from .dnd35e.core.quest_manager import QuestManager
-from .dnd35e.core.npc import NPC  # ✅ NEW: NPC support
+from .dnd35e.core.save_manager import SaveManager  # ✅ NEW
 
 class Game:
     def __init__(self):
         self.world = GameWorld.generate()
-        self.player = Character(name="Hero", race=self.world.default_race, dnd_class=self.world.default_class)
-        self.player.location = self.world.current_room or self.world.rooms[0]
+        self.player, self.starting_room = SaveManager.load_player(self.world, self.create_player)
+        self.player.location = self.starting_room
         self.quest_log = QuestManager(self.player)
-        self.quest_log.load()  # ✅ LOAD QUEST DATA
+        self.quest_log.load()
         self.combat_mode = False
-        self.current_enemy = None
+
+    def create_player(self, name="Hero"):
+        return Character(
+            name=name,
+            race_name=self.world.default_race.name,
+            class_name=self.world.default_class.name
+        )
 
     def start(self):
         print("\n=== Dungeon Adventure ===")
-        print("Commands: north/south/east/west, look, attack [#], quest [list/start/complete/log], talk <npc>, quit\n")
+        print("Commands: north/south/east/west, look, attack [#], quest [list/start/complete/log], save, quit\n")
         self.print_location()
 
     def print_location(self):
@@ -41,13 +46,6 @@ class Game:
             print("\nThere are no living monsters here.")
             self.combat_mode = False
 
-        # ✅ Show NPCs present
-        if "npcs" in room and room["npcs"]:
-            print("\nPeople here:")
-            for npc in room["npcs"]:
-                print(f"- {npc.name}")
-
-        # ✅ Auto-complete objectives based on room name
         room_name = room["name"].lower()
         for quest in self.quest_log.active_quests:
             for objective in quest.objectives:
@@ -67,9 +65,8 @@ class Game:
             self.handle_attack_command(command)
         elif command.startswith("quest"):
             self.handle_quest_command(command)
-        elif command.startswith("talk"):
-            _, _, name = command.partition(" ")
-            self.talk_to_npc(name)
+        elif command == "save":
+            self.save_session()
         elif command in ["quit", "exit"]:
             self.quit_game()
         else:
@@ -78,15 +75,8 @@ class Game:
             print("- look")
             print("- attack [number]")
             print("- quest [list/start/complete/log]")
-            print("- talk <npc>")
+            print("- save")
             print("- quit")
-
-    def talk_to_npc(self, name):
-        for npc in self.player.location.get("npcs", []):
-            if npc.name.lower() == name.lower():
-                print(npc.talk())
-                return
-        print(f"No NPC named '{name}' here.")
 
     def handle_movement(self, direction):
         if self.combat_mode:
@@ -145,7 +135,6 @@ class Game:
                 xp_gain = int(target.challenge_rating * 100)
                 self.player.gain_xp(xp_gain)
 
-                # ✅ Auto-complete quest objectives based on monster name
                 for quest in self.quest_log.active_quests:
                     for objective in quest.objectives:
                         if target.name.lower() in objective.lower():
@@ -157,7 +146,6 @@ class Game:
     def display_combat_result(self, result):
         print(f"\n{result['attacker']} attacks {result['defender']}!")
         print(f"Roll: {result['attack_roll']} + {result['attack_bonus']} vs AC")
-
         if result['hit']:
             print(f"HIT{' (CRITICAL!)' if result['critical'] else ''} for {result['damage']} damage!")
             print(f"{result['defender']} suffers damage.")
@@ -188,17 +176,21 @@ class Game:
         else:
             print("Quest command options: list | log | start <category> <subcategory> <id> | complete")
 
-    def quit_game(self):
-        self.quest_log.save()  # ✅ SAVE QUEST DATA ON EXIT
-        print("\nThanks for playing!")
-        sys.exit()
+    def save_session(self):
+        SaveManager.save_player(self.player, self.player.location["id"])
+        self.quest_log.save()
+        print("💾 Game saved.")
 
+    def quit_game(self):
+        print("\nSaving progress...")
+        self.save_session()
+        print("Thanks for playing!")
+        sys.exit()
 
 def main():
     try:
         game = Game()
         game.start()
-
         while True:
             try:
                 command = input("\nWhat would you like to do? ").strip()
