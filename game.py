@@ -1,42 +1,54 @@
 import sys
+import random
+
 from .character import Character
 from .world import GameWorld
+from .dnd35e.core.combat import CombatSystem
+from .dnd35e.core.monsters import get_monster_by_name
+from .dnd35e.core.quest_manager import QuestManager  # ✅ QUEST SUPPORT
 
 class Game:
     def __init__(self):
         self.world = GameWorld.generate()
-        self.player = Character("Hero", 20, 8, 4)
+        self.player = Character(name="Hero", race=self.world.default_race, dnd_class=self.world.default_class)
         self.player.location = self.world.current_room or self.world.rooms[0]
+        self.quest_log = QuestManager(self.player)
         self.combat_mode = False
         self.current_enemy = None
 
     def start(self):
         print("\n=== Dungeon Adventure ===")
-        print("Commands: move [north/south/east/west], look, attack, inventory, quit\n")
+        print("Commands: north/south/east/west, look, attack [#], quest [list/start/complete/log], quit\n")
         self.print_location()
 
     def print_location(self):
         room = self.player.location
         print(f"\n{room['name']}")
         print(room['description'])
-        
+
         if room['exits']:
             print("\nExits:", ", ".join(room['exits'].keys()))
-        
-        if room['monsters']:
-            alive_monsters = [m for m in room['monsters'] if m.is_alive()]
-            if alive_monsters:
-                print("\nMonsters here:")
-                for i, monster in enumerate(alive_monsters, 1):
-                    print(f"{i}. {monster.name} (HP: {monster.hp})")
-                self.combat_mode = True
-            else:
-                print("\nDefeated monsters lie scattered about.")
-                self.combat_mode = False
+
+        alive_monsters = [m for m in room['monsters'] if m.hit_points > 0]
+        if alive_monsters:
+            print("\nMonsters here:")
+            for i, monster in enumerate(alive_monsters, 1):
+                print(f"{i}. {monster.name} (HP: {monster.hit_points})")
+            self.combat_mode = True
+        else:
+            print("\nThere are no living monsters here.")
+            self.combat_mode = False
+
+        # ✅ Auto-complete objectives based on room name
+        room_name = room["name"].lower()
+        for quest in self.quest_log.active_quests:
+            for objective in quest.objectives:
+                if any(word in objective.lower() for word in room_name.split()):
+                    self.quest_log.complete_objective(quest.name, objective)
 
     def handle_command(self, command):
         command = command.lower().strip()
-        
+
         if self.combat_mode and command.isdigit():
             self.handle_attack(int(command))
         elif command in ["north", "south", "east", "west"]:
@@ -45,81 +57,128 @@ class Game:
             self.print_location()
         elif command.startswith("attack"):
             self.handle_attack_command(command)
+        elif command.startswith("quest"):
+            self.handle_quest_command(command)
         elif command in ["quit", "exit"]:
             self.quit_game()
         else:
-            print("Valid commands:")
-            if self.combat_mode:
-                print("- [number] (to attack that monster)")
+            print("Unknown command. Try:")
             print("- north/south/east/west")
             print("- look")
             print("- attack [number]")
+            print("- quest [list/start/complete/log]")
             print("- quit")
 
     def handle_movement(self, direction):
         if self.combat_mode:
-            print("You can't move while in combat!")
+            print("You can't move while monsters are attacking!")
             return
-            
+
         current_room = self.player.location
         if direction in current_room['exits']:
-            new_room_id = current_room['exits'][direction]
-            new_room = self.world.get_room(new_room_id)
-            if new_room:
-                self.player.location = new_room
+            next_id = current_room['exits'][direction]
+            next_room = self.world.get_room(next_id)
+            if next_room:
+                self.player.location = next_room
                 print(f"You move {direction}.")
                 self.print_location()
                 return
-        print(f"You can't go {direction}!")
+
+        print(f"You can't go {direction}.")
 
     def handle_attack_command(self, command):
         if not self.combat_mode:
-            print("There's nothing to attack here!")
+            print("There's nothing to attack here.")
             return
-            
+
         try:
             target = int(command.split()[1]) if len(command.split()) > 1 else 1
             self.handle_attack(target)
         except (ValueError, IndexError):
-            print("Specify which monster to attack (e.g. 'attack 1')")
+            print("Specify which monster to attack. Example: 'attack 1'")
 
     def handle_attack(self, target_index):
-        alive_monsters = [m for m in self.player.location['monsters'] if m.is_alive()]
-        
+        alive_monsters = [m for m in self.player.location['monsters'] if m.hit_points > 0]
+
         try:
-            monster = alive_monsters[target_index - 1]
-            damage = self.player.attack_target(monster)
-            print(f"You attack the {monster.name} for {damage} damage!")
-            
-            if not monster.is_alive():
-                print(f"You defeated the {monster.name}!")
-                alive_monsters.remove(monster)
-                if not alive_monsters:
-                    self.combat_mode = False
-                    print("All enemies defeated! You can now move freely.")
-            else:
-                # Monster counterattack
-                monster_damage = max(1, monster.attack - self.player.defense)
-                self.player.hp -= monster_damage
-                print(f"The {monster.name} attacks you back for {monster_damage} damage!")
-                print(f"Your HP: {self.player.hp}/{20}")
-                
-                if self.player.hp <= 0:
-                    print("\nYou have been defeated...")
-                    self.quit_game()
-                    
+            target = alive_monsters[target_index - 1]
         except IndexError:
-            print(f"Invalid target. There {'is' if len(alive_monsters) == 1 else 'are'} only {len(alive_monsters)} monster{'s' if len(alive_monsters) != 1 else ''} here.")
+            print(f"Invalid target number. Only {len(alive_monsters)} monster(s) here.")
+            return
+
+        print(f"\nYou engage the {target.name} in combat!")
+
+        turn_order = CombatSystem.determine_initiative([self.player, target])
+        for combatant in turn_order:
+            if combatant == self.player:
+                result = CombatSystem.resolve_attack(self.player, target)
+            else:
+                result = CombatSystem.resolve_attack(target, self.player)
+
+            self.display_combat_result(result)
+
+            if self.player.hit_points <= 0:
+                print("\nYou have fallen in battle...")
+                self.quit_game()
+                return
+            elif target.hit_points <= 0:
+                print(f"\nYou defeated the {target.name}!")
+                xp_gain = int(target.challenge_rating * 100)
+                self.player.gain_xp(xp_gain)
+
+                # ✅ Auto-complete quest objectives based on monster name
+                for quest in self.quest_log.active_quests:
+                    for objective in quest.objectives:
+                        if target.name.lower() in objective.lower():
+                            self.quest_log.complete_objective(quest.name, objective)
+
+                self.combat_mode = False
+                break
+
+    def display_combat_result(self, result):
+        print(f"\n{result['attacker']} attacks {result['defender']}!")
+        print(f"Roll: {result['attack_roll']} + {result['attack_bonus']} vs AC")
+
+        if result['hit']:
+            print(f"HIT{' (CRITICAL!)' if result['critical'] else ''} for {result['damage']} damage!")
+            print(f"{result['defender']} suffers damage.")
+            if result['special_effects']:
+                print(f"Special effect(s): {', '.join(result['special_effects'])}")
+        else:
+            print("MISS!")
+
+    def handle_quest_command(self, command):
+        parts = command.split()
+        if len(parts) == 1 or parts[1] == "list":
+            self.quest_log.list_quests()
+        elif parts[1] == "log":
+            self.quest_log.display_hud()  # ✅ NEW QUEST HUD DISPLAY
+        elif parts[1] == "start":
+            try:
+                _, _, category, subcategory, quest_id = parts
+                self.quest_log.assign_quest(category, subcategory, quest_id)
+            except ValueError:
+                print("Usage: quest start <category> <subcategory> <quest_id>")
+        elif parts[1] == "complete":
+            try:
+                quest_name = input("Enter quest name: ")
+                objective = input("Enter completed objective: ")
+                self.quest_log.complete_objective(quest_name, objective)
+            except Exception as e:
+                print(f"Error completing objective: {e}")
+        else:
+            print("Quest command options: list | log | start <category> <subcategory> <id> | complete")
 
     def quit_game(self):
-        print("\nThanks for playing! Goodbye.")
+        print("\nThanks for playing!")
         sys.exit()
+
 
 def main():
     try:
         game = Game()
         game.start()
-        
+
         while True:
             try:
                 command = input("\nWhat would you like to do? ").strip()
@@ -127,8 +186,7 @@ def main():
             except KeyboardInterrupt:
                 game.quit_game()
             except Exception as e:
-                print(f"Error: {e}. Please try again.")
-                
+                print(f"Error: {e}")
     except Exception as e:
         print(f"Fatal error starting game: {e}")
         sys.exit(1)

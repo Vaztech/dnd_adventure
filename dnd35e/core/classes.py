@@ -67,3 +67,10 @@ CORE_CLASSES = {
         ]
     )
 }
+
+def get_default_class() -> DnDClass:
+    """Return a default class (Fighter)."""
+    return CORE_CLASSES["Fighter"]
+def get_class_by_name(name: str) -> Optional[DnDClass]:
+    """Return a class by its name."""
+    return CORE_CLASSES.get(name)

@@ -1,12 +1,28 @@
-from typing import Dict, Union
+from typing import Dict, Union, List
 import random
 
-# Local import to avoid circular dependency
+# Local imports
 from ..core.character import Character
 from ..core.monsters import Monster, SRD_MONSTERS
 
 class CombatSystem:
     """Combat system for resolving attacks and monster abilities."""
+
+    @staticmethod
+    def determine_initiative(combatants: List[Union[Character, Monster]]) -> List[Union[Character, Monster]]:
+        """
+        Roll initiative for each combatant using Dexterity modifiers.
+        Returns combatants sorted by highest initiative first.
+        """
+        initiative_rolls = []
+        for c in combatants:
+            dex = c.ability_scores.dexterity if isinstance(c, Character) else c.abilities.get('DEX', 10)
+            mod = (dex - 10) // 2
+            roll = random.randint(1, 20) + mod
+            initiative_rolls.append((roll, c))
+            print(f"Initiative: {getattr(c, 'name', 'Monster')} rolled {roll} (DEX mod {mod})")
+
+        return [c for _, c in sorted(initiative_rolls, key=lambda x: x[0], reverse=True)]
 
     @staticmethod
     def resolve_attack(attacker: Union[Character, Monster], 
@@ -17,110 +33,112 @@ class CombatSystem:
         Returns a dictionary with the results.
         """
         result = {
-            'attacker': attacker.name if hasattr(attacker, 'name') else 'Unknown Attacker',
-            'defender': defender.name if hasattr(defender, 'name') else 'Unknown Defender',
+            'attacker': getattr(attacker, 'name', 'Unknown Attacker'),
+            'defender': getattr(defender, 'name', 'Unknown Defender'),
             'hit': False,
             'critical': False,
             'damage': 0,
             'special_effects': [],
-            'error': None  # Added for error reporting
+            'status_effects_applied': [],
+            'error': None,
         }
 
-        # Determine attack bonus
+        # Determine attack bonus, damage, and modifier
         if isinstance(attacker, Character):
-            attack_bonus = attacker.attack_bonus() if hasattr(attacker, 'attack_bonus') else 0
-            weapon = attacker.get_equipped_weapon() if hasattr(attacker, 'get_equipped_weapon') else None
+            attack_bonus = attacker.attack_bonus()
+            weapon = getattr(attacker, 'get_equipped_weapon', lambda: None)()
             damage_dice = weapon.dnd_item.damage if weapon else "1d3"
-            damage_mod = attacker.ability_scores.get_modifier('strength') if hasattr(attacker, 'ability_scores') else 0
+            damage_mod = attacker.ability_scores.get_modifier('strength')
+            special = getattr(weapon.dnd_item, 'special', None) if weapon else None
         else:
-            # Monster attack
             attack = None
             if attack_name:
                 attack = next((a for a in attacker.attacks if a.name.lower() == attack_name.lower()), None)
-            if not attack:
-                attack = attacker.attacks[0] if hasattr(attacker, 'attacks') and attacker.attacks else None
-            
+            if not attack and hasattr(attacker, 'attacks'):
+                attack = attacker.attacks[0] if attacker.attacks else None
             if not attack:
                 result['error'] = "No valid attack found."
                 return result
 
-            attack_bonus = attack.attack_bonus if hasattr(attack, 'attack_bonus') else 0
-            damage_dice = attack.damage if hasattr(attack, 'damage') else "1d3"
-            damage_mod = (attacker.abilities.get('STR', 10) - 10) // 2 if hasattr(attacker, 'abilities') else 0
+            attack_bonus = attack.attack_bonus
+            damage_dice = attack.damage
+            damage_mod = (attacker.abilities.get('STR', 10) - 10) // 2
+            special = getattr(attack, 'special', None)
 
-        # Make attack roll
+        # Roll attack
         attack_roll = random.randint(1, 20)
         is_critical = attack_roll == 20
         result['attack_roll'] = attack_roll
         result['attack_bonus'] = attack_bonus
-        
-        # Check for hit (ensure armor_class method exists)
-        defender_ac = getattr(defender, 'armor_class', lambda: 10)()  # Default to 10 if armor_class is not found
+
+        # Defender AC check
+        defender_ac = getattr(defender, 'armor_class', lambda: 10)()
         if is_critical or (attack_roll + attack_bonus) >= defender_ac:
             result['hit'] = True
             result['critical'] = is_critical
-            
+
             # Calculate damage
             damage = CombatSystem.roll_dice(damage_dice) + damage_mod
             if is_critical:
-                damage *= 2  # Simplified critical hit calculation
-            result['damage'] = max(1, damage)  # Ensure at least 1 damage
-            
-            # Apply special effects if the attack has them
-            if hasattr(attack, 'special') and attack.special:
-                result['special_effects'].append(attack.special)
+                damage *= 2
+            result['damage'] = max(1, damage)
+
+            # Special effects
+            if special:
+                result['special_effects'].append(special)
+                if hasattr(defender, 'apply_status') and isinstance(special, str):
+                    defender.apply_status(special)
+                    result['status_effects_applied'].append(special)
 
         return result
 
     @staticmethod
     def roll_dice(dice_str: str) -> int:
-        """Improved dice rolling with support for complex expressions."""
+        """Dice roller that supports complex expressions (e.g., 2d6+3)."""
         try:
             if '+' in dice_str:
-                parts = dice_str.split('+')
-                return sum(CombatSystem._roll_dice_part(p) for p in parts)
+                return sum(CombatSystem._roll_dice_part(p) for p in dice_str.split('+'))
             elif '-' in dice_str:
                 parts = dice_str.split('-')
                 return CombatSystem._roll_dice_part(parts[0]) - sum(CombatSystem._roll_dice_part(p) for p in parts[1:])
             else:
                 return CombatSystem._roll_dice_part(dice_str)
         except Exception as e:
-            print(f"Error in dice rolling: {e}")  # Print out error message
-            return 0  # Fallback for malformed dice strings
+            print(f"Dice rolling error: {e}")
+            return 0
 
     @staticmethod
     def _roll_dice_part(part: str) -> int:
-        """Handle individual dice parts (e.g., '2d6' or '5')."""
+        """Parse individual dice parts."""
         part = part.strip()
         if 'd' in part:
             try:
                 num, sides = map(int, part.split('d'))
                 return sum(random.randint(1, sides) for _ in range(num))
             except Exception as e:
-                print(f"Error in rolling dice part {part}: {e}")  # Print out error message
+                print(f"Roll error in part '{part}': {e}")
                 return 0
         else:
             try:
                 return int(part)
-            except Exception as e:
-                print(f"Error converting part {part} to integer: {e}")  # Print out error message
+            except ValueError:
                 return 0
 
     @staticmethod
     def resolve_monster_abilities(monster: Monster) -> Dict:
-        """Resolve which special abilities a monster uses this round."""
+        """Select spell-like or special abilities to activate."""
         abilities_used = {}
 
-        # Check spell-like abilities
-        if hasattr(monster, 'spell_like_abilities') and monster.spell_like_abilities:
+        # Spell-like
+        if hasattr(monster, 'spell_like_abilities'):
             for ability, uses in monster.spell_like_abilities.items():
                 if uses == 'At will' or random.random() > 0.7:
                     abilities_used[ability] = {
                         'type': 'spell-like',
-                        'dc': getattr(monster, 'spell_dc', 10 + monster.abilities.get('CHA', 10) // 2)
+                        'dc': getattr(monster, 'spell_dc', 10 + (monster.abilities.get('CHA', 10) - 10) // 2)
                     }
 
-        # Check special attacks
+        # Special attacks
         for ability in getattr(monster, 'abilities_list', []):
             if ability.uses == 'At will' or random.random() > 0.7:
                 abilities_used[ability.name] = {

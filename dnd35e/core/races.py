@@ -19,7 +19,7 @@ class Race:
     def apply_modifiers(self, ability_scores: 'AbilityScores'):
         for ability, modifier in self.ability_modifiers.items():
             setattr(ability_scores, ability.lower(), 
-                   getattr(ability_scores, ability.lower()) + modifier)
+                    getattr(ability_scores, ability.lower()) + modifier)
 
 RACES = {
     "Human": Race(
@@ -47,3 +47,7 @@ RACES = {
         languages=["Common", "Elven"]
     )
 }
+
+def get_default_race() -> Race:
+    """Return a default race (Human)."""
+    return RACES["Human"]
