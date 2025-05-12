@@ -1,6 +1,12 @@
 from dataclasses import dataclass
-from .dnd35e.core.character import CharacterSheet
-from .world import GameWorld
+from dnd_adventure.dnd35e.core.character import CharacterSheet
+from dnd_adventure.world import GameWorld
+
+# Ensure Player class is defined
+class Player:
+    def __init__(self, name):
+        self.name = name
+        # Add other attributes as needed for your game
 
 @dataclass
 class GameSession:
@@ -12,7 +18,10 @@ class GameSession:
     @classmethod
     def new_campaign(cls, character_data: dict):
         """Create new game with 3.5e character"""
-        from .dnd35e.core.character import create_character
+        # Import GameSession inside the method to avoid circular imports
+        from dnd_adventure.game import GameSession
+        # Import create_character inside method to avoid circular imports
+        from dnd_adventure.dnd35e.core.character import create_character
         # Create a new character and a new world for the campaign
         return cls(
             player=create_character(character_data),

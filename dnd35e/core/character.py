@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional
+from .items import Item  # Assuming you have this imported somewhere else
 
 @dataclass
 class AbilityScores:
@@ -62,4 +63,29 @@ class Character:
     def __str__(self):
         return (f"{self.name} - Level {self.level} {self.race.name} {self.dnd_class.name}\n"
                 f"HP: {self.hit_points}, AC: {self.armor_class()}\n"
+                f"Ability Scores: {self.ability_scores}")
+
+# New CharacterSheet class to fix the import issue
+class CharacterSheet:
+    def __init__(self, character: Character):
+        self.character = character
+        self.name = character.name
+        self.level = character.level
+        self.race = character.race.name
+        self.dnd_class = character.dnd_class.name
+        self.ability_scores = character.ability_scores
+        self.hit_points = character.hit_points
+        self.skills = character.skills
+        self.feats = character.feats
+        self.spells_known = character.spells_known
+        self.equipment = character.equipment
+
+    def __str__(self):
+        return (f"Character Sheet for {self.name}, Level {self.level}\n"
+                f"Race: {self.race}, Class: {self.dnd_class}\n"
+                f"HP: {self.hit_points}\n"
+                f"Skills: {self.skills}\n"
+                f"Feats: {self.feats}\n"
+                f"Spells Known: {self.spells_known}\n"
+                f"Equipment: {self.equipment}\n"
                 f"Ability Scores: {self.ability_scores}")

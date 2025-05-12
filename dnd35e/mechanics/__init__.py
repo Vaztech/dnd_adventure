@@ -1,4 +1,4 @@
-from .combat import Combat
+from .combat import CombatSystem
 from .magic import Magic
 from .skills import SkillCheck
 

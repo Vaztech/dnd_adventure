@@ -1,5 +1,5 @@
 import random
-from typing import Dict
+from typing import Dict, Union
 from ..core.spells import Spell
 
 class Magic:

@@ -1,5 +1,8 @@
+# world.py
+
 from random import choice, randint
 from .dnd35e.core.monsters import MonsterTemplate, get_monsters_by_cr, get_monsters_by_type
+from .dnd35e.mechanics.combat import CombatSystem  # Import the updated CombatSystem
 
 class GameWorld:
     """World state container"""
@@ -11,6 +14,7 @@ class GameWorld:
     @classmethod
     def generate(cls):
         """Create new world with 3.5e content"""
+        # Local imports within functions to avoid circular import issues.
         from .dnd35e.data import load_monsters, load_locations
         world = cls()
         world.rooms = load_locations()  # Load predefined locations (dungeon rooms)
@@ -64,7 +68,7 @@ class DnDRoom:
         self.monsters = []
         self.xp_reward = 0
         self.connections = {}
-        
+
     def describe(self):
         """Describe the room and any creatures in it"""
         monster_list = ", ".join([monster.name for monster in self.monsters])
@@ -73,20 +77,21 @@ class DnDRoom:
     def populate_monsters(self, cr_range=(1, 3), monster_type=None):
         """Populate room with appropriate monsters"""
         self.monsters = []
+        
+        # Get monsters within the CR range
         possible_monsters = get_monsters_by_cr(cr_range[1])
-
+        
+        # Filter monsters by type, if provided
         if monster_type:
-            possible_monsters = {k: v for k, v in possible_monsters.items() 
-                                 if v.type.lower() == monster_type.lower()}
+            possible_monsters = [monster for monster in possible_monsters 
+                                 if monster.type.lower() == monster_type.lower()]
 
         if possible_monsters:
             num_monsters = randint(1, 4)
-            self.monsters = [choice(list(possible_monsters.keys())) 
-                             for _ in range(num_monsters)]
-
+            self.monsters = [choice(possible_monsters) for _ in range(num_monsters)]
+            
             # Set XP reward based on total CR
-            total_cr = sum(possible_monsters[m].challenge_rating 
-                           for m in self.monsters)
+            total_cr = sum(monster.challenge_rating for monster in self.monsters)
             self.xp_reward = int(total_cr * 100)
 
     def connect(self, direction, room):
