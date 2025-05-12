@@ -1,53 +1,77 @@
 from dataclasses import dataclass
-from dnd_adventure.dnd35e.core.character import CharacterSheet
-from dnd_adventure.world import GameWorld
+from .world import GameWorld  # Updated to relative import
 
-# Ensure Player class is defined
-class Player:
-    def __init__(self, name):
+# Consolidated PlayerCharacter class
+class PlayerCharacter:
+    def __init__(self, name, health=100, attack_power=10):
         self.name = name
-        # Add other attributes as needed for your game
+        self.health = health
+        self.attack_power = attack_power
+
+    def attack(self, target):
+        """Simple attack method (placeholder)"""
+        return f"{self.name} attacks {target} with power {self.attack_power}!"
+
+    def serialize(self):
+        """Serialize player data"""
+        return {
+            "name": self.name,
+            "health": self.health,
+            "attack_power": self.attack_power,
+        }
+
+    @classmethod
+    def deserialize(cls, data):
+        """Deserialize player data"""
+        return cls(name=data["name"], health=data["health"], attack_power=data["attack_power"])
+
+# Creating the character using the new create_character method
+def create_character(data):
+    """Factory function to create a player character"""
+    return PlayerCharacter(
+        name=data.get("name", "Hero"),
+        health=data.get("health", 100),
+        attack_power=data.get("attack_power", 10)
+    )
 
 @dataclass
 class GameSession:
     """Main game controller with 3.5e integration"""
-    player: CharacterSheet
+    player: PlayerCharacter
     world: GameWorld
     turn: int = 0
 
     @classmethod
     def new_campaign(cls, character_data: dict):
-        """Create new game with 3.5e character"""
-        # Import GameSession inside the method to avoid circular imports
-        from dnd_adventure.game import GameSession
-        # Import create_character inside method to avoid circular imports
-        from dnd_adventure.dnd35e.core.character import create_character
-        # Create a new character and a new world for the campaign
-        return cls(
-            player=create_character(character_data),
-            world=GameWorld.generate()
-        )
-    
+        """Create a new game with a 3.5e character"""
+        # Create a new player character and world
+        player = create_character(character_data)
+        world = GameWorld.generate()
+        return cls(player=player, world=world)
+
     def save(self, filepath: str):
         """Save game state with versioning"""
         import pickle
         data = {
-            'version': __version__,
-            'character': self.player.serialize(),  # Save the character data
-            'world': self.world.serialize(),        # Save the world state
-            'turn': self.turn                       # Save the turn counter
+            'version': '1.0',
+            'character': self.player.serialize(),
+            'world': self.world.serialize(),
+            'turn': self.turn
         }
-        with open(filepath, 'wb') as f:
-            pickle.dump(data, f)
-        print(f"Game saved to {filepath}")
-    
+        try:
+            with open(filepath, 'wb') as f:
+                pickle.dump(data, f)
+            print(f"Game saved to {filepath}")
+        except Exception as e:
+            print(f"Error saving game: {e}")
+
     def load(self, filepath: str):
         """Load a previously saved game"""
         import pickle
         try:
             with open(filepath, 'rb') as f:
                 data = pickle.load(f)
-                self.player = CharacterSheet.deserialize(data['character'])
+                self.player = PlayerCharacter.deserialize(data['character'])
                 self.world = GameWorld.deserialize(data['world'])
                 self.turn = data['turn']
             print(f"Game loaded from {filepath}")
@@ -58,7 +82,5 @@ class GameSession:
 
     def take_turn(self):
         """Handle game logic for each turn"""
-        # Example placeholder for turn-based logic
         self.turn += 1
         print(f"Turn {self.turn} for {self.player.name}")
-        # Handle actions, combat, events, etc. for the player here
