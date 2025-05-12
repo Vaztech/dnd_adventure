@@ -1,8 +1,8 @@
 # game.py
 
-# Import only when needed to avoid circular import issues
-from .world import GameWorld  # Correct import for world-building
-from .commands import CommandParser  # Corrected import
+# Absolute imports to avoid issues when running as a module
+from dnd_adventure.world import GameWorld
+from dnd_adventure.commands import CommandParser
 
 class Game:
     """Game class to encapsulate the main game logic"""
@@ -14,11 +14,11 @@ class Game:
     def start(self):
         """Start the game and handle the main game loop"""
         # Import PlayerCharacter inside the method to avoid circular import
-        from .character import PlayerCharacter
+        from dnd_adventure.character import PlayerCharacter
 
         # Create an example player
         player = PlayerCharacter("Hero", 100, 10)  # Example player with name, health, and attack power
-        
+
         # Set up the player's starting location in the world
         self.world.player_location = self.world.rooms.get('entrance', None)  # Assuming 'entrance' is a room in your world
 
@@ -44,4 +44,9 @@ class Game:
 def main():
     # Instantiate the game and start it
     game = Game()
-    game.start()  # Start the game loop
+    game.start()
+
+if __name__ == "__main__":
+    main()
+# This is the main entry point for the game. It initializes the game world and starts the game loop.
+# The Game class handles the main game logic, including player commands and interactions with the game world.

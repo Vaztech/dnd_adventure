@@ -7,10 +7,6 @@ from .core.monsters import Monster, SRD_MONSTERS  # Corrected import from core.m
 from .core.items import Item, CORE_ITEMS
 from .core.feats import Feat, CORE_FEATS
 from .core.skills import Skill, CORE_SKILLS
-# dnd35e/__init__.py
-from .core.rules import load_rules  # Correct import for load_rules function
-from .core.items import Item, CORE_ITEMS
-from .core.feats import Feat, CORE_FEATS
 
 # Import load_rules from the appropriate module
 try:
@@ -21,8 +17,11 @@ except ImportError:
 # Import combat from mechanics
 from .mechanics import Combat
 
+# Import necessary data loading functions
+from .core.data import load_monsters, load_locations, load_spells, load_classes, load_races, load_feats, load_items
+
 __all__ = [
     'Character', 'DnDClass', 'Race', 'Spell', 'Monster', 'Item', 'Feat', 'Skill',
     'CORE_CLASSES', 'RACES', 'CORE_SPELLS', 'SRD_MONSTERS', 'CORE_ITEMS', 'CORE_FEATS', 'CORE_SKILLS',
-    'Combat', 'load_rules'  # Added Combat and load_rules to __all__
+    'Combat', 'load_rules', 'load_monsters', 'load_locations', 'load_spells', 'load_classes', 'load_races', 'load_feats', 'load_items'
 ]
