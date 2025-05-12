@@ -2,9 +2,11 @@ import os
 import json
 import random
 from pathlib import Path
-from .dnd35e.core.monsters import get_monster_by_name, Monster
-from .dnd35e.core.races import get_default_race
-from .dnd35e.core.classes import get_default_class
+
+from .monsters import get_monster_by_name, Monster
+from .races import get_default_race
+from .classes import get_default_class
+from .npc import NPC  # ✅ NEW: NPC support
 
 class GameWorld:
     def __init__(self):
@@ -95,13 +97,23 @@ class GameWorld:
                 type=room_type,
                 feature=random.choice(template["features"])
             )
-            self.rooms.append({
+
+            room = {
                 "id": room_id,
                 "name": room_name,
                 "description": room_desc,
                 "exits": connections.get(str(room_id), {}),
-                "monsters": []
-            })
+                "monsters": [],
+                "npcs": []  # ✅ NEW: NPC support
+            }
+
+            # ✅ Add NPCs to some rooms (25% chance)
+            if random.random() < 0.25:
+                room["npcs"].append(
+                    NPC(name="Elder Bran", quest_offer=("Adventure_Types", "Dungeon_Crawl", "The_Sunken_Citadel"))
+                )
+
+            self.rooms.append(room)
 
     def generate_random_monsters(self):
         available_names = ["Goblin", "Orc", "Skeleton", "Bandit", "Zombie", "Wolf", "Kobold"]
@@ -113,7 +125,6 @@ class GameWorld:
                     name = random.choice(available_names)
                     monster = get_monster_by_name(name)
                     if monster:
-                        # Clone with fresh HP
                         m = Monster(
                             name=monster.name,
                             type=monster.type,
@@ -133,7 +144,18 @@ class GameWorld:
             if room["id"] == room_id:
                 return room
         return None
+
     def get_random_room(self):
         if self.rooms:
             return random.choice(self.rooms)
         return None
+        self.current_enemy = get_monster_by_name(command)
+        if self.current_enemy:
+            self.combat_mode = True
+            self.player.attack(self.current_enemy)
+            if self.current_enemy.hit_points <= 0:
+                print(f"You defeated the {self.current_enemy.name}!")
+                self.combat_mode = False
+                self.current_enemy = None
+        else:
+            print("❌ Invalid monster number.") 

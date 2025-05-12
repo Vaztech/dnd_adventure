@@ -2,6 +2,11 @@ from typing import List, Dict, Optional
 from .quests import DND_35E_QUESTS
 from .character import Character
 
+import json
+from pathlib import Path
+
+SAVE_PATH = Path("dnd35e/save/quests_save.json")
+
 class Quest:
     def __init__(self, data: Dict):
         self.name = data["name"]
@@ -10,8 +15,9 @@ class Quest:
         self.key_locations = data.get("key_locations", [])
         self.rewards = data["rewards"]
         self.source = data.get("source", "Unknown")
-        self.completed_objectives: List[str] = []
+        self.completed_objectives: List[str] = data.get("completed_objectives", [])
         self.is_complete = False
+        self.check_completion()
 
     def check_objective(self, objective: str):
         if objective in self.objectives and objective not in self.completed_objectives:
@@ -25,6 +31,16 @@ class Quest:
         if set(self.objectives) == set(self.completed_objectives):
             self.is_complete = True
             print(f"🎉 Quest '{self.name}' completed!")
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "hook": self.hook,
+            "objectives": self.objectives,
+            "completed_objectives": self.completed_objectives,
+            "rewards": self.rewards,
+            "source": self.source
+        }
 
     def __str__(self):
         status = "✅ Complete" if self.is_complete else "🕒 In Progress"
@@ -49,7 +65,6 @@ class QuestManager:
 
     def assign_quest(self, category: str, subcategory: str, quest_id: str):
         try:
-            # Prevent duplicate quests
             existing_names = [q.name for q in self.active_quests + self.completed_quests]
             quest_data = DND_35E_QUESTS[category][subcategory][quest_id]
             if quest_data["name"] in existing_names:
@@ -84,7 +99,7 @@ class QuestManager:
             print("📦 Items Found:")
             for item in items:
                 print(f"- {item}")
-        # TODO: Add GP to inventory if implemented
+        # TODO: Add GP or items to player inventory system
 
     def list_quests(self):
         if not self.active_quests and not self.completed_quests:
@@ -111,4 +126,52 @@ class QuestManager:
                 status = "✓" if obj in quest.completed_objectives else " "
                 print(f"  [{status}] {obj}")
         print()
-        print("📜 Type 'quest list' to see all quests.")
+        print("📜 Type 'quest list' to see all quest details.")
+
+    def save(self):
+        """Save quests to file."""
+        data = {
+            "active": [q.to_dict() for q in self.active_quests],
+            "completed": [q.name for q in self.completed_quests]
+        }
+        SAVE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(SAVE_PATH, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+
+    def load(self):
+        """Load quests from save file if it exists."""
+        if not SAVE_PATH.exists():
+            return
+
+        try:
+            with open(SAVE_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception as e:
+            print(f"⚠️ Failed to load quest save: {e}")
+            return
+
+        self.active_quests.clear()
+        self.completed_quests.clear()
+
+        for quest_data in data.get("active", []):
+            quest = Quest({
+                "name": quest_data["name"],
+                "hook": quest_data["hook"],
+                "objectives": quest_data["objectives"],
+                "rewards": quest_data["rewards"],
+                "source": quest_data.get("source", "Unknown"),
+                "completed_objectives": quest_data.get("completed_objectives", [])
+            })
+            self.active_quests.append(quest)
+
+        for name in data.get("completed", []):
+            quest = Quest({
+                "name": name,
+                "hook": "",
+                "objectives": [],
+                "rewards": {},
+                "source": "Unknown",
+                "completed_objectives": []
+            })
+            quest.is_complete = True
+            self.completed_quests.append(quest)

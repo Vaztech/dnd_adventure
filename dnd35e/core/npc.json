@@ -1,0 +1,129 @@
+[
+  {
+    "name_pool": ["Elder Bran", "Sister Naeva", "Oracle Tiri"],
+    "personality": "wise",
+    "race": "Human",
+    "class": ["Druid 5", "Cleric 3", "Wizard 7"],
+    "alignment": "Neutral Good",
+    "dialog": "The ruins speak to those who listen. Darkness stirs once more.",
+    "quest_offers": [
+      ["Adventure_Types", "Dungeon_Crawl", "The_Sunken_Citadel"]
+    ],
+    "stat_block": {
+      "skills": ["Knowledge (nature) +12", "Survival +10"],
+      "gear": ["Staff of the Woodlands", "Bag of herbs"]
+    },
+    "source": "PHB NPC Appendix"
+  },
+  {
+    "name_pool": ["Grumpy Garret", "Old Jeb", "Farmer Thom"],
+    "personality": "grumpy",
+    "race": "Dwarf",
+    "class": "Commoner 2",
+    "alignment": "Lawful Neutral",
+    "dialog": "Bah, adventurers. Always causing more trouble than they fix.",
+    "quest_offers": [],
+    "stat_block": {
+      "traits": ["Stonecunning", "Darkvision 60 ft"],
+      "gear": ["Mining pick", "Stout ale"]
+    },
+    "source": "DMG NPC Tables"
+  },
+  {
+    "name_pool": ["Captain Varn", "Sergeant Kora", "Scout Tolen"],
+    "personality": "vigilant",
+    "race": "Half-Elf",
+    "class": ["Fighter 4/Ranger 3", "Rogue 5", "Paladin 4"],
+    "alignment": "Lawful Good",
+    "dialog": "We've seen increased movement near the undercity. Something's coming.",
+    "quest_offers": [
+      ["Urban_Adventure", "Shadows_of_the_City"]
+    ],
+    "stat_block": {
+      "abilities": ["Track", "Urban Tracking"],
+      "gear": ["+1 Chainmail", "Signal whistle"]
+    },
+    "source": "Cityscape"
+  },
+  {
+    "name_pool": ["Priestess Ryll", "Cleric Doma", "Archivist Zehn"],
+    "personality": "devout",
+    "race": "Aasimar",
+    "class": ["Cleric 6", "Archivist 5", "Favored Soul 4"],
+    "alignment": "Lawful Good",
+    "dialog": "Faith alone cannot turn back the tide. We must act swiftly.",
+    "quest_offers": [
+      ["Artifact_Recovery", "template", "Rescue Mission Template"]
+    ],
+    "stat_block": {
+      "spells": ["Cure Serious Wounds", "Divination"],
+      "gear": ["Holy symbol", "Scroll of restoration"]
+    },
+    "source": "Complete Divine"
+  },
+  {
+    "name_pool": ["Zhentarim Agent", "Black Network Operative"],
+    "personality": "deceptive",
+    "race": "Human",
+    "class": ["Rogue 4", "Fighter 2/Rogue 3"],
+    "alignment": "Lawful Evil",
+    "dialog": "The right coin can make anyone... cooperative.",
+    "quest_offers": [
+      ["Faction_Quests", "Zhentarim_Operations"]
+    ],
+    "stat_block": {
+      "skills": ["Bluff +9", "Hide +8"],
+      "gear": ["Poisoned dagger", "Disguise kit"]
+    },
+    "source": "Forgotten Realms Campaign Setting"
+  },
+  {
+    "name_pool": ["Madam Eva", "Seer Kalindra"],
+    "personality": "mysterious",
+    "race": "Vistani",
+    "class": "Diviner 5",
+    "alignment": "Chaotic Neutral",
+    "dialog": "The cards show many paths... but all lead to blood.",
+    "quest_offers": [
+      ["Campaign_Structures", "The_Red_Hand"]
+    ],
+    "stat_block": {
+      "abilities": ["Premonition (reroll 1/day)"],
+      "gear": ["Tarokka deck", "Crystal ball"]
+    },
+    "source": "Ravenloft Campaign Setting"
+  },
+  {
+    "name_pool": ["Guildmaster Tobin", "Factor Jaris"],
+    "personality": "calculating",
+    "race": "Gnome",
+    "class": "Expert 6",
+    "alignment": "Neutral",
+    "dialog": "Every service has its price. What's your offer worth?",
+    "quest_offers": [
+      ["Urban_Adventure", "Shadows_of_the_City"],
+      ["Faction_Quests", "Merchant_Guild"]
+    ],
+    "stat_block": {
+      "skills": ["Appraise +11", "Diplomacy +10"],
+      "gear": ["Ledger of accounts", "Signet ring"]
+    },
+    "source": "Complete Adventurer"
+  },
+  {
+    "name_pool": ["Witchlight Jax", "Fey-Touched Milo"],
+    "personality": "whimsical",
+    "race": "Half-Fey",
+    "class": "Bard 4",
+    "alignment": "Chaotic Good",
+    "dialog": "The moon's song tonight tells of doors best left unopened...",
+    "quest_offers": [
+      ["Feywild_Quests", "Lost_Glamour"]
+    ],
+    "stat_block": {
+      "abilities": ["Charm Person 1/day", "DR 5/Cold Iron"],
+      "gear": ["Silver flute", "Moonlit cloak"]
+    },
+    "source": "Complete Mage"
+  }
+]

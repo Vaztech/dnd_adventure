@@ -1,0 +1,207 @@
+{
+  "Dungeons_and_Dragons_3.5e_World_Lore": {
+    "Cosmology": {
+      "Great_Wheel": {
+        "description": "The multiversal structure consisting of interconnected planes",
+        "planes": {
+          "Material": {
+            "subtypes": ["Prime Material", "Echo Material", "Shadow Material"]
+          },
+          "Inner_Planes": {
+            "Elemental": ["Air", "Earth", "Fire", "Water"],
+            "Paraelemental": ["Ice", "Magma", "Ooze", "Smoke"],
+            "Energy": ["Positive", "Negative"]
+          },
+          "Outer_Planes": [
+            "Mount Celestia (LG)",
+            "Baator (LE)",
+            "The Abyss (CE)",
+            "Arborea (CG)"
+          ],
+          "Transitive": ["Astral", "Ethereal", "Shadow"]
+        },
+        "source": "Manual of the Planes"
+      }
+    },
+    "Deities": {
+      "Greyhawk_Pantheon": {
+        "Core": {
+          "Pelor": {
+            "alignment": "Neutral Good",
+            "domains": ["Good", "Healing", "Sun", "Strength"],
+            "symbol": "Sun face",
+            "favored_weapon": "Heavy mace"
+          },
+          "Vecna": {
+            "alignment": "Neutral Evil",
+            "domains": ["Evil", "Knowledge", "Magic", "Trickery"],
+            "symbol": "Hand with eye",
+            "favored_weapon": "Dagger"
+          }
+        },
+        "source": "Living Greyhawk Gazetteer"
+      }
+    },
+    "History": {
+      "Greyhawk_Timeline": {
+        "Age_of_Gods": "-10,000 DR to -5,000 DR",
+        "Rise_of_Flanaess": "-500 DR to 0 CY",
+        "Current_Era": "Common Year (CY) system",
+        "key_events": {
+          "Twin_Cataclysms": "Rain of Colorless Fire & Invoked Devastation",
+          "Greyhawk_Wars": "582-584 CY",
+          "Current_Year": "591 CY (standard starting point)"
+        },
+        "source": "Living Greyhawk Gazetteer"
+      }
+    },
+    "Organizations": {
+      "Circle_of_Eight": {
+        "type": "Mage consortium",
+        "members": ["Mordenkainen", "Bigby", "Tenser"],
+        "goals": "Balance of power in the Flanaess",
+        "base": "Unknown (secret)"
+      },
+      "Scarlet_Brotherhood": {
+        "type": "Secret society",
+        "alignment": "Lawful Evil",
+        "activities": ["Assassination", "Political manipulation"],
+        "race": "Primarily human supremacists"
+      },
+      "source": "World of Greyhawk Campaign Setting"
+    },
+    "Races": {
+      "Core": {
+        "Dwarves": {
+          "homelands": ["Principality of Ulek", "Suerth Mountains"],
+          "culture": "Clan-based metallurgy experts",
+          "subraces": ["Hill", "Mountain", "Duergar (Underdark)"]
+        },
+        "Elves": {
+          "homelands": ["Celene", "Valley of the Mage"],
+          "subraces": {
+            "High": "Urbanized magic-users",
+            "Wood": "Forest guardians",
+            "Drow": "Underdark matriarchy"
+          }
+        }
+      },
+      "source": "Player's Handbook"
+    },
+    "Magic_Systems": {
+      "Arcane": {
+        "Schools": [
+          "Abjuration",
+          "Conjuration",
+          "Divination",
+          "Enchantment",
+          "Evocation",
+          "Illusion",
+          "Necromancy",
+          "Transmutation"
+        ],
+        "Prestige_Classes": {
+          "Loremaster": "Complete Arcane",
+          "Archmage": "DMG"
+        }
+      },
+      "Divine": {
+        "Domains": {
+          "Core": ["Air", "Animal", "Death", "War"],
+          "Supplemental": ["Dragonscale", "Summoner"]
+        },
+        "source": "Player's Handbook, Complete Divine"
+      }
+    },
+    "Cities": {
+      "Greyhawk": {
+        "government": "Free City (oligarchy)",
+        "districts": [
+          "River Quarter (trade)",
+          "Clerksburg (administration)",
+          "Thieves Quarter (guild activity)"
+        ],
+        "landmarks": {
+          "Castle_Greyhawk": "Infamous dungeon complex",
+          "River_Cyrus": "Major trade route"
+        }
+      },
+      "Source": "The Adventure Begins"
+    },
+    "Bestiary_Lore": {
+      "Dragons": {
+        "Metallics": ["Gold", "Silver", "Bronze"],
+        "Chromatic": ["Red", "Blue", "Black"],
+        "True_Dragon_Ages": [
+          "Wyrmling",
+          "Young",
+          "Adult",
+          "Ancient",
+          "Great Wyrm"
+        ],
+        "source": "Draconomicon"
+      },
+      "Undead": {
+        "Creation_Mechanics": {
+          "Ghosts": "Unfinished business",
+          "Vampires": "Negative energy infection",
+          "Liches": "Willing transformation ritual"
+        },
+        "source": "Libris Mortis"
+      }
+    },
+    "Recommended_Expansions": {
+      "Settings": {
+        "Forgotten_Realms": {
+          "sourcebooks": ["Forgotten Realms Campaign Setting"],
+          "key_features": ["The Time of Troubles"]
+        },
+        "Eberron": {
+          "sourcebooks": ["Eberron Campaign Setting"],
+          "key_features": ["Dragonmarked Houses"]
+        }
+      },
+      "Epic_Artifacts": {
+        "The_Codex_of_Infinite_Planes": {
+          "powers": ["Plane shift at will"],
+          "destruction": "Burned in solar's flame",
+          "source": "Epic Level Handbook"
+        },
+        "Orbs_of_Dragonkind": {
+          "count": 5,
+          "colors": ["Red", "Blue", "Green", "Black", "White"],
+          "curse": "1% dragon transformation per use",
+          "source": "DMG"
+        }
+      },
+      "Monster_Lair_Templates": {
+        "Dragon_Lair": {
+          "features": ["Lava moat", "Collapsing treasure vaults"],
+          "minions": ["Fire giants", "Magma mephits"],
+          "source": "Draconomicon"
+        },
+        "Vampire_Catacombs": {
+          "traps": ["Dominate runes", "Falling chandeliers"],
+          "hazards": ["Blood fonts", "Daylight wards"],
+          "source": "Libris Mortis"
+        },
+        "Random_Generator": {
+          "d4_Features": ["Shifting walls", "Eldritch runes"],
+          "d6_Hazards": ["Poison vents", "Antimagic zones"],
+          "source": "Dungeonscape"
+        }
+      },
+      "Faction_Reputation": {
+        "tiers": ["Hated", "Neutral", "Exalted"],
+        "mechanics": "Points from quests",
+        "source": "Complete Scoundrel"
+      },
+      "Environmental_Systems": {
+        "Weather": {
+          "blizzard": "-8 Spot, 1d6 cold/hour",
+          "source": "DMG p.94"
+        }
+      }
+    }
+  }
+}
