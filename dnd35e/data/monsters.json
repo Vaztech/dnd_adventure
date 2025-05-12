@@ -1,0 +1,198 @@
+{
+    "Goblin": {
+        "name": "Goblin",
+        "challenge_rating": 0.5,
+        "size": "Small",
+        "type": "Humanoid",
+        "subtype": "Goblinoid",
+        "hit_dice": "1d8",
+        "initiative": 1,
+        "speed": "30 ft.",
+        "armor_class": 15,
+        "touch_ac": 12,
+        "flat_footed_ac": 14,
+        "base_attack": 0,
+        "grapple": -4,
+        "attacks": [
+            {
+                "name": "Morningstar",
+                "attack_bonus": 1,
+                "damage": "1d6",
+                "damage_type": "bludgeoning"
+            }
+        ],
+        "full_attack": "Morningstar +1 melee (1d6) or javelin +3 ranged (1d4)",
+        "space": "5 ft.",
+        "reach": "5 ft.",
+        "special_qualities": ["Darkvision 60 ft."],
+        "saves": {"Fort": 2, "Ref": 1, "Will": -1},
+        "abilities": {"STR": 11, "DEX": 13, "CON": 12, "INT": 10, "WIS": 9, "CHA": 6},
+        "skills": {"Hide": 5, "Listen": 2, "Move Silently": 5, "Ride": 4, "Spot": 2},
+        "feats": ["Alertness"],
+        "abilities_list": [],
+        "environment": "Temperate plains",
+        "organization": "Gang (4-9), warband (10-24 plus 1 3rd-level sergeant and 1-2 dire wolves), or tribe (40-400 plus 35% noncombatants plus 1 3rd-level sergeant per 20 adults, 5 5th-level lieutenants, and 1 7th-level leader)",
+        "treasure": "Standard",
+        "alignment": "Usually neutral evil",
+        "advancement": "By character class",
+        "level_adjustment": 0
+    },
+    "Orc": {
+        "name": "Orc",
+        "challenge_rating": 1,
+        "size": "Medium",
+        "type": "Humanoid",
+        "subtype": "Orc",
+        "hit_dice": "1d8+1",
+        "initiative": 0,
+        "speed": "30 ft.",
+        "armor_class": 13,
+        "touch_ac": 10,
+        "flat_footed_ac": 13,
+        "base_attack": 0,
+        "grapple": 1,
+        "attacks": [
+            {
+                "name": "Falchion",
+                "attack_bonus": 2,
+                "damage": "2d4+3",
+                "damage_type": "slashing"
+            }
+        ],
+        "full_attack": "Falchion +2 melee (2d4+3) or javelin +0 ranged (1d6+2)",
+        "space": "5 ft.",
+        "reach": "5 ft.",
+        "special_qualities": ["Darkvision 60 ft.", "Light sensitivity"],
+        "saves": {"Fort": 3, "Ref": 0, "Will": -1},
+        "abilities": {"STR": 15, "DEX": 11, "CON": 12, "INT": 8, "WIS": 7, "CHA": 6},
+        "skills": {"Listen": 1, "Spot": 1},
+        "feats": ["Alertness"],
+        "abilities_list": [],
+        "environment": "Temperate hills",
+        "organization": "Gang (4-9), squad (10-24 plus 2 3rd-level sergeants and 1 leader of 3rd-6th level), or band (30-100 plus 50% noncombatants plus 1 3rd-level sergeant per 10 adults, 5 5th-level lieutenants, and 3 7th-level captains)",
+        "treasure": "Standard",
+        "alignment": "Usually chaotic evil",
+        "advancement": "By character class",
+        "level_adjustment": 0
+    },
+    "Owlbear": {
+        "name": "Owlbear",
+        "challenge_rating": 4,
+        "size": "Large",
+        "type": "Magical Beast",
+        "hit_dice": "5d10+20",
+        "initiative": 1,
+        "speed": "30 ft.",
+        "armor_class": 15,
+        "touch_ac": 10,
+        "flat_footed_ac": 14,
+        "base_attack": 5,
+        "grapple": 14,
+        "attacks": [
+            {
+                "name": "Claw",
+                "attack_bonus": 9,
+                "damage": "1d6+5",
+                "damage_type": "slashing"
+            },
+            {
+                "name": "Beak",
+                "attack_bonus": 4,
+                "damage": "1d8+2",
+                "damage_type": "piercing"
+            }
+        ],
+        "full_attack": "2 claws +9 melee (1d6+5) and bite +4 melee (1d8+2)",
+        "space": "10 ft.",
+        "reach": "5 ft.",
+        "special_qualities": ["Darkvision 60 ft.", "Low-light vision", "Scent"],
+        "saves": {"Fort": 8, "Ref": 5, "Will": 2},
+        "abilities": {"STR": 21, "DEX": 12, "CON": 19, "INT": 2, "WIS": 12, "CHA": 10},
+        "skills": {"Listen": 7, "Spot": 7},
+        "feats": ["Alertness", "Track"],
+        "abilities_list": [
+            {
+                "name": "Improved Grab",
+                "description": "To use this ability, the owlbear must hit with a claw attack. It can then attempt to start a grapple as a free action without provoking an attack of opportunity."
+            }
+        ],
+        "environment": "Temperate forests",
+        "organization": "Solitary or pair",
+        "treasure": "Standard",
+        "alignment": "Always neutral",
+        "advancement": "6-10 HD (Large); 11-15 HD (Huge)",
+        "level_adjustment": null
+    },
+    "Red Dragon (Young)": {
+        "name": "Red Dragon (Young)",
+        "challenge_rating": 10,
+        "size": "Large",
+        "type": "Dragon",
+        "subtype": "Fire",
+        "hit_dice": "15d12+60 (157 hp)",
+        "initiative": 0,
+        "speed": "40 ft., fly 150 ft. (poor)",
+        "armor_class": 25,
+        "touch_ac": 10,
+        "flat_footed_ac": 25,
+        "base_attack": 15,
+        "grapple": 24,
+        "attacks": [
+            {
+                "name": "Bite",
+                "attack_bonus": 19,
+                "damage": "2d6+9",
+                "damage_type": "piercing"
+            }
+        ],
+        "full_attack": "Bite +19 melee (2d6+9) and 2 claws +14 melee (1d8+4) and 2 wings +14 melee (1d6+4) and tail slap +14 melee (1d8+13)",
+        "space": "10 ft.",
+        "reach": "5 ft. (10 ft. with bite)",
+        "special_qualities": [
+            "Darkvision 120 ft.",
+            "Low-light vision",
+            "Blindsense 60 ft.",
+            "Immunity to fire",
+            "Vulnerability to cold"
+        ],
+        "saves": {"Fort": 13, "Ref": 9, "Will": 11},
+        "abilities": {"STR": 29, "DEX": 10, "CON": 19, "INT": 12, "WIS": 13, "CHA": 12},
+        "skills": {
+            "Bluff": 19,
+            "Concentration": 21,
+            "Diplomacy": 3,
+            "Escape Artist": 18,
+            "Intimidate": 21,
+            "Knowledge (arcana)": 19,
+            "Listen": 21,
+            "Search": 19,
+            "Sense Motive": 19,
+            "Spot": 21,
+            "Use Magic Device": 19
+        },
+        "feats": [
+            "Alertness",
+            "Flyby Attack",
+            "Hover",
+            "Improved Initiative",
+            "Power Attack",
+            "Weapon Focus (bite)"
+        ],
+        "abilities_list": [
+            {
+                "name": "Breath Weapon",
+                "description": "40-ft. cone, 12d10 fire, Reflex DC 21 half"
+            },
+            {
+                "name": "Frightful Presence",
+                "description": "180-ft. radius, Will DC 19 negates"
+            }
+        ],
+        "environment": "Warm mountains",
+        "organization": "Solitary or clutch (2-5)",
+        "treasure": "Double standard",
+        "alignment": "Chaotic evil",
+        "advancement": "16-20 HD (Large), 21-30 HD (Huge)",
+        "level_adjustment": 5
+    }
+}
