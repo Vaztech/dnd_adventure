@@ -1,49 +1,55 @@
-from adventurelib import Item, Bag
-from dnd35e import Character as DnDCharacter, CORE_ITEMS
+from dataclasses import dataclass
+from .dnd35e.core.character import CharacterSheet
+from .world import GameWorld
 
-class Player(DnDCharacter):
-    def __init__(self, name, race, dnd_class):
-        super().__init__(name, race, dnd_class)
-        self.inventory = Bag()
-        self.equipment = {
-            'weapon': None,
-            'armor': None,
-            'shield': None,
-            'ammunition': None
+@dataclass
+class GameSession:
+    """Main game controller with 3.5e integration"""
+    player: CharacterSheet
+    world: GameWorld
+    turn: int = 0
+
+    @classmethod
+    def new_campaign(cls, character_data: dict):
+        """Create new game with 3.5e character"""
+        from .dnd35e.core.character import create_character
+        # Create a new character and a new world for the campaign
+        return cls(
+            player=create_character(character_data),
+            world=GameWorld.generate()
+        )
+    
+    def save(self, filepath: str):
+        """Save game state with versioning"""
+        import pickle
+        data = {
+            'version': __version__,
+            'character': self.player.serialize(),  # Save the character data
+            'world': self.world.serialize(),        # Save the world state
+            'turn': self.turn                       # Save the turn counter
         }
-        self.gold = 0
-        self.location = None
-        self.xp = 0
-        self.level = 1
-        
-    def equip(self, item):
-        """Equip an item from inventory"""
-        if item in self.inventory:
-            slot = item.equip_slot
-            if self.equipment[slot]:
-                self.inventory.add(self.equipment[slot])
-            self.equipment[slot] = item
-            self.inventory.take(item.name)
-            print(f"You equip {item.name}")
-        else:
-            print(f"You don't have {item.name} in your inventory")
+        with open(filepath, 'wb') as f:
+            pickle.dump(data, f)
+        print(f"Game saved to {filepath}")
     
-    def get_equipped_weapon(self):
-        return self.equipment['weapon'] or CORE_ITEMS["Unarmed Strike"]
-    
-    def add_xp(self, amount):
-        self.xp += amount
-        print(f"You gain {amount} XP!")
-        # Simple level up - 1000 XP per level
-        if self.xp >= self.level * 1000:
-            self.level_up()
-    
-    def level_up(self):
-        self.level += 1
-        new_hp = max(1, self.dnd_class.hit_die // 2 + 1 + self.ability_scores.get_modifier('constitution'))
-        self.hit_points += new_hp
-        print(f"\nLEVEL UP! You are now level {self.level}")
-        print(f"You gain {new_hp} hit points (now {self.hit_points})")
-    
-    def __str__(self):
-        return f"{self.name} the {self.race.name} {self.dnd_class.name} (Level {self.level})"
+    def load(self, filepath: str):
+        """Load a previously saved game"""
+        import pickle
+        try:
+            with open(filepath, 'rb') as f:
+                data = pickle.load(f)
+                self.player = CharacterSheet.deserialize(data['character'])
+                self.world = GameWorld.deserialize(data['world'])
+                self.turn = data['turn']
+            print(f"Game loaded from {filepath}")
+        except FileNotFoundError:
+            print(f"No saved game found at {filepath}")
+        except Exception as e:
+            print(f"Error loading game: {e}")
+
+    def take_turn(self):
+        """Handle game logic for each turn"""
+        # Example placeholder for turn-based logic
+        self.turn += 1
+        print(f"Turn {self.turn} for {self.player.name}")
+        # Handle actions, combat, events, etc. for the player here
