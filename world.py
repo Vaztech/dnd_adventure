@@ -1,158 +1,145 @@
-# world.py
-
-from random import choice, randint
-from .dnd35e.core.monsters import MonsterTemplate, get_monsters_by_cr, get_monsters_by_type
-from .dnd35e.mechanics.combat import CombatSystem  # Import the updated CombatSystem
+import os
+import json
+from pathlib import Path
+from .monster import Monster
 
 class GameWorld:
-    """World state container"""
     def __init__(self):
-        self.rooms = {}
-        self.current_time = 0
-        self.player_location = None  # Tracks the player's current room
+        self.rooms = []
+        self.current_room = None
 
     @classmethod
     def generate(cls):
-        """Create new world with 3.5e content"""
-        # Local imports within functions to avoid circular import issues.
-        from .dnd35e.data import load_monsters, load_locations
         world = cls()
-        world.rooms = load_locations()  # Load predefined locations (dungeon rooms)
-        world.populate_monsters(load_monsters())  # Populate rooms with monsters
+        world.ensure_data_directory_exists()
+        world.load_locations()
+        world.populate_monsters(world.load_monsters())
+        world.current_room = world.rooms[0] if world.rooms else None
         return world
+
+    def ensure_data_directory_exists(self):
+        """Create data directory and default files if they don't exist"""
+        base_dir = Path(__file__).parent.parent
+        data_dir = base_dir / "dnd35e" / "core"
+        data_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Default locations data
+        default_locations = {
+            "rooms": [
+                {
+                    "id": 1,
+                    "name": "Entrance Hall",
+                    "description": "A grand hall with torches lining the walls.",
+                    "exits": {"north": 2, "east": 3},
+                    "monsters": []
+                },
+                {
+                    "id": 2,
+                    "name": "Throne Room",
+                    "description": "An ornate room with a golden throne.",
+                    "exits": {"south": 1},
+                    "monsters": []
+                },
+                {
+                    "id": 3,
+                    "name": "Dungeon",
+                    "description": "A dark, damp room with chains on the walls.",
+                    "exits": {"west": 1},
+                    "monsters": []
+                }
+            ]
+        }
+        
+        # Default monsters data
+        default_monsters = {
+            "1": [
+                {
+                    "name": "Goblin",
+                    "hp": 7,
+                    "attack": 4,
+                    "defense": 2
+                }
+            ],
+            "2": [
+                {
+                    "name": "Orc",
+                    "hp": 15,
+                    "attack": 8,
+                    "defense": 5
+                }
+            ],
+            "3": [
+                {
+                    "name": "Skeleton",
+                    "hp": 12,
+                    "attack": 6,
+                    "defense": 3
+                }
+            ]
+        }
+        
+        # Create locations.json if it doesn't exist
+        locations_file = data_dir / "locations.json"
+        if not locations_file.exists():
+            with open(locations_file, "w") as f:
+                json.dump(default_locations, f, indent=2)
+        
+        # Create monsters.json if it doesn't exist
+        monsters_file = data_dir / "monsters.json"
+        if not monsters_file.exists():
+            with open(monsters_file, "w") as f:
+                json.dump(default_monsters, f, indent=2)
+
+    def load_locations(self):
+        try:
+            base_dir = Path(__file__).parent.parent
+            path = base_dir / "dnd35e" / "core" / "locations.json"
+            with open(path, "r") as f:
+                data = json.load(f)
+                self.rooms = data.get("rooms", [])
+                
+                # Ensure we have at least one room
+                if not self.rooms:
+                    self.rooms = [{
+                        "id": 1,
+                        "name": "Default Room",
+                        "description": "A plain room with stone walls.",
+                        "exits": {},
+                        "monsters": []
+                    }]
+                    
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Warning: {e}. Using default room setup.")
+            self.rooms = [{
+                "id": 1,
+                "name": "Emergency Room",
+                "description": "A featureless white room.",
+                "exits": {},
+                "monsters": []
+            }]
+
+    def load_monsters(self):
+        try:
+            base_dir = Path(__file__).parent.parent
+            path = base_dir / "dnd35e" / "core" / "monsters.json"
+            with open(path, "r") as f:
+                return json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Warning: {e}. Using empty monster data.")
+            return {}
 
     def populate_monsters(self, monster_data):
-        """Add 3.5e monsters to world"""
-        for room in self.rooms.values():
-            room.monsters = [
-                MonsterTemplate(**data) 
-                for data in monster_data.get(room.id, [])
-            ]
+        for room in self.rooms:
+            room_id = str(room['id'])
+            if room_id in monster_data:
+                room['monsters'] = [
+                    Monster(**data) for data in monster_data[room_id]
+                ]
+            else:
+                room['monsters'] = []
 
-    def describe_current_location(self):
-        """Describe the player's current location"""
-        if self.player_location:
-            return self.player_location.describe()
-        return "You're lost in the void."
-
-    def move_player(self, direction):
-        """Move the player to another room"""
-        if self.player_location and hasattr(self.player_location, direction):
-            new_room = getattr(self.player_location, direction)
-            if new_room:
-                self.player_location = new_room
-                return f"You move to the {new_room.name}."
-        return "You can't move in that direction."
-
-    def serialize(self):
-        """Serialize the world state for saving"""
-        return {
-            'rooms': {room_id: room.serialize() for room_id, room in self.rooms.items()},
-            'current_time': self.current_time,
-            'player_location': self.player_location.name if self.player_location else None
-        }
-
-    @classmethod
-    def deserialize(cls, data):
-        """Deserialize the world state from saved data"""
-        world = cls()
-        world.current_time = data['current_time']
-        world.player_location = world.rooms.get(data['player_location'])
-        world.rooms = {room_id: DnDRoom.deserialize(room_data) for room_id, room_data in data['rooms'].items()}
-        return world
-
-class DnDRoom:
-    def __init__(self, name, description):
-        self.name = name
-        self.description = description
-        self.monsters = []
-        self.xp_reward = 0
-        self.connections = {}
-
-    def describe(self):
-        """Describe the room and any creatures in it"""
-        monster_list = ", ".join([monster.name for monster in self.monsters])
-        return f"{self.description}\nMonsters here: {monster_list if monster_list else 'None'}"
-
-    def populate_monsters(self, cr_range=(1, 3), monster_type=None):
-        """Populate room with appropriate monsters"""
-        self.monsters = []
-        
-        # Get monsters within the CR range
-        possible_monsters = get_monsters_by_cr(cr_range[1])
-        
-        # Filter monsters by type, if provided
-        if monster_type:
-            possible_monsters = [monster for monster in possible_monsters 
-                                 if monster.type.lower() == monster_type.lower()]
-
-        if possible_monsters:
-            num_monsters = randint(1, 4)
-            self.monsters = [choice(possible_monsters) for _ in range(num_monsters)]
-            
-            # Set XP reward based on total CR
-            total_cr = sum(monster.challenge_rating for monster in self.monsters)
-            self.xp_reward = int(total_cr * 100)
-
-    def connect(self, direction, room):
-        """Connect two rooms together in a specific direction"""
-        self.connections[direction] = room
-        room.connections[self.opposite_direction(direction)] = self
-
-    def opposite_direction(self, direction):
-        """Return the opposite direction (for bi-directional connections)"""
-        opposites = {'north': 'south', 'south': 'north', 'east': 'west', 'west': 'east', 'up': 'down', 'down': 'up'}
-        return opposites.get(direction)
-
-    def serialize(self):
-        """Serialize room data for saving"""
-        return {
-            'name': self.name,
-            'description': self.description,
-            'monsters': [monster.serialize() for monster in self.monsters],
-            'connections': self.connections,
-            'xp_reward': self.xp_reward
-        }
-
-    @classmethod
-    def deserialize(cls, data):
-        """Deserialize room data from saved data"""
-        room = cls(data['name'], data['description'])
-        room.monsters = [MonsterTemplate.deserialize(monster_data) for monster_data in data['monsters']]
-        room.xp_reward = data['xp_reward']
-        room.connections = data['connections']
-        return room
-
-def create_world():
-    """Example dungeon with themed areas"""
-    rooms = {}
-    
-    # Entrance (low CR)
-    entrance = DnDRoom(
-        "Cave Entrance",
-        "A damp cave mouth leading into darkness. Water drips from the ceiling."
-    )
-    entrance.populate_monsters((1, 2))
-    
-    # Goblin Warrens
-    goblin_cavern = DnDRoom(
-        "Goblin Cavern",
-        "A foul-smelling chamber littered with bones and crude weapons."
-    )
-    goblin_cavern.populate_monsters((2, 4), "Humanoid")
-    
-    # Dragon's Lair (high CR)
-    dragon_lair = DnDRoom(
-        "Dragon's Lair",
-        "A vast chamber filled with treasure. The air smells of sulfur."
-    )
-    dragon_lair.populate_monsters((10, 15), "Dragon")
-    
-    # Connect rooms
-    entrance.connect('east', goblin_cavern)
-    goblin_cavern.connect('west', entrance)
-    goblin_cavern.connect('down', dragon_lair)
-    dragon_lair.connect('up', goblin_cavern)
-
-    # Return the entrance room as starting point
-    return entrance
+    def get_room(self, room_id):
+        for room in self.rooms:
+            if room['id'] == room_id:
+                return room
+        return None

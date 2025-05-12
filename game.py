@@ -1,52 +1,123 @@
-# game.py
-
-# Absolute imports to avoid issues when running as a module
-from dnd_adventure.world import GameWorld
-from dnd_adventure.commands import CommandParser
+import os
+import sys
+from pathlib import Path
+from .character import Character
+from .world import GameWorld
 
 class Game:
-    """Game class to encapsulate the main game logic"""
     def __init__(self):
-        # Generate the world with locations and monsters
         self.world = GameWorld.generate()
-        self.command_processor = CommandParser(self.world)  # CommandParser now takes the world as a parameter
+        self.player = Character("Hero", 20, 8, 4)
+        # Ensure player always has a valid starting location
+        self.player.location = self.world.current_room or self.get_safe_starting_location()
+        
+    def get_safe_starting_location(self):
+        """Fallback if no room is set as current_room"""
+        if self.world.rooms:
+            return self.world.rooms[0]
+        # Create emergency room if world is completely empty
+        return {
+            'id': 0,
+            'name': "Void Chamber",
+            'description': "You float in a featureless void.",
+            'exits': {},
+            'monsters': []
+        }
 
     def start(self):
-        """Start the game and handle the main game loop"""
-        # Import PlayerCharacter inside the method to avoid circular import
-        from dnd_adventure.character import PlayerCharacter
+        print("\n=== Dungeon Adventure ===")
+        print("Type commands like 'north', 'south', 'east', 'west', 'look', or 'quit'\n")
+        self.print_location()
 
-        # Create an example player
-        player = PlayerCharacter("Hero", 100, 10)  # Example player with name, health, and attack power
-
-        # Set up the player's starting location in the world
-        self.world.player_location = self.world.rooms.get('entrance', None)  # Assuming 'entrance' is a room in your world
-
-        if self.world.player_location:
-            print("Welcome to the D&D Adventure!")
-            print(f"Your adventure begins in the {self.world.player_location.name}.")
+    def print_location(self):
+        room = self.player.location
+        print(f"\n{room['name']}")
+        print(room['description'])
+        
+        if room['exits']:
+            print("\nExits:", ", ".join(room['exits'].keys()))
         else:
-            print("Error: Starting location 'entrance' not found!")
+            print("\nThere are no visible exits.")
+            
+        if room['monsters']:
+            print("\nMonsters here:")
+            for i, monster in enumerate(room['monsters'], 1):
+                status = "alive" if monster.is_alive() else "defeated"
+                print(f"{i}. {monster.name} (HP: {monster.hp}, Status: {status})")
+
+    def handle_command(self, command):
+        command = command.lower().strip()
+        
+        if command in ["north", "south", "east", "west"]:
+            self.handle_movement(command)
+        elif command == "look":
+            self.print_location()
+        elif command in ["quit", "exit"]:
+            self.quit_game()
+        elif command.startswith("attack"):
+            self.handle_attack(command)
+        else:
+            print("Unknown command. Try 'north', 'south', 'east', 'west', 'look', 'attack X', or 'quit'.")
+
+    def handle_movement(self, direction):
+        current_room = self.player.location
+        if direction in current_room['exits']:
+            new_room_id = current_room['exits'][direction]
+            new_room = self.world.get_room(new_room_id)
+            if new_room:
+                self.player.location = new_room
+                print(f"You move {direction}.")
+                self.print_location()
+                return
+        print(f"You can't go {direction}!")
+
+    def handle_attack(self, command):
+        if not self.player.location['monsters']:
+            print("There's nothing to attack here!")
             return
-
-        while True:
-            # Prompt the player for a command
-            command = input("What do you want to do? (Type 'quit' to exit) ").strip().lower()
-
-            if command == "quit":
-                print("Goodbye!")
-                break
+            
+        try:
+            # Handle "attack 1" or just "attack" (target first monster)
+            parts = command.split()
+            target_idx = int(parts[1])-1 if len(parts) > 1 else 0
+            monster = self.player.location['monsters'][target_idx]
+            
+            if not monster.is_alive():
+                print(f"The {monster.name} is already defeated!")
+                return
+                
+            damage = self.player.attack_target(monster)
+            print(f"You attack the {monster.name} for {damage} damage!")
+            
+            if not monster.is_alive():
+                print(f"You defeated the {monster.name}!")
             else:
-                # Execute the command using the command processor
-                result = self.command_processor.execute(command)
-                print(result if result else "Command not recognized.")
+                print(f"The {monster.name} has {monster.hp} HP remaining.")
+                
+        except (IndexError, ValueError):
+            print("Invalid target. Try 'attack 1' to attack the first monster.")
+
+    def quit_game(self):
+        print("\nThanks for playing! Goodbye.")
+        sys.exit()
 
 def main():
-    # Instantiate the game and start it
-    game = Game()
-    game.start()
+    try:
+        game = Game()
+        game.start()
+        
+        while True:
+            try:
+                command = input("\nWhat would you like to do? ").lower().strip()
+                game.handle_command(command)
+            except KeyboardInterrupt:
+                game.quit_game()
+            except Exception as e:
+                print(f"Error: {e}. Please try again.")
+                
+    except Exception as e:
+        print(f"Fatal error starting game: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
-# This is the main entry point for the game. It initializes the game world and starts the game loop.
-# The Game class handles the main game logic, including player commands and interactions with the game world.
