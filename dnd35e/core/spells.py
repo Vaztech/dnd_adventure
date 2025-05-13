@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Dict, Optional
 import logging
+from dnd_adventure.spells import Spell
 
 logger = logging.getLogger(__name__)
 

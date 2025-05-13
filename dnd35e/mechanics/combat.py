@@ -2,9 +2,9 @@ from typing import Dict, Union, List
 import random
 import logging
 
-# Local imports
-from dnd_adventure.character import Character  # Use absolute import for Character
-from ..core.monsters import Monster, SRD_MONSTERS
+# Local imports - using consistent absolute imports
+from dnd_adventure.character import Character
+from dnd_adventure.dnd35e.core.monsters import Monster, SRD_MONSTERS
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)

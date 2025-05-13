@@ -1,6 +1,6 @@
 import random
 from typing import Dict, Union
-from ..core.spells import Spell
+from dnd_adventure.dnd35e.core.spells import Spell
 
 class Magic:
     @staticmethod
