@@ -160,6 +160,7 @@ class Game:
 
     def handle_attack(self, target_index: int):
         """Execute combat round against specified target"""
+        room = self.player.location
         alive_monsters = [m for m in room['monsters'] if m.hit_points > 0]
 
         try:

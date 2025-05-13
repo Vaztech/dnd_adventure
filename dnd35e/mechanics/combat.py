@@ -3,7 +3,7 @@ import random
 import logging
 
 # Local imports
-from ....character import Character  # Use dnd_adventure.character
+from dnd_adventure.character import Character  # Use absolute import for Character
 from ..core.monsters import Monster, SRD_MONSTERS
 
 logging.basicConfig(level=logging.DEBUG)

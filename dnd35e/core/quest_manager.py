@@ -1,6 +1,6 @@
 from typing import List, Dict, Optional
 from .quests import DND_35E_QUESTS
-from ....character import Character  # Use dnd_adventure.character
+from dnd_adventure.character import Character  # Use absolute import for Character
 
 import json
 from pathlib import Path

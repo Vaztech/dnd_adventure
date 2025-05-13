@@ -1,6 +1,6 @@
 import pickle
 import logging
-from ....character import Character  # Use dnd_adventure.character
+from dnd_adventure.character import Character  # Use absolute import based on project root
 
 logger = logging.getLogger(__name__)
 logger.debug(f"Using Character class from: {Character.__module__}")

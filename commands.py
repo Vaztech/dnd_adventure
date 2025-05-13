@@ -1,6 +1,6 @@
 from .dnd35e.mechanics.combat import CombatSystem
 from .character import Character  # Use dnd_adventure.character
-from .world import GameWorld
+#from .world import GameWorld
 
 class CommandParser:
     """Bridge between player input and game systems"""
