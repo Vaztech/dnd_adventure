@@ -1,13 +1,13 @@
 import json
 from pathlib import Path
-from typing import Dict, List, Tuple, Any, Optional
+from typing import Dict, List, Tuple, Any
 from dataclasses import asdict
 
 from .character import Character
-from .races import Race, get_race_by_name
-from .classes import DnDClass, get_class_by_name
-from .spells import Spell, CORE_SPELLS
-from .items import Item, CORE_ITEMS
+from .races import get_race_by_name
+from .classes import get_class_by_name
+from .spells import CORE_SPELLS
+from .items import CORE_ITEMS
 
 SAVE_FILE = Path("dnd_adventure/dnd35e/save/player_save.json")
 
@@ -16,10 +16,6 @@ class SaveManager:
     def save_player(player: Character, current_room_id: str) -> None:
         """
         Save player data to JSON file
-        
-        Args:
-            player: The Character instance to save
-            current_room_id: ID of the room the player is in
         """
         try:
             data = {
@@ -50,13 +46,6 @@ class SaveManager:
     def load_player(game_world: Any, character_factory: callable) -> Tuple[Character, Dict]:
         """
         Load player data from save file or create new character
-        
-        Args:
-            game_world: The GameWorld instance
-            character_factory: Fallback function to create new character
-            
-        Returns:
-            Tuple of (loaded Character, starting room)
         """
         if not SAVE_FILE.exists():
             return character_factory(), game_world.rooms[0]
@@ -65,42 +54,42 @@ class SaveManager:
             with open(SAVE_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
 
-            # Create character using factory first (handles defaults)
-            player = character_factory(data.get("name", "Hero"))
-            
-            # Override with saved data
-            player.race = get_race_by_name(data["race"])
-            player.dnd_class = get_class_by_name(data["class"])
-            player.level = data["level"]
+            # Instantiate character with saved race and class names
+            player = Character(
+                name=data["name"],
+                race_name=data["race"],
+                class_name=data["class"],
+                level=data["level"]
+            )
+
             player.xp = data.get("xp", 0)
             player.hit_points = data.get("hp", player.calculate_hit_points())
-            
+
             # Restore ability scores
             for attr, val in data["ability_scores"].items():
                 if hasattr(player.ability_scores, attr):
                     setattr(player.ability_scores, attr, val)
-            
-            # Restore collections
+
+            # Restore lists and dictionaries
             player.skills = data.get("skills", {})
             player.feats = data.get("feats", [])
             player.status_effects = data.get("status_effects", [])
-            
+
             # Restore spells and equipment
             player.spells_known = [
-                CORE_SPELLS[name] for name in data.get("spells_known", []) 
+                CORE_SPELLS[name] for name in data.get("spells_known", [])
                 if name in CORE_SPELLS
             ]
             player.equipment = {
-                slot: CORE_ITEMS[name] for slot, name in data.get("equipment", {}).items() 
+                slot: CORE_ITEMS[name] for slot, name in data.get("equipment", {}).items()
                 if name in CORE_ITEMS
             }
 
-            # Find saved location or default to starting room
             location = next(
                 (r for r in game_world.rooms if r["id"] == data["location_id"]),
                 game_world.rooms[0]
             )
-            
+
             return player, location
 
         except Exception as e:
@@ -109,7 +98,9 @@ class SaveManager:
 
     @staticmethod
     def delete_save() -> bool:
-        """Delete existing save file if it exists"""
+        """
+        Delete existing save file if it exists
+        """
         try:
             if SAVE_FILE.exists():
                 SAVE_FILE.unlink()
@@ -118,3 +109,5 @@ class SaveManager:
         except Exception as e:
             print(f"⚠️ Failed to delete save file: {e}")
             return False
+        return False
+        # return False

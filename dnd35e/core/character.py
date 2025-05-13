@@ -28,19 +28,9 @@ class AbilityScores:
                 f"CHA: {self.charisma} ({self.get_modifier('charisma'):+d})")
 
 class Character:
-    def __init__(self, *, name: str, race: Race, dnd_class: DnDClass, level: int = 1):
-        """
-        Initialize a new D&D character with required attributes.
-        
-        Args:
-            name: Character's name
-            race: Race object from races.py
-            dnd_class: Class object from classes.py
-            level: Starting level (default 1)
-        """
+    def __init__(self, *, name: str, race: Optional[Race] = None, dnd_class: Optional[DnDClass] = None,
+                 race_name: Optional[str] = None, class_name: Optional[str] = None, level: int = 1):
         self.name = name
-        self.race = race
-        self.dnd_class = dnd_class
         self.level = level
         self.xp = 0
         self.next_level_xp = 1000
@@ -52,20 +42,31 @@ class Character:
         self.status_effects: List[str] = []
         self.hit_points: int = 0
 
-        # Apply racial modifiers and calculate initial HP
+        if race is not None:
+            self.race = race
+        elif race_name is not None:
+            self.race = get_race_by_name(race_name)
+        else:
+            raise ValueError("Either race or race_name must be provided.")
+
+        if dnd_class is not None:
+            self.dnd_class = dnd_class
+        elif class_name is not None:
+            self.dnd_class = get_class_by_name(class_name)
+        else:
+            raise ValueError("Either dnd_class or class_name must be provided.")
+
         self.race.apply_modifiers(self.ability_scores)
         self.hit_points = self.calculate_hit_points()
 
     def calculate_hit_points(self) -> int:
-        """Calculate hit points based on class HD, CON mod, and level"""
         con_mod = self.ability_scores.get_modifier('constitution')
         base = self.dnd_class.hit_die + con_mod
         additional = sum(max(1, (self.dnd_class.hit_die // 2 + 1 + con_mod)) 
-                        for _ in range(self.level - 1))
+                         for _ in range(self.level - 1))
         return base + additional
 
     def armor_class(self) -> int:
-        """Calculate total armor class"""
         base = 10
         dex_mod = self.ability_scores.get_modifier('dexterity')
         armor_bonus = self.equipment.get('armor', Item()).ac_bonus if 'armor' in self.equipment else 0
@@ -73,31 +74,27 @@ class Character:
         return base + dex_mod + armor_bonus + shield_bonus
 
     def attack_bonus(self, attack_type: str = 'melee') -> int:
-        """Calculate attack bonus based on class and ability"""
         bab = self.dnd_class.bab_at_level(self.level)
         if attack_type == 'melee':
             return bab + self.ability_scores.get_modifier('strength')
         return bab + self.ability_scores.get_modifier('dexterity')
 
     def gain_xp(self, amount: int):
-        """Add XP and check for level up"""
         print(f"{self.name} gains {amount} XP.")
         self.xp += amount
         if self.xp >= self.next_level_xp:
             self.level_up()
 
     def level_up(self):
-        """Handle level progression"""
         self.level += 1
         self.xp = 0
         self.next_level_xp *= 2
         hp_gain = max(1, (self.dnd_class.hit_die // 2 + 1 + 
-                         self.ability_scores.get_modifier('constitution')))
+                          self.ability_scores.get_modifier('constitution')))
         self.hit_points += hp_gain
         print(f"{self.name} has reached level {self.level} and gained {hp_gain} HP!")
 
     def skill_check(self, skill: str, difficulty: int) -> bool:
-        """Perform a skill check with random roll"""
         roll = random.randint(1, 20)
         bonus = self.skills.get(skill, 0)
         result = roll + bonus
@@ -105,13 +102,11 @@ class Character:
         return result >= difficulty
 
     def apply_status(self, effect: str):
-        """Add a status effect if not already present"""
         if effect not in self.status_effects:
             self.status_effects.append(effect)
             print(f"{self.name} is now {effect}")
 
     def to_dict(self) -> dict:
-        """Serialize character to dictionary"""
         return {
             "name": self.name,
             "race": self.race.name,
@@ -128,24 +123,12 @@ class Character:
 
     @staticmethod
     def from_dict(data: dict) -> 'Character':
-        """Create Character from serialized data"""
-        race_obj = get_race_by_name(data["race"])
-        class_obj = get_class_by_name(data["dnd_class"])
-        char = Character(
+        return Character(
             name=data["name"],
-            race=race_obj,
-            dnd_class=class_obj,
+            race_name=data["race"],
+            class_name=data["dnd_class"],
             level=data["level"]
         )
-        # Restore additional attributes
-        char.xp = data.get("xp", 0)
-        char.next_level_xp = data.get("next_level_xp", 1000)
-        char.ability_scores = AbilityScores(**data.get("ability_scores", {}))
-        char.skills = data.get("skills", {})
-        char.feats = data.get("feats", [])
-        char.status_effects = data.get("status_effects", [])
-        char.hit_points = data.get("hit_points", char.calculate_hit_points())
-        return char
 
     def __str__(self):
         return (f"{self.name} - Level {self.level} {self.race.name} {self.dnd_class.name}\n"
@@ -154,7 +137,6 @@ class Character:
                 f"Abilities: {self.ability_scores}")
 
 class CharacterSheet:
-    """Formatted display of character information"""
     def __init__(self, character: Character):
         self.character = character
         self.name = character.name
@@ -169,29 +151,28 @@ class CharacterSheet:
         self.equipment = character.equipment
 
     def display(self):
-        """Print formatted character sheet"""
         print(f"\n=== CHARACTER SHEET ===")
         print(f"Name: {self.name}")
         print(f"Race: {self.race} | Class: {self.dnd_class} | Level: {self.level}")
         print(f"\nHP: {self.hit_points} | AC: {self.character.armor_class()}")
         print(f"\nABILITY SCORES:")
         print(self.ability_scores)
-        
+
         if self.skills:
             print("\nSKILLS:")
             for skill, value in self.skills.items():
                 print(f"- {skill}: {value}")
-                
+
         if self.feats:
             print("\nFEATS:")
             for feat in self.feats:
                 print(f"- {feat}")
-                
+
         if self.spells_known:
             print("\nSPELLS:")
             for spell in self.spells_known:
                 print(f"- {spell.name}")
-                
+
         if self.equipment:
             print("\nEQUIPMENT:")
             for slot, item in self.equipment.items():

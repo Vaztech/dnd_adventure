@@ -26,17 +26,18 @@ class Game:
     def create_player(self, name: str = "Hero") -> Character:
         """
         Create a new player character with default race and class
-        
+
         Args:
             name: The character's name (default "Hero")
-            
+
         Returns:
             Character: The newly created player character
         """
         return Character(
             name=name,
             race=get_race_by_name(self.world.default_race.name),
-            dnd_class=get_class_by_name(self.world.default_class.name)
+            dnd_class=get_class_by_name(self.world.default_class.name),
+            level=1
         )
 
     def start(self):
@@ -152,7 +153,7 @@ class Game:
     def execute_combat_round(self, target):
         """Run a full combat round between player and target"""
         turn_order = CombatSystem.determine_initiative([self.player, target])
-        
+
         for combatant in turn_order:
             if combatant.hit_points <= 0:
                 continue
@@ -240,7 +241,7 @@ class Game:
         """Save game state"""
         SaveManager.save_player(self.player, self.player.location["id"])
         self.quest_log.save()
-        print("💾 Game saved.")
+        print("\U0001F4BE Game saved.")
 
     def quit_game(self):
         """Cleanly exit the game"""
@@ -268,3 +269,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+# This code is part of a Dungeons & Dragons 3.5e adventure game.
+# It includes a Game class that manages the game world, player character, and combat system.
