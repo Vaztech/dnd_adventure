@@ -1,5 +1,7 @@
 import sys
 import logging
+import argparse
+from typing import Optional
 
 from dnd_adventure.character import Character
 from dnd_adventure.dnd35e.core.world import GameWorld
@@ -7,60 +9,112 @@ from dnd_adventure.dnd35e.mechanics.combat import CombatSystem
 from dnd_adventure.dnd35e.core.quest_manager import QuestManager
 from dnd_adventure.dnd35e.core.save_manager import SaveManager
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+# Custom logging setup
+def setup_logging(debug=False):
+    """Configure logging with console and file handlers."""
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
+    # File handler: Log DEBUG and above to game.log
+    file_handler = logging.FileHandler('game.log')
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(logging.Formatter('%(levelname)s:%(name)s:%(message)s'))
+
+    # Console handler: Log INFO (or DEBUG if --debug) and above
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.DEBUG if debug else logging.INFO)
+    stream_handler.setFormatter(logging.Formatter('%(message)s'))
+
+    # Clear existing handlers to avoid duplicates
+    logger.handlers = []
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
+
+    return logging.getLogger(__name__)
 
 class Game:
     def __init__(self):
         logger.info("Initializing Game")
-        self.world = GameWorld.generate()
-
         try:
-            self.player, self.starting_room = SaveManager.load_player(
-                self.world, self.create_player
-            )
-            if not hasattr(self.player, "race"):
-                self.player.race = self.world.default_race
-                self.player.hit_points = self.player.calculate_hit_points()
-        except Exception as e:
-            logger.error(f"Failed to load player: {e}")
-            self.player = self.create_player()
-            self.starting_room = self.world.get_room(0)
+            self.world = GameWorld.generate()
+            if not self.world or not self.world.rooms:
+                raise ValueError("World generation failed - no rooms created")
 
-        self.player.location = self.starting_room
-        self.quest_log = QuestManager(self.player)
-        self.quest_log.load()
-        self.combat_mode = False
+            self.player, self.starting_room = self.initialize_player()
+            if not self.starting_room:
+                self.starting_room = self.world.get_room(0)
+
+            self.player.location = self.starting_room
+            self.quest_log = QuestManager(self.player)
+            self.quest_log.load()
+            self.combat_mode = False
+
+        except Exception as e:
+            logger.critical(f"Game initialization failed: {e}")
+            self.emergency_shutdown()
+
+    def initialize_player(self) -> tuple[Character, Optional[object]]:
+        try:
+            player, room = SaveManager.load_player(self.world, self.create_player)
+            if not hasattr(player, "race"):
+                logger.warning("Patching legacy player data")
+                player.race = self.world.default_race
+                player.hit_points = player.calculate_hit_points()
+            return player, room or self.world.get_room(0)
+        except Exception as e:
+            logger.error(f"Player initialization failed: {e}")
+            player = self.create_player()
+            return player, self.world.get_room(0)
 
     def create_player(self, name: str = "Hero") -> Character:
-        return Character(
-            name=name,
-            race=self.world.default_race,
-            dnd_class=self.world.default_class,
-            level=1
-        )
+        try:
+            return Character(
+                name=name,
+                race=self.world.default_race,
+                dnd_class=self.world.default_class,
+                level=1
+            )
+        except Exception as e:
+            logger.critical(f"Failed to create player: {e}")
+            raise RuntimeError("Could not create player character")
 
     def start(self):
+        if not hasattr(self, 'player') or not self.player:
+            logger.critical("No player character exists")
+            self.emergency_shutdown()
         logger.info("\n=== Dungeon Adventure ===")
         logger.info("Commands: north/south/east/west, look, attack [#], quest [list/start/complete/log], save, quit")
         self.print_location()
 
     def print_location(self):
+        if not hasattr(self.player, 'location'):
+            logger.error("Player has no location attribute!")
+            self.player.location = self.starting_room
+
         room = self.player.location
-        logger.info(f"\n{room.name}")
-        logger.info(room.description)
+        if not room:
+            logger.error("Current room is None! Resetting to start.")
+            self.player.location = self.starting_room
+            room = self.starting_room
 
-        if room.exits:
-            logger.info("\nExits: %s", ", ".join(room.exits.keys()))
+        logger.info(f"\n{getattr(room, 'name', 'Unknown Location')}")
+        logger.info(getattr(room, 'description', 'You see nothing unusual.'))
 
-        alive_monsters = [m for m in room.monsters if m.hit_points > 0]
+        exits = getattr(room, 'exits', {})
+        if exits:
+            logger.info("\nExits: %s", ", ".join(exits.keys()))
+
+        alive_monsters = []
+        if hasattr(room, 'monsters'):
+            alive_monsters = [m for m in room.monsters if hasattr(m, 'hit_points') and m.hit_points > 0]
+
         if alive_monsters:
             logger.info("\nMonsters here:")
             for i, monster in enumerate(alive_monsters, 1):
-                logger.info(f"{i}. {monster.name} (HP: {monster.hit_points})")
+                logger.info(f"{i}. {getattr(monster, 'name', 'Unknown')} (HP: {getattr(monster, 'hit_points', '?')})")
             self.combat_mode = True
         else:
-            logger.info("\nThere are no living monsters here.")
+            logger.info("\nNo active threats here.")
             self.combat_mode = False
 
         self.check_quest_objectives(room)
@@ -71,164 +125,75 @@ class Game:
                 if any(word in objective.lower() for word in room.name.lower().split()):
                     self.quest_log.complete_objective(quest.name, objective)
 
+    def handle_movement(self, direction: str):
+        if not hasattr(self.player, 'location'):
+            logger.error("Player location missing!")
+            return
+        if self.combat_mode:
+            logger.info("You can't flee from combat!")
+            return
+
+        current_room = self.player.location
+        exits = getattr(current_room, 'exits', {})
+
+        if direction not in exits:
+            logger.info(f"No exit to the {direction}.")
+            return
+
+        next_room = self.world.get_room(exits[direction])
+        if not next_room:
+            logger.error(f"Room {exits[direction]} doesn't exist!")
+            return
+
+        self.player.location = next_room
+        logger.info(f"You move {direction}.")
+        self.print_location()
+
+    def save_session(self):
+        try:
+            if not hasattr(self.player, 'location'):
+                logger.error("Cannot save - player has no location")
+                return
+            SaveManager.save_player(
+                self.player,
+                getattr(self.player.location, 'id', 0)
+            )
+            self.quest_log.save()
+            logger.info("Game saved successfully.")
+        except Exception as e:
+            logger.error(f"Save failed: {e}")
+
+    def emergency_shutdown(self):
+        logger.critical("EMERGENCY SHUTDOWN INITIATED")
+        sys.exit(1)
+
     def handle_command(self, command: str):
         command = command.lower().strip()
 
-        if self.combat_mode and command.isdigit():
-            self.handle_attack(int(command))
-        elif command in ["north", "south", "east", "west"]:
+        if command in ["north", "south", "east", "west"]:
             self.handle_movement(command)
         elif command == "look":
             self.print_location()
-        elif command.startswith("attack"):
-            self.handle_attack_command(command)
-        elif command.startswith("quest"):
-            self.handle_quest_command(command)
         elif command == "save":
             self.save_session()
         elif command in ["quit", "exit"]:
             self.quit_game()
         else:
-            self.display_help()
-
-    def display_help(self):
-        logger.info("Available commands:")
-        logger.info("- Movement: north/south/east/west")
-        logger.info("- Combat: attack [number]")
-        logger.info("- Quests: quest [list/start/complete/log]")
-        logger.info("- Other: look, save, quit")
-
-    def handle_movement(self, direction: str):
-        if self.combat_mode:
-            logger.info("You can't move while monsters are attacking!")
-            return
-
-        current_room = self.player.location
-        if direction in current_room.exits:
-            next_id = current_room.exits[direction]
-            next_room = self.world.get_room(next_id)
-            if next_room:
-                self.player.location = next_room
-                logger.info(f"You move {direction}.")
-                self.print_location()
-                return
-
-        logger.info(f"You can't go {direction}.")
-
-    def handle_attack_command(self, command: str):
-        if not self.combat_mode:
-            logger.info("There's nothing to attack here.")
-            return
-
-        try:
-            target = int(command.split()[1]) if len(command.split()) > 1 else 1
-            self.handle_attack(target)
-        except (ValueError, IndexError):
-            logger.info("Specify which monster to attack. Example: 'attack 1'")
-
-    def handle_attack(self, target_index: int):
-        room = self.player.location
-        alive_monsters = [m for m in room.monsters if m.hit_points > 0]
-
-        try:
-            target = alive_monsters[target_index - 1]
-        except IndexError:
-            logger.info(f"Invalid target number. Only {len(alive_monsters)} monster(s) here.")
-            return
-
-        logger.info(f"\nYou engage the {target.name} in combat!")
-        self.execute_combat_round(target)
-
-    def execute_combat_round(self, target):
-        turn_order = CombatSystem.determine_initiative([self.player, target])
-
-        for combatant in turn_order:
-            if combatant.hit_points <= 0:
-                continue
-
-            if combatant == self.player:
-                result = CombatSystem.resolve_attack(self.player, target)
-            else:
-                result = CombatSystem.resolve_attack(target, self.player)
-
-            self.display_combat_result(result)
-
-            if self.check_combat_end(target):
-                break
-
-    def check_combat_end(self, target) -> bool:
-        if self.player.hit_points <= 0:
-            logger.info("\nYou have fallen in battle...")
-            self.quit_game()
-            return True
-        elif target.hit_points <= 0:
-            self.handle_victory(target)
-            return True
-        return False
-
-    def handle_victory(self, target):
-        logger.info(f"\nYou defeated the {target.name}!")
-        xp_gain = int(target.challenge_rating * 100)
-        self.player.gain_xp(xp_gain)
-
-        for quest in self.quest_log.active_quests:
-            for objective in quest.objectives:
-                if target.name.lower() in objective.lower():
-                    self.quest_log.complete_objective(quest.name, objective)
-
-        self.combat_mode = False
-
-    def display_combat_result(self, result: dict):
-        logger.info(f"\n{result['attacker']} attacks {result['defender']}!")
-        logger.info(f"Roll: {result['attack_roll']} + {result['attack_bonus']} vs AC")
-        if result['hit']:
-            logger.info(f"HIT{' (CRITICAL!)' if result['critical'] else ''} for {result['damage']} damage!")
-            logger.info(f"{result['defender']} suffers damage.")
-            if result['special_effects']:
-                logger.info(f"Special effect(s): {', '.join(result['special_effects'])}")
-        else:
-            logger.info("MISS!")
-
-    def handle_quest_command(self, command: str):
-        parts = command.split()
-        if len(parts) == 1 or parts[1] == "list":
-            self.quest_log.list_quests()
-        elif parts[1] == "log":
-            self.quest_log.display_hud()
-        elif parts[1] == "start":
-            self.handle_quest_start(parts)
-        elif parts[1] == "complete":
-            self.handle_quest_completion()
-        else:
-            logger.info("Quest command options: list | log | start <category> <subcategory> <id> | complete")
-
-    def handle_quest_start(self, parts: list):
-        try:
-            _, _, category, subcategory, quest_id = parts
-            self.quest_log.assign_quest(category, subcategory, quest_id)
-        except ValueError:
-            logger.info("Usage: quest start <category> <subcategory> <quest_id>")
-
-    def handle_quest_completion(self):
-        try:
-            quest_name = input("Enter quest name: ")
-            objective = input("Enter completed objective: ")
-            self.quest_log.complete_objective(quest_name, objective)
-        except Exception as e:
-            logger.error(f"Error completing objective: {e}")
-
-    def save_session(self):
-        SaveManager.save_player(self.player, self.player.location.id)
-        self.quest_log.save()
-        logger.info("\U0001F4BE Game saved.")
+            logger.info("Unknown command. Try: north, look, save, quit")
 
     def quit_game(self):
-        logger.info("\nSaving progress...")
-        self.save_session()
         logger.info("Thanks for playing!")
+        self.save_session()
         sys.exit()
 
 def main():
+    parser = argparse.ArgumentParser(description="D&D 3.5e Text Adventure")
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging in console")
+    args = parser.parse_args()
+
+    global logger
+    logger = setup_logging(debug=args.debug)
+
     try:
         game = Game()
         game.start()
@@ -237,11 +202,13 @@ def main():
                 command = input("\nWhat would you like to do? ").strip()
                 game.handle_command(command)
             except KeyboardInterrupt:
+                logger.info("\nGame interrupted by user")
                 game.quit_game()
             except Exception as e:
-                logger.error(f"Error processing command: {e}")
+                logger.error(f"Command error: {e}")
+                logger.info("Type 'help' for available commands")
     except Exception as e:
-        logger.error(f"Fatal error starting game: {e}")
+        logger.critical(f"Fatal game error: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

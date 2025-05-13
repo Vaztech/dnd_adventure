@@ -20,6 +20,17 @@ class Item:
     critical: Optional[str] = None  # for weapons
     range_increment: Optional[int] = None  # for ranged weapons
 
+@dataclass
+class Trap:
+    name: str
+    damage: str
+    description: str = "A dangerous trap set to harm intruders."
+
+@dataclass
+class Puzzle:
+    name: str
+    description: str = "A curious mechanism or riddle meant to challenge the mind."
+
 CORE_ITEMS = {
     "Longsword": Item(
         name="Longsword",

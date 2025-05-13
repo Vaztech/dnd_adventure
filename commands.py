@@ -1,20 +1,25 @@
+import logging
 from .dnd35e.mechanics.combat import CombatSystem
-from .character import Character  # Use dnd_adventure.character
-#from .world import GameWorld
+from .character import Character
+
+logger = logging.getLogger(__name__)
 
 class CommandParser:
     """Bridge between player input and game systems"""
     def __init__(self, game_session):
         self.game = game_session
         self.combat = CombatSystem()
+        logger.debug("Initialized CommandParser")
 
     def execute(self, command: str):
         """Route commands to appropriate systems"""
         if not command:
+            logger.debug("Empty command received")
             return "Please enter a command."
 
         # Normalize the command (lowercase and stripped)
         command = command.strip().lower()
+        logger.debug(f"Executing command: {command}")
 
         # Handle movement
         if command.startswith('move'):
@@ -28,37 +33,44 @@ class CommandParser:
         elif command.startswith('look'):
             return self._handle_look(command)
 
-        # Handle other actions (e.g., searching, using items)
+        # Handle other actions (e.g., searching)
         elif command.startswith('search'):
             return self._handle_search(command)
 
+        logger.debug(f"Unknown command: {command}")
         return "Unknown command. Try again."
 
     def _handle_move(self, command):
         """Handle player movement in the world"""
         try:
-            # Expect command format like "move north", "move south", etc.
             _, direction = command.split(" ", 1)
-            return self.game.world.move_player(direction)
+            logger.debug(f"Handling move: direction={direction}")
+            return self.game.handle_movement(direction)
         except ValueError:
+            logger.debug("Invalid move command format")
             return "Move where? Please specify a direction (e.g., 'move north')."
 
     def _handle_combat(self, command):
         """Use 3.5e combat rules to resolve an attack"""
         try:
             _, target_name = command.split(" ", 1)
+            logger.debug(f"Handling combat: target={target_name}")
         except ValueError:
+            logger.debug("Invalid attack command format")
             return "Attack what? Please specify a target (e.g., 'attack goblin')."
 
         target = self._find_target(target_name)
         if not target:
+            logger.debug(f"No valid target found: {target_name}")
             return f"No valid target named '{target_name}' found."
 
         result = self.combat.resolve_attack(
-            attacker=self.game.player,  # Changed from self.game.player.sheet
+            attacker=self.game.player,
             defender=target
         )
-        return self._format_combat_result(result)
+        combat_result = self._format_combat_result(result)
+        logger.debug(f"Combat result: {combat_result}")
+        return combat_result
 
     def _format_combat_result(self, result):
         """Format combat result into a readable string"""
@@ -76,36 +88,30 @@ class CommandParser:
 
     def _find_target(self, target_name):
         """Find the target of the attack based on the command string"""
-        # Check if the target exists in the current room
-        for monster in self.game.world.player_location.monsters:
-            if monster.name.lower() == target_name.lower():
-                return monster
+        logger.debug(f"Searching for target: {target_name}")
+        try:
+            for monster in self.game.player.location.monsters:
+                if monster.name.lower() == target_name.lower():
+                    logger.debug(f"Target found: {monster.name}")
+                    return monster
+        except AttributeError:
+            logger.error("Invalid player location or monsters attribute")
+        logger.debug(f"No target found for: {target_name}")
         return None
 
     def _handle_look(self, command):
         """Handle the 'look around' command to describe the current room"""
-        return self.game.world.describe_current_location()
+        logger.debug("Handling look command")
+        return self.game.print_location()
 
     def _handle_search(self, command):
         """Handle searching a room or object"""
+        logger.debug("Handling search command")
         search_result = self._search_room()
+        logger.debug(f"Search result: {search_result}")
         return search_result
 
     def _search_room(self):
         """Simulate a room search for hidden items or secrets"""
         found_items = ["a rusty sword", "an old map", "a mysterious potion"]
         return f"You search the area and find: {', '.join(found_items)}"
-
-    def _handle_use_item(self, command):
-        """Handle using an item from the inventory"""
-        try:
-            _, item_name = command.split(" ", 1)
-        except ValueError:
-            return "Use what? Please specify an item (e.g., 'use potion')."
-
-        item = self.game.player.inventory.get(item_name)
-        if not item:
-            return f"You don't have a '{item_name}' in your inventory."
-
-        # Use the item (placeholder; implement actual item effects)
-        return f"You use the {item_name}."
