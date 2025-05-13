@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 from .items import Item
-from .races import Race, get_race_by_name
-from .classes import DnDClass, get_class_by_name
+from .races import get_race_by_name, Race
+from .classes import get_class_by_name, DnDClass
 from .spells import Spell
 import random
 
@@ -28,9 +28,10 @@ class AbilityScores:
                 f"CHA: {self.charisma} ({self.get_modifier('charisma'):+d})")
 
 class Character:
-    def __init__(self, *, name: str, race: Optional[Race] = None, dnd_class: Optional[DnDClass] = None,
-                 race_name: Optional[str] = None, class_name: Optional[str] = None, level: int = 1):
+    def __init__(self, name: str, race_name: str, class_name: str, level: int = 1):
         self.name = name
+        self.race = get_race_by_name(race_name)
+        self.dnd_class = get_class_by_name(class_name)
         self.level = level
         self.xp = 0
         self.next_level_xp = 1000
@@ -42,27 +43,13 @@ class Character:
         self.status_effects: List[str] = []
         self.hit_points: int = 0
 
-        if race is not None:
-            self.race = race
-        elif race_name is not None:
-            self.race = get_race_by_name(race_name)
-        else:
-            raise ValueError("Either race or race_name must be provided.")
-
-        if dnd_class is not None:
-            self.dnd_class = dnd_class
-        elif class_name is not None:
-            self.dnd_class = get_class_by_name(class_name)
-        else:
-            raise ValueError("Either dnd_class or class_name must be provided.")
-
         self.race.apply_modifiers(self.ability_scores)
         self.hit_points = self.calculate_hit_points()
 
     def calculate_hit_points(self) -> int:
         con_mod = self.ability_scores.get_modifier('constitution')
         base = self.dnd_class.hit_die + con_mod
-        additional = sum(max(1, (self.dnd_class.hit_die // 2 + 1 + con_mod)) 
+        additional = sum(max(1, (self.dnd_class.hit_die // 2 + 1 + con_mod))
                          for _ in range(self.level - 1))
         return base + additional
 
@@ -77,7 +64,8 @@ class Character:
         bab = self.dnd_class.bab_at_level(self.level)
         if attack_type == 'melee':
             return bab + self.ability_scores.get_modifier('strength')
-        return bab + self.ability_scores.get_modifier('dexterity')
+        else:
+            return bab + self.ability_scores.get_modifier('dexterity')
 
     def gain_xp(self, amount: int):
         print(f"{self.name} gains {amount} XP.")
@@ -89,7 +77,7 @@ class Character:
         self.level += 1
         self.xp = 0
         self.next_level_xp *= 2
-        hp_gain = max(1, (self.dnd_class.hit_die // 2 + 1 + 
+        hp_gain = max(1, (self.dnd_class.hit_die // 2 + 1 +
                           self.ability_scores.get_modifier('constitution')))
         self.hit_points += hp_gain
         print(f"{self.name} has reached level {self.level} and gained {hp_gain} HP!")
@@ -98,13 +86,13 @@ class Character:
         roll = random.randint(1, 20)
         bonus = self.skills.get(skill, 0)
         result = roll + bonus
-        print(f"{self.name} attempts {skill}: {roll} + {bonus} = {result} vs DC {difficulty}")
+        print(f"{self.name} attempts a {skill} check: Rolled {roll} + {bonus} = {result} vs DC {difficulty}")
         return result >= difficulty
 
     def apply_status(self, effect: str):
         if effect not in self.status_effects:
             self.status_effects.append(effect)
-            print(f"{self.name} is now {effect}")
+            print(f"{self.name} is now affected by: {effect}")
 
     def to_dict(self) -> dict:
         return {
@@ -123,57 +111,23 @@ class Character:
 
     @staticmethod
     def from_dict(data: dict) -> 'Character':
-        return Character(
+        char = Character(
             name=data["name"],
             race_name=data["race"],
             class_name=data["dnd_class"],
             level=data["level"]
         )
+        char.xp = data.get("xp", 0)
+        char.next_level_xp = data.get("next_level_xp", 1000)
+        char.ability_scores = AbilityScores(**data.get("ability_scores", {}))
+        char.skills = data.get("skills", {})
+        char.feats = data.get("feats", [])
+        char.status_effects = data.get("status_effects", [])
+        char.hit_points = data.get("hit_points", char.calculate_hit_points())
+        return char
 
     def __str__(self):
         return (f"{self.name} - Level {self.level} {self.race.name} {self.dnd_class.name}\n"
-                f"HP: {self.hit_points} | AC: {self.armor_class()} | XP: {self.xp}/{self.next_level_xp}\n"
-                f"Status: {', '.join(self.status_effects) or 'Normal'}\n"
-                f"Abilities: {self.ability_scores}")
-
-class CharacterSheet:
-    def __init__(self, character: Character):
-        self.character = character
-        self.name = character.name
-        self.level = character.level
-        self.race = character.race.name
-        self.dnd_class = character.dnd_class.name
-        self.ability_scores = character.ability_scores
-        self.hit_points = character.hit_points
-        self.skills = character.skills
-        self.feats = character.feats
-        self.spells_known = character.spells_known
-        self.equipment = character.equipment
-
-    def display(self):
-        print(f"\n=== CHARACTER SHEET ===")
-        print(f"Name: {self.name}")
-        print(f"Race: {self.race} | Class: {self.dnd_class} | Level: {self.level}")
-        print(f"\nHP: {self.hit_points} | AC: {self.character.armor_class()}")
-        print(f"\nABILITY SCORES:")
-        print(self.ability_scores)
-
-        if self.skills:
-            print("\nSKILLS:")
-            for skill, value in self.skills.items():
-                print(f"- {skill}: {value}")
-
-        if self.feats:
-            print("\nFEATS:")
-            for feat in self.feats:
-                print(f"- {feat}")
-
-        if self.spells_known:
-            print("\nSPELLS:")
-            for spell in self.spells_known:
-                print(f"- {spell.name}")
-
-        if self.equipment:
-            print("\nEQUIPMENT:")
-            for slot, item in self.equipment.items():
-                print(f"- {slot}: {item.name}")
+                f"XP: {self.xp}/{self.next_level_xp} | HP: {self.hit_points}, AC: {self.armor_class()}\n"
+                f"Status Effects: {', '.join(self.status_effects) if self.status_effects else 'None'}\n"
+                f"Ability Scores: {self.ability_scores}")

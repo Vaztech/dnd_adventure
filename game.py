@@ -7,8 +7,6 @@ from .dnd35e.core.world import GameWorld
 from .dnd35e.mechanics.combat import CombatSystem
 from .dnd35e.core.quest_manager import QuestManager
 from .dnd35e.core.save_manager import SaveManager
-from .dnd35e.core.races import get_race_by_name
-from .dnd35e.core.classes import get_class_by_name
 
 class Game:
     def __init__(self):
@@ -24,30 +22,19 @@ class Game:
         self.combat_mode = False
 
     def create_player(self, name: str = "Hero") -> Character:
-        """
-        Create a new player character with default race and class
-
-        Args:
-            name: The character's name (default "Hero")
-
-        Returns:
-            Character: The newly created player character
-        """
         return Character(
             name=name,
-            race=get_race_by_name(self.world.default_race.name),
-            dnd_class=get_class_by_name(self.world.default_class.name),
+            race_name=self.world.default_race.name,
+            class_name=self.world.default_class.name,
             level=1
         )
 
     def start(self):
-        """Begin the game and print starting information"""
         print("\n=== Dungeon Adventure ===")
         print("Commands: north/south/east/west, look, attack [#], quest [list/start/complete/log], save, quit\n")
         self.print_location()
 
     def print_location(self):
-        """Display current room information including exits and monsters"""
         room = self.player.location
         print(f"\n{room['name']}")
         print(room['description'])
@@ -65,11 +52,9 @@ class Game:
             print("\nThere are no living monsters here.")
             self.combat_mode = False
 
-        # Check for quest objectives in this location
         self.check_quest_objectives(room)
 
     def check_quest_objectives(self, room: dict):
-        """Check if current location completes any quest objectives"""
         room_name = room["name"].lower()
         for quest in self.quest_log.active_quests:
             for objective in quest.objectives:
@@ -77,7 +62,6 @@ class Game:
                     self.quest_log.complete_objective(quest.name, objective)
 
     def handle_command(self, command: str):
-        """Process player input commands"""
         command = command.lower().strip()
 
         if self.combat_mode and command.isdigit():
@@ -98,7 +82,6 @@ class Game:
             self.display_help()
 
     def display_help(self):
-        """Show available commands"""
         print("Available commands:")
         print("- Movement: north/south/east/west")
         print("- Combat: attack [number]")
@@ -106,7 +89,6 @@ class Game:
         print("- Other: look, save, quit")
 
     def handle_movement(self, direction: str):
-        """Handle player movement between rooms"""
         if self.combat_mode:
             print("You can't move while monsters are attacking!")
             return
@@ -124,7 +106,6 @@ class Game:
         print(f"You can't go {direction}.")
 
     def handle_attack_command(self, command: str):
-        """Process attack commands"""
         if not self.combat_mode:
             print("There's nothing to attack here.")
             return
@@ -136,7 +117,6 @@ class Game:
             print("Specify which monster to attack. Example: 'attack 1'")
 
     def handle_attack(self, target_index: int):
-        """Execute combat round against specified target"""
         alive_monsters = [m for m in self.player.location['monsters'] if m.hit_points > 0]
 
         try:
@@ -146,31 +126,22 @@ class Game:
             return
 
         print(f"\nYou engage the {target.name} in combat!")
-
-        # Combat sequence
         self.execute_combat_round(target)
 
     def execute_combat_round(self, target):
-        """Run a full combat round between player and target"""
         turn_order = CombatSystem.determine_initiative([self.player, target])
 
         for combatant in turn_order:
             if combatant.hit_points <= 0:
                 continue
 
-            if combatant == self.player:
-                result = CombatSystem.resolve_attack(self.player, target)
-            else:
-                result = CombatSystem.resolve_attack(target, self.player)
-
+            result = CombatSystem.resolve_attack(combatant, target if combatant == self.player else self.player)
             self.display_combat_result(result)
 
-            # Check for combat conclusion
             if self.check_combat_end(target, result):
                 break
 
     def check_combat_end(self, target, result) -> bool:
-        """Determine if combat should end and handle results"""
         if self.player.hit_points <= 0:
             print("\nYou have fallen in battle...")
             self.quit_game()
@@ -181,12 +152,10 @@ class Game:
         return False
 
     def handle_victory(self, target):
-        """Process victory over a defeated monster"""
         print(f"\nYou defeated the {target.name}!")
         xp_gain = int(target.challenge_rating * 100)
         self.player.gain_xp(xp_gain)
 
-        # Check for quest completion
         for quest in self.quest_log.active_quests:
             for objective in quest.objectives:
                 if target.name.lower() in objective.lower():
@@ -195,7 +164,6 @@ class Game:
         self.combat_mode = False
 
     def display_combat_result(self, result: dict):
-        """Show results of a combat action"""
         print(f"\n{result['attacker']} attacks {result['defender']}!")
         print(f"Roll: {result['attack_roll']} + {result['attack_bonus']} vs AC")
         if result['hit']:
@@ -207,7 +175,6 @@ class Game:
             print("MISS!")
 
     def handle_quest_command(self, command: str):
-        """Process quest-related commands"""
         parts = command.split()
         if len(parts) == 1 or parts[1] == "list":
             self.quest_log.list_quests()
@@ -221,7 +188,6 @@ class Game:
             print("Quest command options: list | log | start <category> <subcategory> <id> | complete")
 
     def handle_quest_start(self, parts: list):
-        """Process quest start command"""
         try:
             _, _, category, subcategory, quest_id = parts
             self.quest_log.assign_quest(category, subcategory, quest_id)
@@ -229,7 +195,6 @@ class Game:
             print("Usage: quest start <category> <subcategory> <quest_id>")
 
     def handle_quest_completion(self):
-        """Process quest completion command"""
         try:
             quest_name = input("Enter quest name: ")
             objective = input("Enter completed objective: ")
@@ -238,20 +203,17 @@ class Game:
             print(f"Error completing objective: {e}")
 
     def save_session(self):
-        """Save game state"""
         SaveManager.save_player(self.player, self.player.location["id"])
         self.quest_log.save()
-        print("\U0001F4BE Game saved.")
+        print("💾 Game saved.")
 
     def quit_game(self):
-        """Cleanly exit the game"""
         print("\nSaving progress...")
         self.save_session()
         print("Thanks for playing!")
         sys.exit()
 
 def main():
-    """Entry point for the game"""
     try:
         game = Game()
         game.start()
@@ -269,5 +231,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-# This code is part of a Dungeons & Dragons 3.5e adventure game.
-# It includes a Game class that manages the game world, player character, and combat system.
