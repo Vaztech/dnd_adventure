@@ -17,7 +17,7 @@ class DnDClass:
     class_skills: List[str]
     spellcasting: Optional[Dict] = None
     features: Optional[List[ClassFeature]] = None
-    
+
     def bab_at_level(self, level: int) -> int:
         if self.base_attack_bonus == 'good':
             return level
@@ -25,7 +25,7 @@ class DnDClass:
             return level * 3 // 4
         else:
             return level // 2
-    
+
     def save_at_level(self, save_type: str, level: int) -> int:
         if self.saving_throws[save_type] == 'good':
             return 2 + level // 2
@@ -56,9 +56,9 @@ CORE_CLASSES = {
             "ability": "Intelligence",
             "spells_known": "learned",
             "spells_per_day": {
-                1: [3, 1],   # [1st-level, 2nd-level]
+                1: [3, 1],
                 2: [4, 2],
-                3: [4, 2, 1],  # [1st, 2nd, 3rd]
+                3: [4, 2, 1],
             }
         },
         features=[
@@ -69,8 +69,10 @@ CORE_CLASSES = {
 }
 
 def get_default_class() -> DnDClass:
-    """Return a default class (Fighter)."""
     return CORE_CLASSES["Fighter"]
+
 def get_class_by_name(name: str) -> Optional[DnDClass]:
-    """Return a class by its name."""
     return CORE_CLASSES.get(name)
+
+def get_all_classes() -> List[DnDClass]:
+    return list(CORE_CLASSES.values())

@@ -53,3 +53,6 @@ def get_default_race() -> Race:
 
 def get_race_by_name(name: str) -> Race:
     return RACES.get(name, get_default_race())
+
+def get_all_races() -> List[Race]:
+    return list(RACES.values())
