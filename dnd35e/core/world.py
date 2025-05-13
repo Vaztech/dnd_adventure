@@ -4,9 +4,9 @@ import random
 from pathlib import Path
 
 from .monsters import get_monster_by_name, Monster
-from .races import get_default_race
-from .classes import get_default_class
-from .npc import NPC  # ✅ NEW: NPC support
+from ...races import get_default_race  # Use dnd_adventure.races
+from ...classes import get_default_class  # Use dnd_adventure.classes
+from .npc import NPC
 
 class GameWorld:
     def __init__(self):
@@ -43,14 +43,7 @@ class GameWorld:
                     "description": "A {adjective} {type} with {feature}.",
                     "types": ["cave", "tunnel", "chamber", "hall"],
                     "adjectives": ["spooky", "damp", "cold", "eerie"],
-                    "features": ["strange markings on the walls", "a mysterious glow", "an unsettling silence"]
-                },
-                {
-                    "name": ["Ruined {type}", "Abandoned {type}", "Destroyed {type}"],
-                    "description": "The remains of a {adjective} {type} that {feature}.",
-                    "types": ["temple", "library", "forge", "barracks"],
-                    "adjectives": ["once-magnificent", "ancient", "crumbling"],
-                    "features": ["has seen better days", "hints at past grandeur", "still holds secrets"]
+                    "features": ["strange markings", "a mysterious glow", "an unsettling silence"]
                 }
             ]
             with open(location_file, "w") as f:
@@ -64,29 +57,30 @@ class GameWorld:
             with open(data_dir / "location_templates.json", "r") as f:
                 self.location_templates = json.load(f)
         except Exception:
-            print("Warning: Could not load location templates. Using fallback.")
+            print("⚠ Failed to load templates, using fallback.")
             self.location_templates = [{
-                "name": ["Mysterious {type}"],
-                "description": "A {adjective} {type} with {feature}.",
+                "name": ["Unknown {type}"],
+                "description": "A {adjective} {type} filled with {feature}.",
                 "types": ["room"],
                 "adjectives": ["plain"],
-                "features": ["nothing interesting"]
+                "features": ["dust and echoes"]
             }]
 
     def generate_random_locations(self, num_rooms=10):
         self.rooms = []
         room_ids = list(range(1, num_rooms + 1))
         random.shuffle(room_ids)
-
-        # Create connections
         connections = {}
+
         for i in range(num_rooms):
-            connections[str(room_ids[i])] = {}
+            current = str(room_ids[i])
+            connections[current] = {}
             if i > 0:
+                prev = str(room_ids[i - 1])
                 direction = random.choice(["north", "south", "east", "west"])
-                connections[str(room_ids[i])][direction] = room_ids[i - 1]
                 opposite = {"north": "south", "south": "north", "east": "west", "west": "east"}[direction]
-                connections[str(room_ids[i - 1])][opposite] = room_ids[i]
+                connections[current][direction] = int(prev)
+                connections[prev][opposite] = int(current)
 
         for room_id in room_ids:
             template = random.choice(self.location_templates)
@@ -104,10 +98,9 @@ class GameWorld:
                 "description": room_desc,
                 "exits": connections.get(str(room_id), {}),
                 "monsters": [],
-                "npcs": []  # ✅ NEW: NPC support
+                "npcs": []
             }
 
-            # ✅ Add NPCs to some rooms (25% chance)
             if random.random() < 0.25:
                 room["npcs"].append(
                     NPC(name="Elder Bran", quest_offer=("Adventure_Types", "Dungeon_Crawl", "The_Sunken_Citadel"))
@@ -116,46 +109,55 @@ class GameWorld:
             self.rooms.append(room)
 
     def generate_random_monsters(self):
-        available_names = ["Goblin", "Orc", "Skeleton", "Bandit", "Zombie", "Wolf", "Kobold"]
+        names = ["Goblin", "Orc", "Skeleton", "Zombie", "Wolf", "Kobold"]
         for room in self.rooms:
-            if random.random() < 0.6:  # 60% chance to spawn monsters
-                num = random.randint(1, 3)
+            if random.random() < 0.6:
                 room["monsters"] = []
-                for _ in range(num):
-                    name = random.choice(available_names)
-                    monster = get_monster_by_name(name)
-                    if monster:
-                        m = Monster(
-                            name=monster.name,
-                            type=monster.type,
-                            armor_class=monster.armor_class,
-                            hit_points=monster.hit_points,
-                            speed=monster.speed,
-                            challenge_rating=monster.challenge_rating,
-                            abilities=monster.abilities,
-                            attacks=monster.attacks,
-                            spell_like_abilities=monster.spell_like_abilities,
-                            abilities_list=monster.abilities_list
-                        )
-                        room["monsters"].append(m)
+                for _ in range(random.randint(1, 3)):
+                    base = get_monster_by_name(random.choice(names))
+                    if base:
+                        room["monsters"].append(Monster(**base.__dict__))
 
     def get_room(self, room_id):
-        for room in self.rooms:
-            if room["id"] == room_id:
-                return room
-        return None
+        return next((room for room in self.rooms if room["id"] == room_id), None)
 
     def get_random_room(self):
-        if self.rooms:
-            return random.choice(self.rooms)
-        return None
-        self.current_enemy = get_monster_by_name(command)
-        if self.current_enemy:
-            self.combat_mode = True
-            self.player.attack(self.current_enemy)
-            if self.current_enemy.hit_points <= 0:
-                print(f"You defeated the {self.current_enemy.name}!")
-                self.combat_mode = False
-                self.current_enemy = None
+        return random.choice(self.rooms) if self.rooms else None
+
+    def move_player(self, direction):
+        """Move the player to a new room based on the direction."""
+        if not self.current_room:
+            return "No current room set."
+        
+        exits = self.current_room.get("exits", {})
+        if direction not in exits:
+            return f"No exit to the {direction}."
+        
+        new_room_id = exits[direction]
+        new_room = self.get_room(new_room_id)
+        if new_room:
+            self.current_room = new_room
+            return self.describe_current_location()
+        return "Cannot move to that location."
+
+    def describe_current_location(self):
+        """Describe the current room, including exits, monsters, and NPCs."""
+        if not self.current_room:
+            return "You are nowhere."
+        
+        desc = f"\n{self.current_room['name']}\n{self.current_room['description']}\n"
+        exits = self.current_room.get("exits", {})
+        if exits:
+            desc += f"Exits: {', '.join(exits.keys())}\n"
         else:
-            print("❌ Invalid monster number.") 
+            desc += "No visible exits.\n"
+        
+        monsters = self.current_room.get("monsters", [])
+        if monsters:
+            desc += f"Monsters: {', '.join(m.name for m in monsters)}\n"
+        
+        npcs = self.current_room.get("npcs", [])
+        if npcs:
+            desc += f"NPCs: {', '.join(npc.name for npc in npcs)}\n"
+        
+        return desc

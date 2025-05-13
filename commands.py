@@ -1,12 +1,12 @@
-from .dnd35e.mechanics.combat import CombatSystem  # Updated class name
-from .dnd35e.core.character import CharacterSheet
+from .dnd35e.mechanics.combat import CombatSystem
+from .character import Character  # Use dnd_adventure.character
 from .world import GameWorld
 
 class CommandParser:
     """Bridge between player input and game systems"""
     def __init__(self, game_session):
         self.game = game_session
-        self.combat = CombatSystem()  # Updated to use CombatSystem
+        self.combat = CombatSystem()
 
     def execute(self, command: str):
         """Route commands to appropriate systems"""
@@ -19,19 +19,19 @@ class CommandParser:
         # Handle movement
         if command.startswith('move'):
             return self._handle_move(command)
-        
+
         # Handle combat (attacking)
         elif command.startswith('attack'):
             return self._handle_combat(command)
-        
+
         # Handle looking around
         elif command.startswith('look'):
             return self._handle_look(command)
-        
+
         # Handle other actions (e.g., searching, using items)
         elif command.startswith('search'):
             return self._handle_search(command)
-        
+
         return "Unknown command. Try again."
 
     def _handle_move(self, command):
@@ -49,13 +49,13 @@ class CommandParser:
             _, target_name = command.split(" ", 1)
         except ValueError:
             return "Attack what? Please specify a target (e.g., 'attack goblin')."
-        
+
         target = self._find_target(target_name)
         if not target:
             return f"No valid target named '{target_name}' found."
-        
+
         result = self.combat.resolve_attack(
-            attacker=self.game.player.sheet,
+            attacker=self.game.player,  # Changed from self.game.player.sheet
             defender=target
         )
         return self._format_combat_result(result)
@@ -67,7 +67,7 @@ class CommandParser:
 
         critical = " (CRITICAL HIT!)" if result['critical'] else ""
         effects = ", ".join(result['special_effects']) if result['special_effects'] else "None"
-        
+
         return (
             f"{result['attacker']} attacks {result['defender']} and hits!{critical}\n"
             f"Damage: {result['damage']}\n"
@@ -93,20 +93,19 @@ class CommandParser:
 
     def _search_room(self):
         """Simulate a room search for hidden items or secrets"""
-        # You can expand this method to include hidden treasure, traps, or NPCs
         found_items = ["a rusty sword", "an old map", "a mysterious potion"]
         return f"You search the area and find: {', '.join(found_items)}"
-    
+
     def _handle_use_item(self, command):
         """Handle using an item from the inventory"""
         try:
             _, item_name = command.split(" ", 1)
         except ValueError:
             return "Use what? Please specify an item (e.g., 'use potion')."
-        
+
         item = self.game.player.inventory.get(item_name)
         if not item:
             return f"You don't have a '{item_name}' in your inventory."
-        
-        # Use the item (this is a placeholder; implement actual item effects)
+
+        # Use the item (placeholder; implement actual item effects)
         return f"You use the {item_name}."

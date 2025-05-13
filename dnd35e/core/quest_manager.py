@@ -1,6 +1,6 @@
 from typing import List, Dict, Optional
 from .quests import DND_35E_QUESTS
-from .character import Character
+from ....character import Character  # Use dnd_adventure.character
 
 import json
 from pathlib import Path
@@ -24,7 +24,7 @@ class Quest:
             self.completed_objectives.append(objective)
             print(f"✅ Objective completed: {objective}")
         else:
-            print(f"⚠️ Objective '{objective}' already completed or invalid.")
+            print(f"⚠ Objective '{objective}' already completed or invalid.")
         self.check_completion()
 
     def check_completion(self):
@@ -43,7 +43,7 @@ class Quest:
         }
 
     def __str__(self):
-        status = "✅ Complete" if self.is_complete else "🕒 In Progress"
+        status = "✅ Complete" if self.is_complete else "⏳ In Progress"
         return (
             f"\n📜 {self.name} [{status}]\n"
             f"Hook: {self.hook}\n"
@@ -54,7 +54,6 @@ class Quest:
                 for obj in self.objectives
             )
         )
-
 
 class QuestManager:
     def __init__(self, character: Character):
@@ -67,27 +66,27 @@ class QuestManager:
             existing_names = [q.name for q in self.active_quests + self.completed_quests]
             quest_data = DND_35E_QUESTS[category][subcategory][quest_id]
             if quest_data["name"] in existing_names:
-                print(f"⚠️ Quest '{quest_data['name']}' already accepted or completed.")
+                print(f"⚠ Quest '{quest_data['name']}' already accepted or completed.")
                 return
             quest = Quest(quest_data)
             self.active_quests.append(quest)
             print(f"🆕 New quest added: {quest.name}")
         except KeyError:
-            print(f"❌ Quest not found: {category} > {subcategory} > {quest_id}")
+            print(f"❌ Quest not found: {category}/{subcategory}/{quest_id}")
 
-    def complete_objective(self, quest_name: str, objective: str):
-        for quest in self.active_quests:
-            if quest.name == quest_name:
-                quest.check_objective(objective)
-                if quest.is_complete:
-                    self.reward_player(quest)
-                    self.active_quests.remove(quest)
-                    self.completed_quests.append(quest)
-                return
-        print(f"❌ No active quest found with name: '{quest_name}'")
+    def complete_quest(self, quest_name: str):
+        quest = next((q for q in self.active_quests if q.name == quest_name), None)
+        if not quest:
+            print(f"⚠ Quest '{quest_name}' not found in active quests.")
+            return
 
-    def reward_player(self, quest: Quest):
-        print(f"\n🎁 Granting rewards for quest: {quest.name}")
+        self.active_quests.remove(quest)
+        self.completed_quests.append(quest)
+        quest.is_complete = True
+        print(f"🎉 Quest '{quest.name}' completed!")
+
+        # Grant rewards
+        print(f"✨ Granting rewards for quest: {quest.name}")
         gp = quest.rewards.get("gp", 0)
         xp = quest.rewards.get("xp", 0)
         items = quest.rewards.get("items", [])
@@ -120,7 +119,7 @@ class QuestManager:
 
         print("\n📘 Quest Log Summary:")
         for quest in self.active_quests:
-            print(f"📍 {quest.name}:")
+            print(f"📜 {quest.name}:")
             for obj in quest.objectives:
                 status = "✓" if obj in quest.completed_objectives else " "
                 print(f"  [{status}] {obj}")
@@ -145,7 +144,7 @@ class QuestManager:
             with open(SAVE_PATH, "r", encoding="utf-8") as f:
                 data = json.load(f)
         except Exception as e:
-            print(f"⚠️ Failed to load quest save: {e}")
+            print(f"⚠ Failed to load quest save: {e}")
             return
 
         self.active_quests.clear()
@@ -179,4 +178,4 @@ class QuestManager:
                 })
                 quest.is_complete = True
                 self.completed_quests.append(quest)
-                print(f"⚠️ Quest '{name}' not found in definitions, loaded as incomplete.")
+                print(f"⚠ Quest '{name}' not found in definitions, loaded as incomplete.")

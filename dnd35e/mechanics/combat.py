@@ -1,12 +1,19 @@
 from typing import Dict, Union, List
 import random
+import logging
 
 # Local imports
-from ..core.character import Character
+from ....character import Character  # Use dnd_adventure.character
 from ..core.monsters import Monster, SRD_MONSTERS
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class CombatSystem:
     """Combat system for resolving attacks and monster abilities."""
+
+    def __init__(self):
+        logger.debug(f"Using Character class from: {Character.__module__}")
 
     @staticmethod
     def determine_initiative(combatants: List[Union[Character, Monster]]) -> List[Union[Character, Monster]]:
@@ -20,7 +27,7 @@ class CombatSystem:
             mod = (dex - 10) // 2
             roll = random.randint(1, 20) + mod
             initiative_rolls.append((roll, c))
-            print(f"Initiative: {getattr(c, 'name', 'Monster')} rolled {roll} (DEX mod {mod})")
+            logger.info(f"Initiative: {getattr(c, 'name', 'Monster')} rolled {roll} (DEX mod {mod})")
 
         return [c for _, c in sorted(initiative_rolls, key=lambda x: x[0], reverse=True)]
 
@@ -104,7 +111,7 @@ class CombatSystem:
             else:
                 return CombatSystem._roll_dice_part(dice_str)
         except Exception as e:
-            print(f"Dice rolling error: {e}")
+            logger.error(f"Dice rolling error: {e}")
             return 0
 
     @staticmethod
@@ -116,7 +123,7 @@ class CombatSystem:
                 num, sides = map(int, part.split('d'))
                 return sum(random.randint(1, sides) for _ in range(num))
             except Exception as e:
-                print(f"Roll error in part '{part}': {e}")
+                logger.error(f"Roll error in part '{part}': {e}")
                 return 0
         else:
             try:
