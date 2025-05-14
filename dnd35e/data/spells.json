@@ -1,0 +1,239 @@
+{
+    "Magic Missile": {
+        "name": "Magic Missile",
+        "level": 1,
+        "school": "Evocation",
+        "subschool": null,
+        "descriptor": ["Force"],
+        "casting_time": "1 standard action",
+        "components": {
+            "verbal": true,
+            "somatic": true,
+            "material": false,
+            "focus": false,
+            "divine_focus": false
+        },
+        "spell_range": "Medium (100 ft. + 10 ft./level)",
+        "area": null,
+        "target": "Up to five creatures, no two of which can be more than 15 ft. apart",
+        "duration": "Instantaneous",
+        "saving_throw": "None",
+        "spell_resistance": true,
+        "description": "A missile of magical energy darts forth and strikes its target.",
+        "classes": {"Wizard": 1, "Sorcerer": 1}
+    }
+}{
+  "Sorcerer/Wizard": {
+    "level_1": [
+      {
+        "name": "Magic Missile",
+        "school": "Evocation [Force]",
+        "casting_time": "1 standard action",
+        "range": "Medium (100 ft. + 10 ft./level)",
+        "target": "Up to five creatures, no two of which can be more than 15 ft. apart",
+        "duration": "Instantaneous",
+        "saving_throw": "None",
+        "spell_resistance": "Yes",
+        "description": "A missile of magical energy darts forth and strikes its target, dealing 1d4+1 force damage.",
+        "damage": "1d4+1 per missile (force)",
+        "notes": "Cannot target objects."
+      },
+      {
+        "name": "Protection from Evil",
+        "school": "Abjuration [Good]",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "1 min./level (D)",
+        "saving_throw": "Will negates (harmless)",
+        "spell_resistance": "No (harmless)",
+        "description": "The subject gains +2 deflection AC and +2 resistance saves vs. evil creatures.",
+        "protection": "+2 AC/saves vs. evil, blocks possession"
+      },
+      {
+        "name": "Summon Monster I",
+        "school": "Conjuration (Summoning)",
+        "casting_time": "1 round",
+        "range": "Close (25 ft. + 5 ft./2 levels)",
+        "effect": "One summoned creature",
+        "duration": "1 round/level (D)",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Summons a creature to fight for you.",
+        "summon_options": ["Celestial Dog", "Fiendish Monkey", "Fiendish Raven"],
+        "notes": "Alignment-based variants exist."
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Invisibility",
+        "school": "Illusion (Glamer)",
+        "casting_time": "1 standard action",
+        "range": "Personal or touch",
+        "target": "You or a creature",
+        "duration": "1 min./level (D)",
+        "saving_throw": "Will negates (harmless, object)",
+        "spell_resistance": "Yes (harmless, object)",
+        "description": "The subject becomes invisible.",
+        "notes": "Breaks on attack or aggressive action."
+      }
+    ],
+    "level_3": [
+      {
+        "name": "Fireball",
+        "school": "Evocation [Fire]",
+        "casting_time": "1 standard action",
+        "range": "Long (400 ft. + 40 ft./level)",
+        "area": "20-ft.-radius spread",
+        "duration": "Instantaneous",
+        "saving_throw": "Reflex half",
+        "spell_resistance": "Yes",
+        "description": "Explosion deals 1d6 fire damage per caster level.",
+        "damage": "1d6/level (max 10d6, fire)",
+        "notes": "Sets flammable objects alight."
+      },
+      {
+        "name": "Haste",
+        "school": "Transmutation",
+        "casting_time": "1 standard action",
+        "range": "Close (25 ft. + 5 ft./2 levels)",
+        "target": "One creature/level",
+        "duration": "1 round/level",
+        "saving_throw": "Fortitude negates (harmless)",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Subjects gain bonuses to attack, AC, and speed.",
+        "buffs": "+1 attack, +1 AC (dodge), +30 ft. speed"
+      },
+      {
+        "name": "Hold Person",
+        "school": "Enchantment (Compulsion) [Mind-Affecting]",
+        "casting_time": "1 standard action",
+        "range": "Medium (100 ft. + 10 ft./level)",
+        "target": "One humanoid creature",
+        "duration": "1 round/level (D)",
+        "saving_throw": "Will negates",
+        "spell_resistance": "Yes",
+        "description": "Target becomes paralyzed. New save each round.",
+        "notes": "Only affects humanoids."
+      }
+    ]
+  },
+
+  "Cleric": {
+    "level_1": [
+      {
+        "name": "Cure Light Wounds",
+        "school": "Conjuration (Healing)",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "Instantaneous",
+        "saving_throw": "Will half (harmless)",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Heals 1d8 + 1 per caster level (max +5).",
+        "healing": "1d8 + 1/level (max +5)"
+      },
+      {
+        "name": "Protection from Evil",
+        "school": "Abjuration [Good]",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "1 min./level (D)",
+        "saving_throw": "Will negates (harmless)",
+        "spell_resistance": "No (harmless)",
+        "description": "Blocks evil mental control and improves defenses.",
+        "protection": "+2 AC/saves vs. evil, blocks possession"
+      },
+      {
+        "name": "Summon Monster I",
+        "school": "Conjuration (Summoning)",
+        "casting_time": "1 round",
+        "range": "Close (25 ft. + 5 ft./2 levels)",
+        "effect": "One summoned creature",
+        "duration": "1 round/level (D)",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Summons a creature to fight for you.",
+        "summon_options": ["Celestial Dog", "Fiendish Monkey", "Fiendish Raven"]
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Hold Person",
+        "school": "Enchantment (Compulsion) [Mind-Affecting]",
+        "casting_time": "1 standard action",
+        "range": "Medium (100 ft. + 10 ft./level)",
+        "target": "One humanoid creature",
+        "duration": "1 round/level (D)",
+        "saving_throw": "Will negates",
+        "spell_resistance": "Yes",
+        "description": "Paralyzes humanoid target."
+      }
+    ]
+  },
+
+  "Bard": {
+    "level_1": [
+      {
+        "name": "Magic Missile",
+        "school": "Evocation [Force]",
+        "casting_time": "1 standard action",
+        "range": "Medium (100 ft. + 10 ft./level)",
+        "target": "Up to five creatures",
+        "duration": "Instantaneous",
+        "saving_throw": "None",
+        "spell_resistance": "Yes",
+        "description": "Force missiles hit automatically."
+      },
+      {
+        "name": "Cure Light Wounds",
+        "school": "Conjuration (Healing)",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "Instantaneous",
+        "saving_throw": "Will half (harmless)",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Heals 1d8 + 1/level (max +5)."
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Invisibility",
+        "school": "Illusion (Glamer)",
+        "casting_time": "1 standard action",
+        "range": "Personal or touch",
+        "target": "You or creature",
+        "duration": "1 min./level (D)",
+        "saving_throw": "Will negates",
+        "spell_resistance": "Yes",
+        "description": "Turns target invisible."
+      },
+      {
+        "name": "Hold Person",
+        "school": "Enchantment",
+        "casting_time": "1 standard action",
+        "range": "Medium",
+        "target": "One humanoid",
+        "duration": "1 round/level",
+        "saving_throw": "Will negates",
+        "spell_resistance": "Yes",
+        "description": "Paralyzes a humanoid."
+      }
+    ],
+    "level_3": [
+      {
+        "name": "Haste",
+        "school": "Transmutation",
+        "casting_time": "1 standard action",
+        "range": "Close",
+        "target": "Multiple creatures",
+        "duration": "1 round/level",
+        "saving_throw": "Fortitude negates",
+        "spell_resistance": "Yes",
+        "description": "Speeds up actions and movement."
+      }
+    ]
+  }
+}
