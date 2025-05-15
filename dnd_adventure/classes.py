@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional
+from dnd_adventure.data_loader import DataLoader
 
 @dataclass
 class ClassFeature:
@@ -51,49 +52,17 @@ class DnDClass:
             "subclasses": self.subclasses
         }
 
-CORE_CLASSES = {
-    "Fighter": DnDClass(
-        name="Fighter",
-        description="A versatile combatant skilled in a wide array of weapons and tactics.",
-        hit_die=10,
-        base_attack_bonus="good",
-        saving_throws={"Fort": "good", "Ref": "poor", "Will": "poor"},
-        skill_points=2,
-        class_skills=["Climb", "Craft", "Handle Animal", "Intimidate", "Jump", "Ride", "Swim"],
-        features=[
-            ClassFeature("Bonus Feat", 1, "Gain a bonus combat feat at 1st level and every even level")
-        ]
-    ),
-    "Wizard": DnDClass(
-        name="Wizard",
-        description="A scholarly arcane caster who masters magic through study and spellbooks.",
-        hit_die=4,
-        base_attack_bonus="poor",
-        saving_throws={"Fort": "poor", "Ref": "poor", "Will": "good"},
-        skill_points=2,
-        class_skills=["Concentration", "Craft", "Decipher Script", "Knowledge (all)", "Profession", "Spellcraft"],
-        spellcasting={
-            "type": "arcane",
-            "ability": "Intelligence",
-            "spells_known": "learned",
-            "spells_per_day": {
-                1: [3, 1],
-                2: [4, 2],
-                3: [4, 2, 1],
-            }
-        },
-        features=[
-            ClassFeature("Arcane Bond", 1, "Choose a familiar or bonded object"),
-            ClassFeature("Scribe Scroll", 1, "Can create scrolls")
-        ]
-    )
-}
+def get_default_class() -> Dict:
+    loader = DataLoader()
+    classes = loader.load_classes_from_json()
+    return classes.get("Fighter", {})
 
-def get_default_class() -> DnDClass:
-    return CORE_CLASSES["Fighter"]
+def get_class_by_name(name: str) -> Optional[Dict]:
+    loader = DataLoader()
+    classes = loader.load_classes_from_json()
+    return classes.get(name)
 
-def get_class_by_name(name: str) -> Optional[DnDClass]:
-    return CORE_CLASSES.get(name)
-
-def get_all_classes() -> List[DnDClass]:
-    return list(CORE_CLASSES.values())
+def get_all_classes() -> List[Dict]:
+    loader = DataLoader()
+    classes = loader.load_classes_from_json()
+    return list(classes.values())
