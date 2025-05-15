@@ -58,11 +58,7 @@
     "spellcasting": {
       "type": "arcane",
       "ability": "Charisma",
-      "spells_known": "spontaneous",
-      "spells_per_day": {
-        "1": [2, 0],
-        "2": [3, 1]
-      }
+      "spells_known": "spontaneous"
     },
     "features": [
       {"name": "Bardic Music", "level": 1, "description": "Inspire courage, fascinate, and other effects"},
@@ -79,8 +75,7 @@
         "spellcasting": {
           "type": "arcane",
           "ability": "Charisma",
-          "spells_known": "spontaneous",
-          "spells_per_day": {"1": [3, 2], "2": [4, 3]}
+          "spells_known": "spontaneous"
         },
         "features": [
           {"name": "Enhanced Bardic Music", "level": 1, "description": "Advanced musical abilities"}
@@ -96,8 +91,7 @@
         "spellcasting": {
           "type": "arcane",
           "ability": "Charisma",
-          "spells_known": "spontaneous",
-          "spells_per_day": {"1": [3, 1], "2": [4, 2]}
+          "spells_known": "spontaneous"
         },
         "features": [
           {"name": "Masterful Performance", "level": 1, "description": "Enhanced bardic music effects"}
@@ -120,11 +114,7 @@
     "spellcasting": {
       "type": "divine",
       "ability": "Wisdom",
-      "spells_known": "prepared",
-      "spells_per_day": {
-        "1": [3, 1],
-        "2": [4, 2]
-      }
+      "spells_known": "prepared"
     },
     "features": [
       {"name": "Turn Undead", "level": 1, "description": "Channel divine energy to turn undead"},
@@ -141,8 +131,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Radiant Turning", "level": 1, "description": "Enhanced turning against undead"}
@@ -158,8 +147,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Divination Mastery", "level": 1, "description": "Bonus to divination spells"}
@@ -182,11 +170,7 @@
     "spellcasting": {
       "type": "divine",
       "ability": "Wisdom",
-      "spells_known": "prepared",
-      "spells_per_day": {
-        "1": [3, 1],
-        "2": [4, 2]
-      }
+      "spells_known": "prepared"
     },
     "features": [
       {"name": "Animal Companion", "level": 1, "description": "Gain a loyal animal companion"},
@@ -203,8 +187,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Planar Attunement", "level": 1, "description": "Attune to a specific plane"}
@@ -220,8 +203,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Lunar Magic", "level": 1, "description": "Enhanced spells tied to lunar cycles"}
@@ -312,8 +294,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [0, 1], "2": [1, 1]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Sacred Strikes", "level": 1, "description": "Unarmed strikes count as magic"}
@@ -336,11 +317,7 @@
     "spellcasting": {
       "type": "divine",
       "ability": "Wisdom",
-      "spells_known": "prepared",
-      "spells_per_day": {
-        "4": [0, 1],
-        "5": [0, 1]
-      }
+      "spells_known": "prepared"
     },
     "features": [
       {"name": "Smite Evil", "level": 1, "description": "Bonus damage against evil creatures"},
@@ -357,8 +334,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"4": [1, 1], "5": [1, 2]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Chaotic Smite", "level": 1, "description": "Smite chaotic creatures"}
@@ -374,8 +350,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"4": [1, 1], "5": [1, 2]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Shadowbane Smite", "level": 1, "description": "Smite evil outsiders and undead"}
@@ -398,11 +373,7 @@
     "spellcasting": {
       "type": "divine",
       "ability": "Wisdom",
-      "spells_known": "prepared",
-      "spells_per_day": {
-        "4": [0, 1],
-        "5": [0, 1]
-      }
+      "spells_known": "prepared"
     },
     "features": [
       {"name": "Favored Enemy", "level": 1, "description": "Bonus against specific creature types"},
@@ -419,8 +390,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"4": [1, 1], "5": [1, 2]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Favored Enemy (Arcanists)", "level": 1, "description": "Bonus against spellcasters"}
@@ -436,8 +406,7 @@
         "spellcasting": {
           "type": "divine",
           "ability": "Wisdom",
-          "spells_known": "prepared",
-          "spells_per_day": {"4": [1, 1], "5": [1, 2]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Terrain Mastery", "level": 1, "description": "Bonuses in specific terrains"}
@@ -473,8 +442,7 @@
         "spellcasting": {
           "type": "arcane",
           "ability": "Intelligence",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [0, 1], "2": [1, 1]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Death Attack", "level": 1, "description": "Paralyze or kill with sneak attack"}
@@ -509,11 +477,7 @@
     "spellcasting": {
       "type": "arcane",
       "ability": "Charisma",
-      "spells_known": "spontaneous",
-      "spells_per_day": {
-        "1": [5, 3],
-        "2": [6, 4]
-      }
+      "spells_known": "spontaneous"
     },
     "features": [
       {"name": "Familiar", "level": 1, "description": "Gain a magical familiar"}
@@ -529,8 +493,7 @@
         "spellcasting": {
           "type": "arcane",
           "ability": "Charisma",
-          "spells_known": "spontaneous",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "spontaneous"
         },
         "features": [
           {"name": "Martial Proficiency", "level": 1, "description": "Proficiency with martial weapons"}
@@ -546,8 +509,7 @@
         "spellcasting": {
           "type": "arcane",
           "ability": "Charisma",
-          "spells_known": "spontaneous",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "spontaneous"
         },
         "features": [
           {"name": "Draconic Heritage", "level": 1, "description": "Gain draconic abilities"}
@@ -570,11 +532,7 @@
     "spellcasting": {
       "type": "arcane",
       "ability": "Intelligence",
-      "spells_known": "prepared",
-      "spells_per_day": {
-        "1": [3, 1],
-        "2": [4, 2]
-      }
+      "spells_known": "prepared"
     },
     "features": [
       {"name": "Spellbook", "level": 1, "description": "Prepare spells from a spellbook"},
@@ -591,8 +549,7 @@
         "spellcasting": {
           "type": "arcane",
           "ability": "Intelligence",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "Abjuration Focus", "level": 1, "description": "Bonus to abjuration spells"}
@@ -608,8 +565,7 @@
         "spellcasting": {
           "type": "arcane",
           "ability": "Intelligence",
-          "spells_known": "prepared",
-          "spells_per_day": {"1": [4, 2], "2": [5, 3]}
+          "spells_known": "prepared"
         },
         "features": [
           {"name": "High Arcana", "level": 1, "description": "Sacrifice spell slots for powerful abilities"}

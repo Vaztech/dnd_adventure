@@ -2,6 +2,12 @@ import random
 from typing import Dict, List, Tuple, Optional
 from colorama import Fore, Style
 
+class Monster:
+    def __init__(self, name: str, hp: int, attacks: List[Dict]):
+        self.name = name
+        self.hp = hp
+        self.attacks = attacks
+
 class Room:
     def __init__(self, description: str, exits: Dict[str, str], monsters: List['Monster'] = None, items: List[str] = None):
         self.description = description
@@ -73,10 +79,15 @@ class World:
         return None
 
     def _generate_map(self):
-        # Initialize empty map
+        # Initialize empty map with plains tiles
         for x in range(self.map["width"]):
             for y in range(self.map["height"]):
-                self.map["tiles"][(x, y)] = {"type": "plains", "name": f"Plains {x},{y}"}
+                self.map["tiles"][(x, y)] = {
+                    "type": "plains",
+                    "name": f"Plains {x},{y}",
+                    "symbol": ".",
+                    "color": Fore.GREEN
+                }
 
         # Place features
         features = [
@@ -166,7 +177,7 @@ class World:
     def get_location(self, x: int, y: int) -> Dict:
         return self.map["tiles"].get((x, y), {"type": "plains", "name": f"Plains {x},{y}", "symbol": ".", "color": Fore.GREEN})
 
-    def display_map(self, player_pos: Tuple[int, int], radius: int = 5) -> str:
+    def display_map(self, player_pos: Tuple[int, int], radius: int = 7) -> str:
         output = []
         px, py = player_pos
         for y in range(max(0, py - radius), min(self.map["height"], py + radius + 1)):
@@ -195,7 +206,7 @@ class GameWorld:
                 for direction, (dx, dy) in [("north", (0, -1)), ("south", (0, 1)), ("east", (1, 0)), ("west", (-1, 0))]:
                     new_x, new_y = x + dx, y + dy
                     if 0 <= new_x < self.world.map["width"] and 0 <= new_y < self.world.map["height"]:
-                        new_sr = self.world.get_location(new_x, new_y)
+                        new_tile = self.world.get_location(new_x, new_y)
                         if new_tile["type"] in ["dungeon", "castle"]:
                             exits[direction] = f"{new_x},{new_y}"
                 monsters = [Monster(f"Goblin {i+1}", 6, [{"attack_bonus": 3, "damage": "1d4+1"}]) for i in range(random.randint(0, 2))] if tile["type"] == "dungeon" else []

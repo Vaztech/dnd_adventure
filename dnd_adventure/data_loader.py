@@ -1,7 +1,7 @@
 import json
 import logging
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from dnd_adventure.race_models import Race
 from dnd_adventure.spells import Spell
 
@@ -181,8 +181,7 @@ class DataLoader:
                     "spellcasting": {
                         "type": "arcane",
                         "ability": "Charisma",
-                        "spells_known": "spontaneous",
-                        "spells_per_day": {"1": [2, 0], "2": [3, 1]}
+                        "spells_known": "spontaneous"
                     },
                     "features": [
                         {"name": "Bardic Music", "level": 1, "description": "Inspire courage, fascinate, and other effects"},
@@ -200,8 +199,7 @@ class DataLoader:
                     "spellcasting": {
                         "type": "divine",
                         "ability": "Wisdom",
-                        "spells_known": "prepared",
-                        "spells_per_day": {"1": [3, 1], "2": [4, 2]}
+                        "spells_known": "prepared"
                     },
                     "features": [
                         {"name": "Turn Undead", "level": 1, "description": "Channel divine energy to turn undead"},
@@ -219,8 +217,7 @@ class DataLoader:
                     "spellcasting": {
                         "type": "divine",
                         "ability": "Wisdom",
-                        "spells_known": "prepared",
-                        "spells_per_day": {"1": [3, 1], "2": [4, 2]}
+                        "spells_known": "prepared"
                     },
                     "features": [
                         {"name": "Animal Companion", "level": 1, "description": "Gain a loyal animal companion"},
@@ -265,8 +262,7 @@ class DataLoader:
                     "spellcasting": {
                         "type": "divine",
                         "ability": "Wisdom",
-                        "spells_known": "prepared",
-                        "spells_per_day": {"4": [0, 1], "5": [0, 1]}
+                        "spells_known": "prepared"
                     },
                     "features": [
                         {"name": "Smite Evil", "level": 1, "description": "Bonus damage against evil creatures"},
@@ -284,8 +280,7 @@ class DataLoader:
                     "spellcasting": {
                         "type": "divine",
                         "ability": "Wisdom",
-                        "spells_known": "prepared",
-                        "spells_per_day": {"4": [0, 1], "5": [0, 1]}
+                        "spells_known": "prepared"
                     },
                     "features": [
                         {"name": "Favored Enemy", "level": 1, "description": "Bonus against specific creature types"},
@@ -317,8 +312,7 @@ class DataLoader:
                     "spellcasting": {
                         "type": "arcane",
                         "ability": "Charisma",
-                        "spells_known": "spontaneous",
-                        "spells_per_day": {"1": [5, 3], "2": [6, 4]}
+                        "spells_known": "spontaneous"
                     },
                     "features": [
                         {"name": "Familiar", "level": 1, "description": "Gain a magical familiar"}
@@ -335,8 +329,7 @@ class DataLoader:
                     "spellcasting": {
                         "type": "arcane",
                         "ability": "Intelligence",
-                        "spells_known": "prepared",
-                        "spells_per_day": {"1": [3, 1], "2": [4, 2]}
+                        "spells_known": "prepared"
                     },
                     "features": [
                         {"name": "Spellbook", "level": 1, "description": "Prepare spells from a spellbook"},
@@ -369,17 +362,24 @@ class DataLoader:
             return []
 
     def load_classes_from_json(self) -> Dict[str, Any]:
-        self.ensure_data_files_exist()
-        base_dir = Path(__file__).parent
-        classes_path = base_dir / "data" / "classes.json"
-        logger.debug(f"Attempting to load classes from {classes_path}")
-        if not classes_path.exists():
-            logger.error(f"Classes file not found at {classes_path}")
+        try:
+            self.ensure_data_files_exist()
+            base_dir = Path(__file__).parent
+            classes_path = base_dir / "data" / "classes.json"
+            logger.debug(f"Attempting to load classes from {classes_path}")
+            if not classes_path.exists():
+                logger.error(f"Classes file not found at {classes_path}")
+                return {}
+            with open(classes_path) as f:
+                classes_data = json.load(f)
+            logger.debug(f"Loaded {len(classes_data)} classes from JSON")
+            return classes_data
+        except json.JSONDecodeError as e:
+            logger.error(f"Invalid JSON in classes.json: {e}")
             return {}
-        with open(classes_path) as f:
-            classes_data = json.load(f)
-        logger.debug(f"Loaded {len(classes_data)} classes from JSON")
-        return classes_data
+        except Exception as e:
+            logger.error(f"Failed to load classes from JSON: {e}")
+            return {}
 
     def load_spells_from_json(self) -> Dict[str, Dict[int, List[Spell]]]:
         try:
@@ -449,3 +449,12 @@ class DataLoader:
         except Exception as e:
             logger.error(f"Failed to load spells from JSON: {e}")
             return {}
+
+    def get_spell_by_name(self, spell_name: str, class_name: str) -> Optional[Spell]:
+        spells_data = self.load_spells_from_json()
+        class_key = "Sorcerer/Wizard" if class_name in ["Wizard", "Sorcerer"] else class_name
+        for level, spells in spells_data.get(class_key, {}).items():
+            for spell in spells:
+                if spell.name == spell_name:
+                    return spell
+        return None
