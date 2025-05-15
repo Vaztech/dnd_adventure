@@ -1,0 +1,51 @@
+[
+  {
+    "name": [
+      "Dark {type}",
+      "Forgotten {type}",
+      "Ancient {type}"
+    ],
+    "description": "A {adjective} {type} with {feature}.",
+    "types": [
+      "cave",
+      "tunnel",
+      "chamber",
+      "hall"
+    ],
+    "adjectives": [
+      "spooky",
+      "damp",
+      "cold",
+      "eerie"
+    ],
+    "features": [
+      "strange markings on the walls",
+      "a mysterious glow",
+      "an unsettling silence"
+    ]
+  },
+  {
+    "name": [
+      "Ruined {type}",
+      "Abandoned {type}",
+      "Destroyed {type}"
+    ],
+    "description": "The remains of a {adjective} {type} that {feature}.",
+    "types": [
+      "temple",
+      "library",
+      "forge",
+      "barracks"
+    ],
+    "adjectives": [
+      "once-magnificent",
+      "ancient",
+      "crumbling"
+    ],
+    "features": [
+      "has seen better days",
+      "hints at past grandeur",
+      "still holds secrets"
+    ]
+  }
+]

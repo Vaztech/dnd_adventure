@@ -1,0 +1,86 @@
+
+## 🛠️ Setting Up the D\&D Adventure Game on a New Device
+
+### 1. **Install Python**
+
+Ensure Python 3.8 or higher is installed on your system.
+
+* **Windows**: Download from the [official Python website](https://www.python.org/downloads/). During installation, check the box to "Add Python to PATH."
+
+* **macOS/Linux**: Python is typically pre-installed. To verify, run:
+
+  ```bash
+  python3 --version
+  ```
+
+  If not installed, use:
+
+  * **macOS**: `brew install python`
+  * **Linux**: `sudo apt install python3`
+
+### 2. **Clone the Repository**
+
+Open your terminal or command prompt and execute:
+
+```bash
+git clone https://github.com/Vaztech/dnd_adventure.git
+cd dnd_adventure
+```
+
+### 3. **Set Up a Virtual Environment**
+
+Create and activate a virtual environment to manage dependencies:
+
+* **Windows**:
+
+  ```bash
+  python -m venv .venv
+  .\.venv\Scripts\activate
+  ```
+
+* **macOS/Linux**:
+
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  ```
+
+### 4. **Install Dependencies**
+
+With the virtual environment activated, install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+If `requirements.txt` is missing, manually install necessary packages, such as:
+
+```bash
+pip install requests
+```
+
+### 5. **Run the Game**
+
+Start the game by executing:
+
+```bash
+python -m dnd_adventure.game
+```
+
+Follow the on-screen prompts to create your character, select a race, and choose a class.
+
+---
+
+## ⚙️ Optional: IDE Setup
+
+For an enhanced development experience, consider setting up an Integrated Development Environment (IDE):
+
+* **Visual Studio Code**: Lightweight and extensible. Install from [here](https://code.visualstudio.com/).
+
+* **PyCharm**: Feature-rich IDE tailored for Python. Download from [here](https://www.jetbrains.com/pycharm/).
+
+After installation, open your project folder in the IDE to begin development.
+
+---
+
+If you encounter any issues or need further assistance, feel free to ask!

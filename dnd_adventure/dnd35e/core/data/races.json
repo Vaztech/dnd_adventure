@@ -1,0 +1,264 @@
+[
+    {
+        "name": "Human",
+        "description": "Versatile and adaptable, humans excel in any profession.",
+        "ability_modifiers": {},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Bonus Feat", "description": "Gain one extra feat at 1st level"},
+            {"name": "Extra Skills", "description": "+4 skill points at 1st level, +1 each additional level"}
+        ],
+        "favored_class": "Any",
+        "languages": ["Common"],
+        "subraces": {}
+    },
+    {
+        "name": "Elf",
+        "description": "Graceful and magical, attuned to nature and arcane arts.",
+        "ability_modifiers": {"Dexterity": 2, "Constitution": -2},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Low-Light Vision", "description": "See twice as far as humans in dim light"},
+            {"name": "Keen Senses", "description": "+2 Listen, Search, Spot"},
+            {"name": "Immunity to Sleep", "description": "Immune to magical sleep"},
+            {"name": "Elven Weapon Proficiency", "description": "Longsword, rapier, longbow, shortbow"}
+        ],
+        "favored_class": "Wizard",
+        "languages": ["Common", "Elven"],
+        "subraces": {
+            "High Elf": {
+                "description": "Arcane scholars with keen intellect.",
+                "ability_modifiers": {"Intelligence": 1},
+                "racial_traits": [
+                    {"name": "Arcane Affinity", "description": "+2 Spellcraft checks"}
+                ]
+            },
+            "Wood Elf": {
+                "description": "Forest dwellers with unmatched agility.",
+                "ability_modifiers": {"Wisdom": 1},
+                "racial_traits": [
+                    {"name": "Camouflage", "description": "+4 Hide in natural terrain"}
+                ]
+            }
+        }
+    },
+    {
+        "name": "Dwarf",
+        "description": "Sturdy masters of stone and metal.",
+        "ability_modifiers": {"Constitution": 2, "Charisma": -2},
+        "size": "Medium",
+        "speed": 20,
+        "racial_traits": [
+            {"name": "Darkvision", "description": "See 60 ft in darkness"},
+            {"name": "Stability", "description": "+4 vs bull rush/trip"},
+            {"name": "Stonecunning", "description": "+2 Search stonework"},
+            {"name": "Poison Resistance", "description": "+2 saves vs poison"}
+        ],
+        "favored_class": "Fighter",
+        "languages": ["Common", "Dwarven"],
+        "subraces": {
+            "Hill Dwarf": {
+                "description": "Wise and resilient.",
+                "ability_modifiers": {"Wisdom": 1},
+                "racial_traits": [
+                    {"name": "Magic Resistance", "description": "+2 vs spells"}
+                ]
+            },
+            "Mountain Dwarf": {
+                "description": "Strong and armored.",
+                "ability_modifiers": {"Strength": 1},
+                "racial_traits": [
+                    {"name": "Armor Proficiency", "description": "Light/medium armor"}
+                ]
+            }
+        }
+    },
+    {
+        "name": "Gnome",
+        "description": "Small illusionists and tinkerers.",
+        "ability_modifiers": {"Constitution": 2, "Strength": -2},
+        "size": "Small",
+        "speed": 20,
+        "racial_traits": [
+            {"name": "Low-Light Vision", "description": "See twice as far in dim light"},
+            {"name": "Gnome Magic", "description": "Dancing lights, ghost sound 1/day"},
+            {"name": "Illusion Resistance", "description": "+2 vs illusions"}
+        ],
+        "favored_class": "Bard",
+        "languages": ["Common", "Gnome"],
+        "subraces": {
+            "Forest Gnome": {
+                "description": "Nature-connected tricksters.",
+                "ability_modifiers": {"Dexterity": 1},
+                "racial_traits": [
+                    {"name": "Speak with Animals", "description": "1/day with burrowing mammals"}
+                ]
+            }
+        }
+    },
+    {
+        "name": "Half-Elf",
+        "description": "Diplomatic bridge between worlds.",
+        "ability_modifiers": {},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Low-Light Vision", "description": "See twice as far in dim light"},
+            {"name": "Adaptability", "description": "+1 skill point per level"}
+        ],
+        "favored_class": "Any",
+        "languages": ["Common", "Elven"],
+        "subraces": {}
+    },
+    {
+        "name": "Half-Orc",
+        "description": "Powerful survivors with orcish blood.",
+        "ability_modifiers": {"Strength": 2, "Intelligence": -2, "Charisma": -2},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Darkvision", "description": "See 60 ft in darkness"},
+            {"name": "Orc Blood", "description": "Count as both orc and human"}
+        ],
+        "favored_class": "Barbarian",
+        "languages": ["Common", "Orc"],
+        "subraces": {}
+    },
+    {
+        "name": "Halfling",
+        "description": "Nimble and lucky smallfolk.",
+        "ability_modifiers": {"Dexterity": 2, "Strength": -2},
+        "size": "Small",
+        "speed": 20,
+        "racial_traits": [
+            {"name": "Lucky", "description": "+1 all saving throws"},
+            {"name": "Fearless", "description": "+2 vs fear effects"}
+        ],
+        "favored_class": "Rogue",
+        "languages": ["Common", "Halfling"],
+        "subraces": {
+            "Tallfellow": {
+                "description": "More attuned to nature.",
+                "ability_modifiers": {"Wisdom": 1},
+                "racial_traits": [
+                    {"name": "Tree Climber", "description": "+4 Climb in forests"}
+                ]
+            }
+        }
+    },
+    {
+        "name": "Goblin",
+        "description": "Cunning and vicious small humanoids.",
+        "ability_modifiers": {"Dexterity": 2, "Charisma": -2},
+        "size": "Small",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Darkvision", "description": "See 60 ft in darkness"},
+            {"name": "Sneaky", "description": "+4 Move Silently"}
+        ],
+        "favored_class": "Rogue",
+        "languages": ["Common", "Goblin"],
+        "subraces": {}
+    },
+    {
+        "name": "Kobold",
+        "description": "Small reptilian trap-makers.",
+        "ability_modifiers": {"Dexterity": 2, "Strength": -2},
+        "size": "Small",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Darkvision", "description": "See 60 ft in darkness"},
+            {"name": "Light Sensitivity", "description": "-1 attack in bright light"}
+        ],
+        "favored_class": "Sorcerer",
+        "languages": ["Common", "Draconic"],
+        "subraces": {}
+    },
+    {
+        "name": "Orc",
+        "description": "Brutish warriors with poor temperaments.",
+        "ability_modifiers": {"Strength": 4, "Intelligence": -2, "Charisma": -2},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Darkvision", "description": "See 60 ft in darkness"},
+            {"name": "Light Sensitivity", "description": "-1 attack in bright light"}
+        ],
+        "favored_class": "Barbarian",
+        "languages": ["Common", "Orc"],
+        "subraces": {}
+    },
+    {
+        "name": "Shifter",
+        "description": "Humanoids with lycanthropic heritage.",
+        "ability_modifiers": {},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Low-Light Vision", "description": "See twice as far in dim light"},
+            {"name": "Shifting", "description": "Enter bestial state 1/day"}
+        ],
+        "favored_class": "Ranger",
+        "languages": ["Common"],
+        "subraces": {
+            "Beasthide": {
+                "description": "Tough and resilient.",
+                "ability_modifiers": {"Constitution": 1},
+                "racial_traits": [
+                    {"name": "Thick Hide", "description": "+2 natural armor when shifting"}
+                ]
+            },
+            "Longtooth": {
+                "description": "Feral bite attackers.",
+                "ability_modifiers": {"Strength": 1},
+                "racial_traits": [
+                    {"name": "Bite Attack", "description": "1d6 damage when shifting"}
+                ]
+            }
+        }
+    },
+    {
+        "name": "Warforged",
+        "description": "Living constructs built for war.",
+        "ability_modifiers": {"Constitution": 2, "Wisdom": -2},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Living Construct", "description": "Immune to poison, disease, fatigue"},
+            {"name": "Composite Plating", "description": "+2 natural armor"}
+        ],
+        "favored_class": "Fighter",
+        "languages": ["Common"],
+        "subraces": {}
+    },
+    {
+        "name": "Aasimar",
+        "description": "Celestial-blooded beings of virtue.",
+        "ability_modifiers": {"Wisdom": 2, "Charisma": 2},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Darkvision", "description": "See 60 ft in darkness"},
+            {"name": "Celestial Resistance", "description": "+2 vs acid/cold/electricity"}
+        ],
+        "favored_class": "Paladin",
+        "languages": ["Common", "Celestial"],
+        "subraces": {}
+    },
+    {
+        "name": "Tiefling",
+        "description": "Fiendish-blooded beings of darkness.",
+        "ability_modifiers": {"Intelligence": 2, "Charisma": -2},
+        "size": "Medium",
+        "speed": 30,
+        "racial_traits": [
+            {"name": "Darkvision", "description": "See 60 ft in darkness"},
+            {"name": "Fiendish Resistance", "description": "+2 vs fire/cold/electricity"}
+        ],
+        "favored_class": "Rogue",
+        "languages": ["Common", "Infernal"],
+        "subraces": {}
+    }
+]
