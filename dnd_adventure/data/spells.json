@@ -1,0 +1,249 @@
+{
+  "Sorcerer/Wizard": {
+    "level_0": [
+      {
+        "name": "Acid Splash",
+        "school": "Conjuration (Creation) [Acid]",
+        "casting_time": "1 standard action",
+        "range": "Close (25 ft. + 5 ft./2 levels)",
+        "effect": "One missile of acid",
+        "duration": "Instantaneous",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "You fire a small orb of acid that deals 1d3 acid damage.",
+        "damage": "1d3 acid"
+      },
+      {
+        "name": "Dancing Lights",
+        "school": "Evocation [Light]",
+        "casting_time": "1 standard action",
+        "range": "Medium (100 ft. + 10 ft./level)",
+        "effect": "Up to four lights",
+        "duration": "1 minute (D)",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Creates torches or other lights that you can move."
+      }
+    ],
+    "level_1": [
+      {
+        "name": "Magic Missile",
+        "school": "Evocation [Force]",
+        "casting_time": "1 standard action",
+        "range": "Medium (100 ft. + 10 ft./level)",
+        "target": "Up to five creatures, no two of which can be more than 15 ft. apart",
+        "duration": "Instantaneous",
+        "saving_throw": "None",
+        "spell_resistance": "Yes",
+        "description": "A missile of magical energy darts forth and strikes its target, dealing 1d4+1 force damage.",
+        "damage": "1d4+1 per missile (force)",
+        "notes": "Cannot target objects."
+      },
+      {
+        "name": "Shield",
+        "school": "Abjuration [Force]",
+        "casting_time": "1 standard action",
+        "range": "Personal",
+        "target": "You",
+        "duration": "1 min./level (D)",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Invisible disc provides +4 shield bonus to AC and blocks magic missiles.",
+        "bonus": "+4 shield AC"
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Melf's Acid Arrow",
+        "school": "Conjuration (Creation) [Acid]",
+        "casting_time": "1 standard action",
+        "range": "Long (400 ft. + 40 ft./level)",
+        "effect": "One arrow of acid",
+        "duration": "1 round + 1 round per three levels",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Fires an arrow that deals 2d4 initial damage and 2d4 next round.",
+        "damage": "2d4 initial + 2d4 next round (acid)"
+      }
+    ],
+    "level_3": [
+      {
+        "name": "Fireball",
+        "school": "Evocation [Fire]",
+        "casting_time": "1 standard action",
+        "range": "Long (400 ft. + 40 ft./level)",
+        "area": "20-ft.-radius spread",
+        "duration": "Instantaneous",
+        "saving_throw": "Reflex half",
+        "spell_resistance": "Yes",
+        "description": "Explosion deals 1d6 fire damage per caster level.",
+        "damage": "1d6/level (max 10d6, fire)",
+        "notes": "Sets flammable objects alight."
+      }
+    ],
+    "level_4": [
+      {
+        "name": "Polymorph",
+        "school": "Transmutation",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Willing creature touched",
+        "duration": "1 min./level (D)",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Transforms subject into another creature, gaining its physical form and abilities.",
+        "notes": "Doesn't grant supernatural or spell-like abilities."
+      }
+    ],
+    "level_5": [
+      {
+        "name": "Teleport",
+        "school": "Conjuration (Teleportation)",
+        "casting_time": "1 standard action",
+        "range": "Personal and touch",
+        "target": "You and touched objects or other touched willing creatures",
+        "duration": "Instantaneous",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Instantly transports you to a designated destination.",
+        "notes": "5% chance of mishap per 500 miles traveled."
+      }
+    ]
+  },
+  "Cleric": {
+    "level_0": [
+      {
+        "name": "Cure Minor Wounds",
+        "school": "Conjuration (Healing)",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "Instantaneous",
+        "saving_throw": "Will half (harmless)",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Cures 1 point of damage.",
+        "healing": "1 point"
+      }
+    ],
+    "level_1": [
+      {
+        "name": "Cure Light Wounds",
+        "school": "Conjuration (Healing)",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "Instantaneous",
+        "saving_throw": "Will half (harmless)",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Cures 1d8 damage +1/level (max +5).",
+        "healing": "1d8 +1/level (max +5)"
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Hold Person",
+        "school": "Enchantment (Compulsion) [Mind-Affecting]",
+        "casting_time": "1 standard action",
+        "range": "Medium (100 ft. + 10 ft./level)",
+        "target": "One humanoid creature",
+        "duration": "1 round/level (D)",
+        "saving_throw": "Will negates",
+        "spell_resistance": "Yes",
+        "description": "Target becomes paralyzed. New save each round.",
+        "notes": "Only affects humanoids."
+      }
+    ]
+  },
+  "Druid": {
+    "level_1": [
+      {
+        "name": "Entangle",
+        "school": "Transmutation",
+        "casting_time": "1 standard action",
+        "range": "Long (400 ft. + 40 ft./level)",
+        "area": "Plants in 40-ft. radius",
+        "duration": "1 min./level (D)",
+        "saving_throw": "Reflex partial",
+        "spell_resistance": "No",
+        "description": "Plants entangle all in area.",
+        "notes": "Requires plants present."
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Barkskin",
+        "school": "Transmutation",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Living creature touched",
+        "duration": "10 min./level",
+        "saving_throw": "None",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Grants +2 (or higher) enhancement to natural armor.",
+        "bonus": "+2 to +5 natural armor (scales with level)"
+      }
+    ]
+  },
+  "Bard": {
+    "level_1": [
+      {
+        "name": "Cure Light Wounds",
+        "school": "Conjuration (Healing)",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "Instantaneous",
+        "saving_throw": "Will half (harmless)",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Cures 1d8 damage +1/level (max +5).",
+        "healing": "1d8 +1/level (max +5)"
+      }
+    ],
+    "level_2": [
+      {
+        "name": "Invisibility",
+        "school": "Illusion (Glamer)",
+        "casting_time": "1 standard action",
+        "range": "Personal or touch",
+        "target": "You or a creature",
+        "duration": "1 min./level (D)",
+        "saving_throw": "Will negates (harmless, object)",
+        "spell_resistance": "Yes (harmless, object)",
+        "description": "The subject becomes invisible.",
+        "notes": "Breaks on attack or aggressive action."
+      }
+    ]
+  },
+  "Paladin": {
+    "level_1": [
+      {
+        "name": "Cure Light Wounds",
+        "school": "Conjuration (Healing)",
+        "casting_time": "1 standard action",
+        "range": "Touch",
+        "target": "Creature touched",
+        "duration": "Instantaneous",
+        "saving_throw": "Will half (harmless)",
+        "spell_resistance": "Yes (harmless)",
+        "description": "Cures 1d8 damage +1/level (max +5).",
+        "healing": "1d8 +1/level (max +5)"
+      }
+    ]
+  },
+  "Ranger": {
+    "level_1": [
+      {
+        "name": "Longstrider",
+        "school": "Transmutation",
+        "casting_time": "1 standard action",
+        "range": "Personal",
+        "target": "You",
+        "duration": "1 hour/level",
+        "saving_throw": "None",
+        "spell_resistance": "No",
+        "description": "Increases your base speed by 10 ft.",
+        "bonus": "+10 ft. movement speed"
+      }
+    ]
+  }
+}
