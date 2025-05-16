@@ -1,0 +1,68 @@
+import os
+import logging
+from typing import List
+from colorama import Fore, Style
+
+logger = logging.getLogger(__name__)
+
+def select_race(races: List) -> str:
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"{Fore.CYAN}=== Select Your Race ==={Style.RESET_ALL}")
+        print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
+        for i, race in enumerate(races, 1):
+            desc = race.description[:100] + "..." if len(race.description) > 100 else race.description
+            print(f"{Fore.YELLOW}{i}. {race.name}{Style.RESET_ALL}")
+            print(f"     {Fore.LIGHTYELLOW_EX}{desc}{Style.RESET_ALL}")
+            print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
+        print(f"\n{Fore.CYAN}Enter the number of your chosen race (or 'q' to quit):{Style.RESET_ALL}")
+        choice = input().strip().lower()
+        if choice == 'q':
+            logger.info("Game exited during race selection")
+            exit()
+        try:
+            choice_index = int(choice) - 1
+            if 0 <= choice_index < len(races):
+                logger.debug(f"Selected race: {races[choice_index].name}")
+                return races[choice_index].name
+            else:
+                print(f"{Fore.RED}Invalid choice! Please select a number between 1 and {len(races)}.{Style.RESET_ALL}")
+                logger.warning(f"Invalid race choice: {choice}")
+                input(f"{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")
+        except ValueError:
+            print(f"{Fore.RED}Invalid input! Please enter a number or 'q' to quit.{Style.RESET_ALL}")
+            logger.warning(f"Invalid race input: {choice}")
+            input(f"{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")
+
+def select_subrace(subrace_names: List[str], race) -> str:
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"{Fore.CYAN}=== Select Subrace for {race.name} ==={Style.RESET_ALL}")
+        print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
+        for i, subrace in enumerate(subrace_names, 1):
+            if subrace.startswith("Base "):
+                desc = race.description
+            else:
+                desc = race.subraces[subrace]["description"]
+            desc = desc[:100] + "..." if len(desc) > 100 else desc
+            print(f"{Fore.YELLOW}{i}. {subrace}{Style.RESET_ALL}")
+            print(f"     {Fore.LIGHTYELLOW_EX}{desc}{Style.RESET_ALL}")
+            print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
+        print(f"\n{Fore.CYAN}Enter the number of your chosen subrace (or 'q' to quit):{Style.RESET_ALL}")
+        choice = input().strip().lower()
+        if choice == 'q':
+            logger.info("Game exited during subrace selection")
+            exit()
+        try:
+            choice_index = int(choice) - 1
+            if 0 <= choice_index < len(subrace_names):
+                logger.debug(f"Selected subrace: {subrace_names[choice_index]}")
+                return subrace_names[choice_index]
+            else:
+                print(f"{Fore.RED}Invalid choice! Please select a number between 1 and {len(subrace_names)}.{Style.RESET_ALL}")
+                logger.warning(f"Invalid subrace choice: {choice}")
+                input(f"{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")
+        except ValueError:
+            print(f"{Fore.RED}Invalid input! Please enter a number or 'q' to quit.{Style.RESET_ALL}")
+            logger.warning(f"Invalid subrace input: {choice}")
+            input(f"{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")

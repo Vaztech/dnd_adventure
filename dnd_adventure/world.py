@@ -1,215 +1,241 @@
 import random
+import json
+import os
 from typing import Dict, List, Tuple, Optional
 from colorama import Fore, Style
+import logging
+import pickle
+from dnd_adventure.paths import get_resource_path
 
-class Monster:
-    def __init__(self, name: str, hp: int, attacks: List[Dict]):
-        self.name = name
-        self.hp = hp
-        self.attacks = attacks
+logger = logging.getLogger(__name__)
 
 class Room:
-    def __init__(self, description: str, exits: Dict[str, str], monsters: List['Monster'] = None, items: List[str] = None):
+    def __init__(self, description: str, exits: Dict[str, str], monsters: List = None, items: List = None, visited: bool = False):
         self.description = description
         self.exits = exits
-        self.monsters = monsters or []
-        self.items = items or []
-        self.visited = False
-
-class World:
-    def __init__(self, seed: Optional[int] = None):
-        if seed is not None:
-            random.seed(seed)
-        self.name = self._generate_name()
-        self.map = {"width": 20, "height": 20, "tiles": {}}
-        self.history = self._generate_history()
-        self._generate_map()
-
-    def _generate_name(self) -> str:
-        prefixes = ["Eryn", "Thal", "Vor", "Syl", "Kor"]
-        suffixes = ["dia", "vania", "thar", "mor", "land"]
-        return f"{random.choice(prefixes)}{random.choice(suffixes)}"
-
-    def _generate_history(self) -> List[Dict]:
-        eras = [
-            {"name": "Age of Creation", "start_year": -1500, "events": []},
-            {"name": "Age of Empires", "start_year": -500, "events": []},
-            {"name": "Age of Heroes", "start_year": 0, "events": []}
-        ]
-        countries = ["Stormhold", "Silverlake", "Ironwood", "Duskmoor"]
-        for era in eras:
-            num_events = random.randint(3, 5)
-            for _ in range(num_events):
-                year = era["start_year"] + random.randint(0, 1000)
-                country = random.choice(countries)
-                events = [
-                    f"{country} is founded by {self._generate_hero()}",
-                    f"{country} defeats {random.choice(countries)} in the {self._generate_war()}",
-                    f"A {random.choice(['dragon', 'demon', 'lich'])} threatens {country}",
-                    f"{country} discovers the {self._generate_artifact()}"
-                ]
-                era["events"].append({"year": year, "desc": random.choice(events)})
-            era["events"].sort(key=lambda x: x["year"])
-        return eras
-
-    def _generate_hero(self) -> str:
-        names = ["Aric", "Elara", "Thane", "Liora", "Kael"]
-        titles = ["Ironfoot", "Starblade", "Duskborn", "Lightbringer"]
-        return f"{random.choice(names)} {random.choice(titles)}"
-
-    def _generate_war(self) -> str:
-        return f"{random.choice(['Battle', 'War', 'Siege'])} of {random.choice(['Dawn', 'Dusk', 'Iron', 'Shadow'])}"
-
-    def _generate_artifact(self) -> str:
-        return f"{random.choice(['Sword', 'Crown', 'Orb', 'Tome'])} of {random.choice(['Eternity', 'Flame', 'Void'])}"
-
-    def _find_empty_spot(self, max_attempts: int = 100) -> Optional[Tuple[int, int]]:
-        attempts = 0
-        while attempts < max_attempts:
-            x = random.randint(0, self.map["width"] - 1)
-            y = random.randint(0, self.map["height"] - 1)
-            if (x, y) not in self.map["tiles"]:
-                return x, y
-            attempts += 1
-        # Fallback: Find any empty spot
-        for x in range(self.map["width"]):
-            for y in range(self.map["height"]):
-                if (x, y) not in self.map["tiles"]:
-                    return x, y
-        return None
-
-    def _generate_map(self):
-        # Initialize empty map with plains tiles
-        for x in range(self.map["width"]):
-            for y in range(self.map["height"]):
-                self.map["tiles"][(x, y)] = {
-                    "type": "plains",
-                    "name": f"Plains {x},{y}",
-                    "symbol": ".",
-                    "color": Fore.GREEN
-                }
-
-        # Place features
-        features = [
-            ("city", 2, "C", Fore.YELLOW),
-            ("town", 3, "T", Fore.YELLOW),
-            ("dungeon", 2, "D", Fore.MAGENTA),
-            ("castle", 1, "K", Fore.MAGENTA),
-            ("mountain", 10, "^", Fore.WHITE),
-            ("river", 8, "~", Fore.BLUE),
-            ("lake", 5, "L", Fore.CYAN),
-            ("forest", 15, "F", Fore.GREEN)
-        ]
-        for feature, count, symbol, color in features:
-            for _ in range(count):
-                pos = self._find_empty_spot()
-                if pos:
-                    x, y = pos
-                    self.map["tiles"][(x, y)] = {
-                        "type": feature,
-                        "name": f"{feature.capitalize()} {x},{y}",
-                        "symbol": symbol,
-                        "color": color
-                    }
-                if feature == "river":
-                    # Extend river
-                    for i in range(1, 3):
-                        if pos and random.random() < 0.8:
-                            new_x = x + random.choice([-1, 0, 1])
-                            new_y = y + i
-                            if 0 <= new_x < self.map["width"] and 0 <= new_y < self.map["height"] and (new_x, new_y) not in self.map["tiles"]:
-                                self.map["tiles"][(new_x, new_y)] = {
-                                    "type": "river",
-                                    "name": f"River {new_x},{new_y}",
-                                    "symbol": "~",
-                                    "color": Fore.BLUE
-                                }
-                elif feature == "lake":
-                    # Expand lake
-                    for dx in [-1, 0, 1]:
-                        for dy in [-1, 0, 1]:
-                            if pos and random.random() < 0.3:
-                                new_x, new_y = x + dx, y + dy
-                                if 0 <= new_x < self.map["width"] and 0 <= new_y < self.map["height"] and (new_x, new_y) not in self.map["tiles"]:
-                                    self.map["tiles"][(new_x, new_y)] = {
-                                        "type": "lake",
-                                        "name": f"Lake {new_x},{new_y}",
-                                        "symbol": "L",
-                                        "color": Fore.CYAN
-                                    }
-                elif feature == "forest":
-                    # Expand forest
-                    for dx in [-1, 0, 1]:
-                        for dy in [-1, 0, 1]:
-                            if pos and random.random() < 0.4:
-                                new_x, new_y = x + dx, y + dy
-                                if 0 <= new_x < self.map["width"] and 0 <= new_y < self.map["height"] and (new_x, new_y) not in self.map["tiles"]:
-                                    self.map["tiles"][(new_x, new_y)] = {
-                                        "type": "forest",
-                                        "name": f"Forest {new_x},{new_y}",
-                                        "symbol": "F",
-                                        "color": Fore.GREEN
-                                    }
-
-        # Add roads
-        cities_towns = [(x, y) for (x, y), tile in self.map["tiles"].items() if tile["type"] in ["city", "town"]]
-        for i, (x1, y1) in enumerate(cities_towns):
-            for x2, y2 in cities_towns[i+1:]:
-                if random.random() < 0.7:
-                    # Simple road path (horizontal then vertical)
-                    for x in range(min(x1, x2), max(x1, x2) + 1):
-                        if (x, y1) not in self.map["tiles"] or self.map["tiles"][(x, y1)]["type"] == "plains":
-                            self.map["tiles"][(x, y1)] = {
-                                "type": "road",
-                                "name": f"Road {x},{y1}",
-                                "symbol": "-",
-                                "color": Fore.BLACK
-                            }
-                    for y in range(min(y1, y2), max(y1, y2) + 1):
-                        if (x2, y) not in self.map["tiles"] or self.map["tiles"][(x2, y)]["type"] == "plains":
-                            self.map["tiles"][(x2, y)] = {
-                                "type": "road",
-                                "name": f"Road {x2},{y}",
-                                "symbol": "|",
-                                "color": Fore.BLACK
-                            }
-
-    def get_location(self, x: int, y: int) -> Dict:
-        return self.map["tiles"].get((x, y), {"type": "plains", "name": f"Plains {x},{y}", "symbol": ".", "color": Fore.GREEN})
-
-    def display_map(self, player_pos: Tuple[int, int], radius: int = 7) -> str:
-        output = []
-        px, py = player_pos
-        for y in range(max(0, py - radius), min(self.map["height"], py + radius + 1)):
-            row = []
-            for x in range(max(0, px - radius), min(self.map["width"], px + radius + 1)):
-                if (x, y) == player_pos:
-                    row.append(f"{Fore.RED}P{Style.RESET_ALL}")
-                else:
-                    tile = self.get_location(x, y)
-                    row.append(f"{tile['color']}{tile['symbol']}{Style.RESET_ALL}")
-            output.append(" ".join(row))
-        return "\n".join(output)
+        self.monsters = monsters if monsters is not None else []
+        self.items = items if items is not None else []
+        self.visited = visited
 
 class GameWorld:
-    def __init__(self, world: World):
+    def __init__(self, world: 'World'):
         self.world = world
-        self.rooms = self._generate_rooms()
+        self.rooms: Dict[str, Room] = {}
+        self.generate_dungeons_and_castles()
 
-    def _generate_rooms(self) -> Dict[str, Room]:
-        rooms = {}
-        for (x, y), tile in self.world.map["tiles"].items():
-            if tile["type"] in ["dungeon", "castle"]:
-                room_id = f"{x},{y}"
-                description = f"A {tile['type']} room with {random.choice(['stone walls', 'ancient runes', 'flickering torches'])}."
-                exits = {}
-                for direction, (dx, dy) in [("north", (0, -1)), ("south", (0, 1)), ("east", (1, 0)), ("west", (-1, 0))]:
-                    new_x, new_y = x + dx, y + dy
-                    if 0 <= new_x < self.world.map["width"] and 0 <= new_y < self.world.map["height"]:
-                        new_tile = self.world.get_location(new_x, new_y)
-                        if new_tile["type"] in ["dungeon", "castle"]:
-                            exits[direction] = f"{new_x},{new_y}"
-                monsters = [Monster(f"Goblin {i+1}", 6, [{"attack_bonus": 3, "damage": "1d4+1"}]) for i in range(random.randint(0, 2))] if tile["type"] == "dungeon" else []
-                items = [random.choice(["Potion", "Scroll", "Gem"])] if random.random() < 0.3 else []
-                rooms[room_id] = Room(description, exits, monsters, items)
-        return rooms
+    def generate_dungeons_and_castles(self):
+        map_data = self.world.map
+        width, height = map_data["width"], map_data["height"]
+        for y in range(height):
+            for x in range(width):
+                tile = self.world.get_location(x, y)
+                if tile["type"] in ["dungeon", "castle"]:
+                    room_id = f"{x},{y}"
+                    description = f"A dark {tile['type']} room at ({x},{y}) in {tile['name']}"
+                    exits = {}
+                    for direction, (dx, dy) in [("north", (0, 1)), ("south", (0, -1)), ("east", (1, 0)), ("west", (-1, 0))]:
+                        new_x, new_y = x + dx, y + dy
+                        if 0 <= new_x < width and 0 <= new_y < height:
+                            new_tile = self.world.get_location(new_x, new_y)
+                            if new_tile["type"] == tile["type"]:
+                                exits[direction] = f"{new_x},{new_y}"
+                    self.rooms[room_id] = Room(description=description, exits=exits)
+
+class Monster:
+    def __init__(self, name: str, hp: int, attacks: List[Dict], armor_class: int = 10):
+        self.name = name
+        self.hp = hp
+        self.attacks = attacks  # List of dicts with "attack_bonus" and "damage"
+        self.armor_class = armor_class
+
+class World:
+    def __init__(self, seed: Optional[int] = None, graphics: Dict = None):
+        self.seed = seed if seed is not None else random.randint(0, 1000000)
+        random.seed(self.seed)
+        self.name = self.generate_name()
+        self.graphics = graphics if graphics else {}
+        self.map = self.load_or_generate_map()
+        self.history = self.generate_history()
+
+    def generate_name(self) -> str:
+        prefixes = ["Eldr", "Thal", "Vyr", "Kael", "Drak", "Fyr"]
+        suffixes = ["ion", "stead", "moor", "wyn", "gard", "thyr"]
+        return random.choice(prefixes) + random.choice(suffixes)
+
+    def load_or_generate_map(self) -> Dict:
+        cache_path = os.path.join("dnd_adventure", "map_cache.pkl")
+        try:
+            with open(cache_path, "rb") as f:
+                cached_map = pickle.load(f)
+            logger.info("Loaded map from cache.")
+            return cached_map
+        except Exception as e:
+            logger.error(f"Failed to load map cache from {cache_path}: {e}. Regenerating map.")
+            new_map = self.generate_map()
+            try:
+                os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+                with open(cache_path, "wb") as f:
+                    pickle.dump(new_map, f)
+                logger.info(f"Saved generated map to cache at {cache_path}.")
+            except Exception as e:
+                logger.error(f"Failed to save map cache to {cache_path}: {e}")
+            return new_map
+
+    def generate_map(self) -> Dict:
+        width, height = 192, 192  # Adjusted for Dwarf Fortress scale
+        map_data = {
+            "width": width,
+            "height": height,
+            "locations": [],
+            "countries": []
+        }
+
+        for y in range(height):
+            row = []
+            for x in range(width):
+                terrain = self.generate_terrain(x, y, width, height)
+                row.append({
+                    "x": x,
+                    "y": y,
+                    "type": terrain,
+                    "name": f"{terrain.capitalize()} at ({x},{y})",
+                    "country": None
+                })
+            map_data["locations"].append(row)
+
+        self.assign_countries(map_data)
+        return map_data
+
+    def generate_terrain(self, x: int, y: int, width: int, height: int) -> str:
+        perlin = self.perlin_noise(x / 20.0, y / 20.0, self.seed)
+        elevation = self.perlin_noise(x / 50.0, y / 50.0, self.seed + 1)
+        if elevation > 0.7:
+            return "mountain"
+        elif perlin < 0.2:
+            return random.choice(["river", "lake", "ocean"])
+        elif perlin < 0.4:
+            return "plains"
+        elif perlin < 0.6:
+            return "forest"
+        elif perlin < 0.7:
+            return "dungeon"
+        else:
+            return "castle"
+
+    def perlin_noise(self, x: float, y: float, seed: int) -> float:
+        random.seed(seed + int(x * 1000 + y))
+        return random.random()
+
+    def assign_countries(self, map_data: Dict):
+        width, height = map_data["width"], map_data["height"]
+        num_countries = random.randint(3, 6)
+        countries = []
+        for i in range(num_countries):
+            capital_x, capital_y = random.randint(0, width - 1), random.randint(0, height - 1)
+            countries.append({
+                "id": i,
+                "name": self.generate_name(),
+                "capital": (capital_x, capital_y)
+            })
+
+        for y in range(height):
+            for x in range(width):
+                closest_country = min(countries, key=lambda c: (c["capital"][0] - x) ** 2 + (c["capital"][1] - y) ** 2)
+                map_data["locations"][y][x]["country"] = closest_country["id"]
+
+        map_data["countries"] = countries
+
+    def generate_history(self) -> List[Dict]:
+        history = []
+        num_eras = random.randint(3, 5)
+        current_year = 0
+        for i in range(num_eras):
+            era_length = random.randint(100, 500)
+            era = {
+                "name": f"Era {i + 1}",
+                "start_year": current_year,
+                "events": []
+            }
+            num_events = random.randint(2, 5)
+            for j in range(num_events):
+                event_year = current_year + random.randint(0, era_length)
+                event_desc = random.choice([
+                    f"The kingdom of {self.generate_name()} is founded by a legendary hero.",
+                    f"A great war breaks out between {self.generate_name()} and {self.generate_name()}.",
+                    f"An ancient artifact, the {self.generate_name()} Stone, is discovered.",
+                    f"The {self.generate_name()} Plague devastates the population."
+                ])
+                era["events"].append({"year": event_year, "desc": event_desc})
+            history.append(era)
+            current_year += era_length
+        return history
+
+    def get_location(self, x: int, y: int) -> Dict:
+        if 0 <= y < self.map["height"] and 0 <= x < self.map["width"]:
+            return self.map["locations"][y][x]
+        return {"type": "void", "name": "Void", "country": None}
+
+    def display_map(self, player_pos: Tuple[int, int]) -> str:
+        view_radius = 5
+        x, y = player_pos
+        map_display = []
+        for dy in range(view_radius, -view_radius - 1, -1):
+            row = ""
+            for dx in range(-view_radius, view_radius + 1):
+                map_x, map_y = x + dx, y + dy
+                if 0 <= map_x < self.map["width"] and 0 <= map_y < self.map["height"]:
+                    tile = self.map["locations"][map_y][map_x]
+                    terrain_type = tile["type"]
+                    if (map_x, map_y) == (x, y):
+                        row += Fore.RED + "@" + Style.RESET_ALL
+                    else:
+                        symbol_data = self.graphics.get("terrains", {}).get(terrain_type, {"symbol": "?", "color": "white"})
+                        symbol = symbol_data["symbol"]
+                        color = symbol_data["color"]
+                        if color == "gray":
+                            row += Fore.LIGHTBLACK_EX + symbol + Style.RESET_ALL
+                        elif color == "dark_green":
+                            row += Fore.GREEN + symbol + Style.RESET_ALL
+                        elif color == "green":
+                            row += Fore.GREEN + symbol + Style.RESET_ALL
+                        elif color == "light_green":
+                            row += Fore.LIGHTGREEN_EX + symbol + Style.RESET_ALL
+                        elif color == "light_green_ex":
+                            row += Fore.LIGHTGREEN_EX + symbol + Style.RESET_ALL
+                        elif color == "blue":
+                            row += Fore.BLUE + symbol + Style.RESET_ALL
+                        elif color == "light_blue_ex":
+                            row += Fore.LIGHTBLUE_EX + symbol + Style.RESET_ALL
+                        elif color == "cyan":
+                            row += Fore.CYAN + symbol + Style.RESET_ALL
+                        elif color == "light_cyan_ex":
+                            row += Fore.LIGHTCYAN_EX + symbol + Style.RESET_ALL
+                        elif color == "yellow":
+                            row += Fore.YELLOW + symbol + Style.RESET_ALL
+                        elif color == "light_yellow_ex":
+                            row += Fore.LIGHTYELLOW_EX + symbol + Style.RESET_ALL
+                        elif color == "red":
+                            row += Fore.RED + symbol + Style.RESET_ALL
+                        elif color == "light_red_ex":
+                            row += Fore.LIGHTRED_EX + symbol + Style.RESET_ALL
+                        elif color == "brown":
+                            row += Fore.LIGHTRED_EX + symbol + Style.RESET_ALL
+                        elif color == "magenta":
+                            row += Fore.MAGENTA + symbol + Style.RESET_ALL
+                        elif color == "light_magenta_ex":
+                            row += Fore.LIGHTMAGENTA_EX + symbol + Style.RESET_ALL
+                        elif color == "light_black_ex":
+                            row += Fore.LIGHTBLACK_EX + symbol + Style.RESET_ALL
+                        elif color == "white":
+                            row += Fore.WHITE + symbol + Style.RESET_ALL
+                        elif color == "light_white_ex":
+                            row += Fore.LIGHTWHITE_EX + symbol + Style.RESET_ALL
+                        elif color == "black":
+                            row += Fore.BLACK + symbol + Style.RESET_ALL
+                        else:
+                            print(f"{Fore.YELLOW}Warning: Unsupported color '{color}' for symbol '{symbol}' in terrain.{Style.RESET_ALL}")
+                            row += symbol  # Fallback: no color applied
+                else:
+                    row += " "
+            map_display.append(row)
+        return "\n".join(map_display)

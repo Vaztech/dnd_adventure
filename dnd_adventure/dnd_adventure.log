@@ -1,0 +1,1304 @@
+2025-05-15 21:15:36,655 [DEBUG] Starting main loop. Terminal: Unknown, stdout: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+2025-05-15 21:15:40,757 [DEBUG] Initializing Game object for player: V
+2025-05-15 21:15:40,757 [DEBUG] Loading graphics...
+2025-05-15 21:15:40,757 [DEBUG] Reading graphics.json from C:\Users\Vaz\Desktop\dnd_adventure\resources\graphics.json
+2025-05-15 21:15:40,758 [DEBUG] Graphics loaded and cached
+2025-05-15 21:15:40,758 [DEBUG] Creating World...
+2025-05-15 21:15:40,767 [INFO] Loaded map from cache.
+2025-05-15 21:15:40,767 [DEBUG] Creating GameWorld...
+2025-05-15 21:15:40,794 [DEBUG] Creating QuestManager...
+2025-05-15 21:15:40,794 [DEBUG] Creating SaveManager...
+2025-05-15 21:15:40,794 [DEBUG] Initializing player...
+2025-05-15 21:15:40,796 [DEBUG] Initializing player, save_file=None
+2025-05-15 21:15:40,796 [DEBUG] Creating new player
+2025-05-15 21:15:40,796 [DEBUG] Creating character: V
+2025-05-15 21:15:40,796 [DEBUG] Attempting to load races from C:\Users\Vaz\Desktop\dnd_adventure\dnd_adventure\data\races.json
+2025-05-15 21:15:40,796 [DEBUG] Loaded 14 races from JSON
+2025-05-15 21:15:42,120 [DEBUG] Selected race: Dwarf
+2025-05-15 21:15:43,621 [DEBUG] Selected subrace: Mountain Dwarf
+2025-05-15 21:15:43,621 [DEBUG] Attempting to load classes from C:\Users\Vaz\Desktop\dnd_adventure\dnd_adventure\data\classes.json
+2025-05-15 21:15:43,622 [DEBUG] Loaded 11 classes from JSON
+2025-05-15 21:15:45,927 [DEBUG] Selected class: Fighter
+2025-05-15 21:15:45,928 [DEBUG] Rolling stats
+2025-05-15 21:15:47,352 [DEBUG] Stats rolled: [16, 12, 14, 4, 13, 9]
+2025-05-15 21:15:48,590 [WARNING] Invalid selection review input: 
+2025-05-15 21:15:51,233 [DEBUG] Selections confirmed: {'race': 'Dwarf', 'subrace': 'Mountain Dwarf', 'class': 'Fighter', 'stats': [16, 12, 14, 4, 13, 9], 'spells': {0: [], 1: []}}
+2025-05-15 21:15:52,415 [DEBUG] Displayed character sheet for V
+2025-05-15 21:15:52,416 [DEBUG] Character created: V, Mountain Dwarf, Fighter
+2025-05-15 21:16:06,190 [DEBUG] Displayed initial lore: The chronicles of Era 2 whisper of V, a Fighter, who will forge a new era by fulfilling the legacy of The Kaelthyr Plague devastates the population..
+2025-05-15 21:16:06,190 [DEBUG] Finding starting room
+2025-05-15 21:16:06,190 [DEBUG] Displaying initial lore
+2025-05-15 21:16:08,020 [DEBUG] Displayed initial lore: The chronicles of Era 2 whisper of V, a Fighter, who will forge a new era by fulfilling the legacy of The Kaelthyr Plague devastates the population..
+2025-05-15 21:16:08,020 [DEBUG] Player initialization complete
+2025-05-15 21:16:08,020 [DEBUG] Setting current room...
+2025-05-15 21:16:08,020 [DEBUG] Finding starting position...
+2025-05-15 21:16:08,021 [DEBUG] Starting position found: (96, 96)
+2025-05-15 21:16:08,021 [DEBUG] Setting game state...
+2025-05-15 21:16:08,021 [DEBUG] Setting initial map and room...
+2025-05-15 21:16:08,021 [DEBUG] Game initialized: map=plains, room=None, pos=(2, 2)
+2025-05-15 21:16:08,042 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 2)
+2025-05-15 21:16:08,042 [DEBUG] Displayed status: mode=movement, message=, HP=12/12, MP=0/0
+2025-05-15 21:16:08,343 [DEBUG] Initial input buffer cleared
+2025-05-15 21:16:08,343 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:08,372 [DEBUG] Keyboard library initialized successfully
+2025-05-15 21:16:08,424 [DEBUG] No input detected, idling
+2025-05-15 21:16:08,624 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:08,625 [DEBUG] No input detected, idling
+2025-05-15 21:16:08,825 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:08,826 [DEBUG] No input detected, idling
+2025-05-15 21:16:09,026 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:09,027 [DEBUG] No input detected, idling
+2025-05-15 21:16:09,228 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:09,228 [DEBUG] No input detected, idling
+2025-05-15 21:16:09,429 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:09,429 [DEBUG] No input detected, idling
+2025-05-15 21:16:09,630 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:09,631 [DEBUG] No input detected, idling
+2025-05-15 21:16:09,832 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:09,833 [DEBUG] No input detected, idling
+2025-05-15 21:16:10,033 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:10,035 [DEBUG] No input detected, idling
+2025-05-15 21:16:10,236 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:10,237 [DEBUG] No input detected, idling
+2025-05-15 21:16:10,437 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:10,438 [DEBUG] No input detected, idling
+2025-05-15 21:16:10,639 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:10,640 [DEBUG] No input detected, idling
+2025-05-15 21:16:10,840 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:10,841 [DEBUG] No input detected, idling
+2025-05-15 21:16:11,042 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:11,043 [DEBUG] No input detected, idling
+2025-05-15 21:16:11,244 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:11,244 [DEBUG] No input detected, idling
+2025-05-15 21:16:11,445 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:11,446 [DEBUG] No input detected, idling
+2025-05-15 21:16:11,646 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:11,647 [DEBUG] No input detected, idling
+2025-05-15 21:16:11,848 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:11,849 [DEBUG] No input detected, idling
+2025-05-15 21:16:12,050 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:12,051 [DEBUG] No input detected, idling
+2025-05-15 21:16:12,251 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:12,252 [DEBUG] No input detected, idling
+2025-05-15 21:16:12,453 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:12,454 [DEBUG] No input detected, idling
+2025-05-15 21:16:12,655 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:12,656 [DEBUG] No input detected, idling
+2025-05-15 21:16:12,857 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:12,858 [DEBUG] No input detected, idling
+2025-05-15 21:16:13,059 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:13,060 [DEBUG] No input detected, idling
+2025-05-15 21:16:13,261 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:13,262 [DEBUG] No input detected, idling
+2025-05-15 21:16:13,462 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:13,464 [DEBUG] No input detected, idling
+2025-05-15 21:16:13,664 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:13,665 [DEBUG] No input detected, idling
+2025-05-15 21:16:13,866 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:13,867 [DEBUG] No input detected, idling
+2025-05-15 21:16:14,067 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:14,068 [DEBUG] No input detected, idling
+2025-05-15 21:16:14,268 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:14,269 [DEBUG] No input detected, idling
+2025-05-15 21:16:14,470 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:14,471 [DEBUG] No input detected, idling
+2025-05-15 21:16:14,671 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:14,673 [DEBUG] No input detected, idling
+2025-05-15 21:16:14,873 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:14,874 [DEBUG] No input detected, idling
+2025-05-15 21:16:15,075 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:15,075 [DEBUG] No input detected, idling
+2025-05-15 21:16:15,276 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:15,277 [DEBUG] No input detected, idling
+2025-05-15 21:16:15,477 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:15,479 [DEBUG] No input detected, idling
+2025-05-15 21:16:15,680 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:15,681 [DEBUG] No input detected, idling
+2025-05-15 21:16:15,881 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:15,882 [DEBUG] No input detected, idling
+2025-05-15 21:16:16,083 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:16,084 [DEBUG] No input detected, idling
+2025-05-15 21:16:16,284 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:16,286 [DEBUG] No input detected, idling
+2025-05-15 21:16:16,487 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:16,488 [DEBUG] No input detected, idling
+2025-05-15 21:16:16,689 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=1
+2025-05-15 21:16:16,690 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:16,690 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:16:16,690 [DEBUG] Handling movement: north
+2025-05-15 21:16:16,690 [DEBUG] Moved north to (2, 3)
+2025-05-15 21:16:16,710 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 3)
+2025-05-15 21:16:16,710 [DEBUG] Displayed status: mode=movement, message=You move north., HP=12/12, MP=0/0
+2025-05-15 21:16:16,710 [DEBUG] Moved north via arrow key
+2025-05-15 21:16:16,710 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:16,812 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:16,912 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:17,013 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:17,014 [DEBUG] No input detected, idling
+2025-05-15 21:16:17,215 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:17,216 [DEBUG] No input detected, idling
+2025-05-15 21:16:17,416 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:17,416 [DEBUG] No input detected, idling
+2025-05-15 21:16:17,617 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:17,617 [DEBUG] No input detected, idling
+2025-05-15 21:16:17,818 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:17,818 [DEBUG] No input detected, idling
+2025-05-15 21:16:18,019 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:18,019 [DEBUG] No input detected, idling
+2025-05-15 21:16:18,220 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:18,221 [DEBUG] No input detected, idling
+2025-05-15 21:16:18,422 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=0
+2025-05-15 21:16:18,424 [DEBUG] No input detected, idling
+2025-05-15 21:16:18,624 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=plains, kbhit=1
+2025-05-15 21:16:18,625 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:18,625 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:18,625 [DEBUG] Handling movement: east
+2025-05-15 21:16:18,625 [DEBUG] Moved east to (3, 3)
+2025-05-15 21:16:18,646 [DEBUG] Displayed map: map=plains, room=None, pos=(3, 3)
+2025-05-15 21:16:18,646 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:18,646 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:18,646 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=plains, kbhit=0
+2025-05-15 21:16:18,746 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=plains, kbhit=0
+2025-05-15 21:16:18,848 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=plains, kbhit=0
+2025-05-15 21:16:18,948 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=plains, kbhit=0
+2025-05-15 21:16:18,949 [DEBUG] No input detected, idling
+2025-05-15 21:16:19,150 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=plains, kbhit=0
+2025-05-15 21:16:19,150 [DEBUG] No input detected, idling
+2025-05-15 21:16:19,351 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=plains, kbhit=1
+2025-05-15 21:16:19,351 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:19,351 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:19,351 [DEBUG] Handling movement: east
+2025-05-15 21:16:19,351 [DEBUG] Moved east to (4, 3)
+2025-05-15 21:16:19,372 [DEBUG] Displayed map: map=plains, room=None, pos=(4, 3)
+2025-05-15 21:16:19,373 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:19,373 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:19,373 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=0
+2025-05-15 21:16:19,473 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=0
+2025-05-15 21:16:19,575 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=0
+2025-05-15 21:16:19,675 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=0
+2025-05-15 21:16:19,676 [DEBUG] No input detected, idling
+2025-05-15 21:16:19,876 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=0
+2025-05-15 21:16:19,877 [DEBUG] No input detected, idling
+2025-05-15 21:16:20,078 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=0
+2025-05-15 21:16:20,078 [DEBUG] No input detected, idling
+2025-05-15 21:16:20,279 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=0
+2025-05-15 21:16:20,280 [DEBUG] No input detected, idling
+2025-05-15 21:16:20,480 [DEBUG] Main loop iteration: mode=movement, pos=(4, 3), map=plains, kbhit=1
+2025-05-15 21:16:20,481 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:20,481 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:20,481 [DEBUG] Handling movement: east
+2025-05-15 21:16:20,481 [DEBUG] Exited mini-map to world map at (96, 96)
+2025-05-15 21:16:20,499 [DEBUG] Displayed map: map=None, room=None, pos=(96, 96)
+2025-05-15 21:16:20,499 [DEBUG] Displayed status: mode=movement, message=You exit the None and return to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:20,499 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:20,499 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:20,600 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:20,700 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:20,801 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:20,802 [DEBUG] No input detected, idling
+2025-05-15 21:16:21,002 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:21,002 [DEBUG] No input detected, idling
+2025-05-15 21:16:21,203 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:21,204 [DEBUG] No input detected, idling
+2025-05-15 21:16:21,404 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:21,405 [DEBUG] No input detected, idling
+2025-05-15 21:16:21,605 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=1
+2025-05-15 21:16:21,606 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:21,607 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:21,607 [DEBUG] Handling movement: east
+2025-05-15 21:16:21,607 [DEBUG] Moved east to Castle at (97,96) at (97, 96)
+2025-05-15 21:16:21,607 [DEBUG] Entered mini-map: castle
+2025-05-15 21:16:21,627 [DEBUG] Displayed map: map=castle, room=97,96, pos=(2, 2)
+2025-05-15 21:16:21,627 [DEBUG] Displayed status: mode=movement, message=You enter a grand castle hall., HP=12/12, MP=0/0
+2025-05-15 21:16:21,627 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:21,627 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:21,728 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:21,829 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:21,929 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:21,930 [DEBUG] No input detected, idling
+2025-05-15 21:16:22,131 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:22,131 [DEBUG] No input detected, idling
+2025-05-15 21:16:22,332 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=1
+2025-05-15 21:16:22,332 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:22,332 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:22,333 [DEBUG] Handling movement: south
+2025-05-15 21:16:22,333 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:22,354 [DEBUG] Displayed map: map=castle, room=97,96, pos=(2, 1)
+2025-05-15 21:16:22,354 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:22,354 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:22,354 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:22,455 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:22,556 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:22,657 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:22,657 [DEBUG] No input detected, idling
+2025-05-15 21:16:22,857 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=1
+2025-05-15 21:16:22,858 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:22,858 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:22,858 [DEBUG] Handling movement: east
+2025-05-15 21:16:22,858 [DEBUG] Exited None to world map via door
+2025-05-15 21:16:22,878 [DEBUG] Displayed map: map=None, room=None, pos=(97, 96)
+2025-05-15 21:16:22,878 [DEBUG] Displayed status: mode=movement, message=You exit the None through the door to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:22,878 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:22,878 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=0
+2025-05-15 21:16:22,979 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=0
+2025-05-15 21:16:23,079 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=0
+2025-05-15 21:16:23,180 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=0
+2025-05-15 21:16:23,181 [DEBUG] No input detected, idling
+2025-05-15 21:16:23,382 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=0
+2025-05-15 21:16:23,382 [DEBUG] No input detected, idling
+2025-05-15 21:16:23,582 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=0
+2025-05-15 21:16:23,583 [DEBUG] No input detected, idling
+2025-05-15 21:16:23,784 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=0
+2025-05-15 21:16:23,785 [DEBUG] No input detected, idling
+2025-05-15 21:16:23,986 [DEBUG] Main loop iteration: mode=movement, pos=(97, 96), map=None, kbhit=1
+2025-05-15 21:16:23,986 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:23,986 [DEBUG] Arrow key second byte: b'K'
+2025-05-15 21:16:23,987 [DEBUG] Handling movement: west
+2025-05-15 21:16:23,987 [DEBUG] Moved west to Plains at (96,96) at (96, 96)
+2025-05-15 21:16:23,987 [DEBUG] Entered mini-map: plains
+2025-05-15 21:16:24,008 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 2)
+2025-05-15 21:16:24,008 [DEBUG] Displayed status: mode=movement, message=Open plains with rolling hills and grass., HP=12/12, MP=0/0
+2025-05-15 21:16:24,008 [DEBUG] Moved west via arrow key
+2025-05-15 21:16:24,008 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:24,108 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:24,209 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:24,310 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:24,310 [DEBUG] No input detected, idling
+2025-05-15 21:16:24,510 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:24,511 [DEBUG] No input detected, idling
+2025-05-15 21:16:24,711 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:24,712 [DEBUG] No input detected, idling
+2025-05-15 21:16:24,912 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=1
+2025-05-15 21:16:24,913 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:24,913 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:24,913 [DEBUG] Handling movement: south
+2025-05-15 21:16:24,913 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:24,933 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 1)
+2025-05-15 21:16:24,933 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:24,933 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:24,933 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:25,034 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:25,135 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:25,235 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:25,235 [DEBUG] No input detected, idling
+2025-05-15 21:16:25,436 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=1
+2025-05-15 21:16:25,436 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:25,437 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:25,437 [DEBUG] Handling movement: south
+2025-05-15 21:16:25,437 [DEBUG] Moved south to (2, 0)
+2025-05-15 21:16:25,456 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 0)
+2025-05-15 21:16:25,456 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:25,456 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:25,456 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:25,556 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:25,657 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:25,758 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=1
+2025-05-15 21:16:25,758 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:25,758 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:25,758 [DEBUG] Handling movement: south
+2025-05-15 21:16:25,758 [DEBUG] Exited mini-map to world map at (96, 96)
+2025-05-15 21:16:25,778 [DEBUG] Displayed map: map=None, room=None, pos=(96, 96)
+2025-05-15 21:16:25,778 [DEBUG] Displayed status: mode=movement, message=You exit the None and return to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:25,778 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:25,778 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:25,878 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:25,979 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:26,079 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:26,080 [DEBUG] No input detected, idling
+2025-05-15 21:16:26,281 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:26,281 [DEBUG] No input detected, idling
+2025-05-15 21:16:26,482 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=0
+2025-05-15 21:16:26,484 [DEBUG] No input detected, idling
+2025-05-15 21:16:26,684 [DEBUG] Main loop iteration: mode=movement, pos=(96, 96), map=None, kbhit=1
+2025-05-15 21:16:26,685 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:26,685 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:26,685 [DEBUG] Handling movement: south
+2025-05-15 21:16:26,685 [DEBUG] Moved south to Plains at (96,95) at (96, 95)
+2025-05-15 21:16:26,685 [DEBUG] Entered mini-map: plains
+2025-05-15 21:16:26,705 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 2)
+2025-05-15 21:16:26,705 [DEBUG] Displayed status: mode=movement, message=Open plains with rolling hills and grass., HP=12/12, MP=0/0
+2025-05-15 21:16:26,706 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:26,706 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:26,806 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:26,907 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:27,009 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:27,010 [DEBUG] No input detected, idling
+2025-05-15 21:16:27,210 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:27,211 [DEBUG] No input detected, idling
+2025-05-15 21:16:27,411 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:27,412 [DEBUG] No input detected, idling
+2025-05-15 21:16:27,613 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:27,613 [DEBUG] No input detected, idling
+2025-05-15 21:16:27,814 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:27,815 [DEBUG] No input detected, idling
+2025-05-15 21:16:28,015 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:28,017 [DEBUG] No input detected, idling
+2025-05-15 21:16:28,217 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=1
+2025-05-15 21:16:28,218 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:28,218 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:28,218 [DEBUG] Handling movement: south
+2025-05-15 21:16:28,218 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:28,237 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 1)
+2025-05-15 21:16:28,237 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:28,237 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:28,237 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:28,338 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:28,438 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:28,539 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:28,540 [DEBUG] No input detected, idling
+2025-05-15 21:16:28,741 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:28,741 [DEBUG] No input detected, idling
+2025-05-15 21:16:28,942 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=1
+2025-05-15 21:16:28,942 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:28,942 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:28,942 [DEBUG] Handling movement: south
+2025-05-15 21:16:28,942 [DEBUG] Moved south to (2, 0)
+2025-05-15 21:16:28,963 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 0)
+2025-05-15 21:16:28,963 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:28,963 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:28,963 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:29,063 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:29,164 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:29,265 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:29,265 [DEBUG] No input detected, idling
+2025-05-15 21:16:29,466 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=1
+2025-05-15 21:16:29,466 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:29,466 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:29,466 [DEBUG] Handling movement: south
+2025-05-15 21:16:29,467 [DEBUG] Exited mini-map to world map at (96, 95)
+2025-05-15 21:16:29,486 [DEBUG] Displayed map: map=None, room=None, pos=(96, 95)
+2025-05-15 21:16:29,487 [DEBUG] Displayed status: mode=movement, message=You exit the None and return to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:29,487 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:29,487 [DEBUG] Main loop iteration: mode=movement, pos=(96, 95), map=None, kbhit=0
+2025-05-15 21:16:29,587 [DEBUG] Main loop iteration: mode=movement, pos=(96, 95), map=None, kbhit=0
+2025-05-15 21:16:29,688 [DEBUG] Main loop iteration: mode=movement, pos=(96, 95), map=None, kbhit=0
+2025-05-15 21:16:29,789 [DEBUG] Main loop iteration: mode=movement, pos=(96, 95), map=None, kbhit=0
+2025-05-15 21:16:29,789 [DEBUG] No input detected, idling
+2025-05-15 21:16:29,990 [DEBUG] Main loop iteration: mode=movement, pos=(96, 95), map=None, kbhit=0
+2025-05-15 21:16:29,990 [DEBUG] No input detected, idling
+2025-05-15 21:16:30,191 [DEBUG] Main loop iteration: mode=movement, pos=(96, 95), map=None, kbhit=0
+2025-05-15 21:16:30,192 [DEBUG] No input detected, idling
+2025-05-15 21:16:30,393 [DEBUG] Main loop iteration: mode=movement, pos=(96, 95), map=None, kbhit=1
+2025-05-15 21:16:30,394 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:30,394 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:30,394 [DEBUG] Handling movement: south
+2025-05-15 21:16:30,394 [DEBUG] Moved south to Plains at (96,94) at (96, 94)
+2025-05-15 21:16:30,394 [DEBUG] Entered mini-map: plains
+2025-05-15 21:16:30,415 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 2)
+2025-05-15 21:16:30,415 [DEBUG] Displayed status: mode=movement, message=Open plains with rolling hills and grass., HP=12/12, MP=0/0
+2025-05-15 21:16:30,415 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:30,415 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:30,516 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:30,618 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:30,718 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:30,719 [DEBUG] No input detected, idling
+2025-05-15 21:16:30,920 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=1
+2025-05-15 21:16:30,920 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:30,920 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:30,920 [DEBUG] Handling movement: south
+2025-05-15 21:16:30,921 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:30,940 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 1)
+2025-05-15 21:16:30,940 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:30,940 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:30,940 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:31,040 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:31,141 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:31,241 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:31,242 [DEBUG] No input detected, idling
+2025-05-15 21:16:31,442 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=1
+2025-05-15 21:16:31,443 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:31,443 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:31,443 [DEBUG] Handling movement: south
+2025-05-15 21:16:31,443 [DEBUG] Moved south to (2, 0)
+2025-05-15 21:16:31,463 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 0)
+2025-05-15 21:16:31,463 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:31,463 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:31,463 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:31,564 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:31,665 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:31,766 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=0
+2025-05-15 21:16:31,766 [DEBUG] No input detected, idling
+2025-05-15 21:16:31,967 [DEBUG] Main loop iteration: mode=movement, pos=(2, 0), map=plains, kbhit=1
+2025-05-15 21:16:31,967 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:31,967 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:31,967 [DEBUG] Handling movement: south
+2025-05-15 21:16:31,967 [DEBUG] Exited mini-map to world map at (96, 94)
+2025-05-15 21:16:31,987 [DEBUG] Displayed map: map=None, room=None, pos=(96, 94)
+2025-05-15 21:16:31,987 [DEBUG] Displayed status: mode=movement, message=You exit the None and return to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:31,987 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:31,987 [DEBUG] Main loop iteration: mode=movement, pos=(96, 94), map=None, kbhit=0
+2025-05-15 21:16:32,088 [DEBUG] Main loop iteration: mode=movement, pos=(96, 94), map=None, kbhit=0
+2025-05-15 21:16:32,189 [DEBUG] Main loop iteration: mode=movement, pos=(96, 94), map=None, kbhit=0
+2025-05-15 21:16:32,290 [DEBUG] Main loop iteration: mode=movement, pos=(96, 94), map=None, kbhit=0
+2025-05-15 21:16:32,290 [DEBUG] No input detected, idling
+2025-05-15 21:16:32,491 [DEBUG] Main loop iteration: mode=movement, pos=(96, 94), map=None, kbhit=0
+2025-05-15 21:16:32,491 [DEBUG] No input detected, idling
+2025-05-15 21:16:32,692 [DEBUG] Main loop iteration: mode=movement, pos=(96, 94), map=None, kbhit=1
+2025-05-15 21:16:32,693 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:32,693 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:32,694 [DEBUG] Handling movement: east
+2025-05-15 21:16:32,694 [DEBUG] Moved east to Castle at (97,94) at (97, 94)
+2025-05-15 21:16:32,694 [DEBUG] Entered mini-map: castle
+2025-05-15 21:16:32,716 [DEBUG] Displayed map: map=castle, room=97,94, pos=(2, 2)
+2025-05-15 21:16:32,716 [DEBUG] Displayed status: mode=movement, message=You enter a grand castle hall., HP=12/12, MP=0/0
+2025-05-15 21:16:32,716 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:32,716 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:32,816 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:32,917 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:33,018 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:33,018 [DEBUG] No input detected, idling
+2025-05-15 21:16:33,219 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:33,219 [DEBUG] No input detected, idling
+2025-05-15 21:16:33,420 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=1
+2025-05-15 21:16:33,421 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:33,421 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:33,421 [DEBUG] Handling movement: east
+2025-05-15 21:16:33,421 [DEBUG] Moved east to (3, 2)
+2025-05-15 21:16:33,441 [DEBUG] Displayed map: map=castle, room=97,94, pos=(3, 2)
+2025-05-15 21:16:33,441 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:33,441 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:33,441 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=0
+2025-05-15 21:16:33,542 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=0
+2025-05-15 21:16:33,643 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=1
+2025-05-15 21:16:33,743 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=0
+2025-05-15 21:16:33,744 [DEBUG] No input detected, idling
+2025-05-15 21:16:33,945 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=0
+2025-05-15 21:16:33,945 [DEBUG] No input detected, idling
+2025-05-15 21:16:34,146 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=1
+2025-05-15 21:16:34,146 [DEBUG] msvcrt key pressed: b'M'
+2025-05-15 21:16:34,146 [DEBUG] Ignored key: b'M'
+2025-05-15 21:16:34,146 [DEBUG] No input detected, idling
+2025-05-15 21:16:34,347 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=1
+2025-05-15 21:16:34,348 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:34,348 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:34,348 [DEBUG] Handling movement: south
+2025-05-15 21:16:34,349 [DEBUG] Transitioned to room 97,93 via door south
+2025-05-15 21:16:34,368 [DEBUG] Displayed map: map=castle, room=97,93, pos=(2, 2)
+2025-05-15 21:16:34,369 [DEBUG] Displayed status: mode=movement, message=You pass through the door south into a new castle room., HP=12/12, MP=0/0
+2025-05-15 21:16:34,369 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:34,369 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:34,469 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:34,570 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:34,670 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:34,671 [DEBUG] No input detected, idling
+2025-05-15 21:16:34,872 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:34,872 [DEBUG] No input detected, idling
+2025-05-15 21:16:35,073 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=1
+2025-05-15 21:16:35,073 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:35,074 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:35,074 [DEBUG] Handling movement: south
+2025-05-15 21:16:35,074 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:35,095 [DEBUG] Displayed map: map=castle, room=97,93, pos=(2, 1)
+2025-05-15 21:16:35,095 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:35,095 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:35,095 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:35,195 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:35,296 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:35,396 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:35,397 [DEBUG] No input detected, idling
+2025-05-15 21:16:35,598 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=1
+2025-05-15 21:16:35,598 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:35,598 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:35,598 [DEBUG] Handling movement: east
+2025-05-15 21:16:35,598 [DEBUG] Exited None to world map via door
+2025-05-15 21:16:35,618 [DEBUG] Displayed map: map=None, room=None, pos=(97, 93)
+2025-05-15 21:16:35,618 [DEBUG] Displayed status: mode=movement, message=You exit the None through the door to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:35,619 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:35,619 [DEBUG] Main loop iteration: mode=movement, pos=(97, 93), map=None, kbhit=0
+2025-05-15 21:16:35,719 [DEBUG] Main loop iteration: mode=movement, pos=(97, 93), map=None, kbhit=0
+2025-05-15 21:16:35,820 [DEBUG] Main loop iteration: mode=movement, pos=(97, 93), map=None, kbhit=0
+2025-05-15 21:16:35,921 [DEBUG] Main loop iteration: mode=movement, pos=(97, 93), map=None, kbhit=0
+2025-05-15 21:16:35,921 [DEBUG] No input detected, idling
+2025-05-15 21:16:36,122 [DEBUG] Main loop iteration: mode=movement, pos=(97, 93), map=None, kbhit=0
+2025-05-15 21:16:36,122 [DEBUG] No input detected, idling
+2025-05-15 21:16:36,323 [DEBUG] Main loop iteration: mode=movement, pos=(97, 93), map=None, kbhit=1
+2025-05-15 21:16:36,324 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:36,324 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:36,324 [DEBUG] Handling movement: east
+2025-05-15 21:16:36,325 [DEBUG] Moved east to Plains at (98,93) at (98, 93)
+2025-05-15 21:16:36,325 [DEBUG] Entered mini-map: plains
+2025-05-15 21:16:36,344 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 2)
+2025-05-15 21:16:36,344 [DEBUG] Displayed status: mode=movement, message=Open plains with rolling hills and grass., HP=12/12, MP=0/0
+2025-05-15 21:16:36,344 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:36,345 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:36,446 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:36,546 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:36,648 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:36,649 [DEBUG] No input detected, idling
+2025-05-15 21:16:36,849 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:36,850 [DEBUG] No input detected, idling
+2025-05-15 21:16:37,050 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=0
+2025-05-15 21:16:37,051 [DEBUG] No input detected, idling
+2025-05-15 21:16:37,251 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=plains, kbhit=1
+2025-05-15 21:16:37,252 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:37,252 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:37,252 [DEBUG] Handling movement: south
+2025-05-15 21:16:37,252 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:37,273 [DEBUG] Displayed map: map=plains, room=None, pos=(2, 1)
+2025-05-15 21:16:37,273 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:37,273 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:37,273 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:37,374 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:37,474 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=1
+2025-05-15 21:16:37,575 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:37,575 [DEBUG] No input detected, idling
+2025-05-15 21:16:37,775 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=0
+2025-05-15 21:16:37,775 [DEBUG] No input detected, idling
+2025-05-15 21:16:37,977 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=1
+2025-05-15 21:16:37,977 [DEBUG] msvcrt key pressed: b'M'
+2025-05-15 21:16:37,977 [DEBUG] Ignored key: b'M'
+2025-05-15 21:16:37,977 [DEBUG] No input detected, idling
+2025-05-15 21:16:38,178 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=plains, kbhit=1
+2025-05-15 21:16:38,178 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:38,178 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:38,178 [DEBUG] Handling movement: east
+2025-05-15 21:16:38,178 [DEBUG] Moved east to (3, 1)
+2025-05-15 21:16:38,199 [DEBUG] Displayed map: map=plains, room=None, pos=(3, 1)
+2025-05-15 21:16:38,199 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:38,199 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:38,199 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=plains, kbhit=0
+2025-05-15 21:16:38,300 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=plains, kbhit=0
+2025-05-15 21:16:38,400 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=plains, kbhit=0
+2025-05-15 21:16:38,501 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=plains, kbhit=0
+2025-05-15 21:16:38,501 [DEBUG] No input detected, idling
+2025-05-15 21:16:38,702 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=plains, kbhit=1
+2025-05-15 21:16:38,703 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:38,703 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:38,703 [DEBUG] Handling movement: east
+2025-05-15 21:16:38,703 [DEBUG] Moved east to (4, 1)
+2025-05-15 21:16:38,722 [DEBUG] Displayed map: map=plains, room=None, pos=(4, 1)
+2025-05-15 21:16:38,722 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:38,722 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:38,722 [DEBUG] Main loop iteration: mode=movement, pos=(4, 1), map=plains, kbhit=0
+2025-05-15 21:16:38,823 [DEBUG] Main loop iteration: mode=movement, pos=(4, 1), map=plains, kbhit=0
+2025-05-15 21:16:38,924 [DEBUG] Main loop iteration: mode=movement, pos=(4, 1), map=plains, kbhit=0
+2025-05-15 21:16:39,024 [DEBUG] Main loop iteration: mode=movement, pos=(4, 1), map=plains, kbhit=0
+2025-05-15 21:16:39,025 [DEBUG] No input detected, idling
+2025-05-15 21:16:39,226 [DEBUG] Main loop iteration: mode=movement, pos=(4, 1), map=plains, kbhit=1
+2025-05-15 21:16:39,226 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:39,226 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:39,226 [DEBUG] Handling movement: east
+2025-05-15 21:16:39,226 [DEBUG] Exited mini-map to world map at (98, 93)
+2025-05-15 21:16:39,246 [DEBUG] Displayed map: map=None, room=None, pos=(98, 93)
+2025-05-15 21:16:39,246 [DEBUG] Displayed status: mode=movement, message=You exit the None and return to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:39,246 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:39,246 [DEBUG] Main loop iteration: mode=movement, pos=(98, 93), map=None, kbhit=0
+2025-05-15 21:16:39,346 [DEBUG] Main loop iteration: mode=movement, pos=(98, 93), map=None, kbhit=0
+2025-05-15 21:16:39,447 [DEBUG] Main loop iteration: mode=movement, pos=(98, 93), map=None, kbhit=0
+2025-05-15 21:16:39,547 [DEBUG] Main loop iteration: mode=movement, pos=(98, 93), map=None, kbhit=0
+2025-05-15 21:16:39,548 [DEBUG] No input detected, idling
+2025-05-15 21:16:39,749 [DEBUG] Main loop iteration: mode=movement, pos=(98, 93), map=None, kbhit=0
+2025-05-15 21:16:39,749 [DEBUG] No input detected, idling
+2025-05-15 21:16:39,950 [DEBUG] Main loop iteration: mode=movement, pos=(98, 93), map=None, kbhit=1
+2025-05-15 21:16:39,951 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:39,951 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:39,951 [DEBUG] Handling movement: east
+2025-05-15 21:16:39,952 [DEBUG] Moved east to Castle at (99,93) at (99, 93)
+2025-05-15 21:16:39,952 [DEBUG] Entered mini-map: castle
+2025-05-15 21:16:39,978 [DEBUG] Displayed map: map=castle, room=99,93, pos=(2, 2)
+2025-05-15 21:16:39,978 [DEBUG] Displayed status: mode=movement, message=You enter a grand castle hall., HP=12/12, MP=0/0
+2025-05-15 21:16:39,978 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:39,978 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:40,079 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:40,180 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:40,281 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:40,281 [DEBUG] No input detected, idling
+2025-05-15 21:16:40,482 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:40,482 [DEBUG] No input detected, idling
+2025-05-15 21:16:40,683 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=1
+2025-05-15 21:16:40,683 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:40,684 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:40,684 [DEBUG] Handling movement: east
+2025-05-15 21:16:40,684 [DEBUG] Moved east to (3, 2)
+2025-05-15 21:16:40,704 [DEBUG] Displayed map: map=castle, room=99,93, pos=(3, 2)
+2025-05-15 21:16:40,704 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:40,704 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:40,704 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=0
+2025-05-15 21:16:40,805 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=0
+2025-05-15 21:16:40,906 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=0
+2025-05-15 21:16:41,007 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=castle, kbhit=1
+2025-05-15 21:16:41,007 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:41,007 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:41,007 [DEBUG] Handling movement: south
+2025-05-15 21:16:41,007 [DEBUG] Transitioned to room 99,92 via door south
+2025-05-15 21:16:41,027 [DEBUG] Displayed map: map=castle, room=99,92, pos=(2, 2)
+2025-05-15 21:16:41,027 [DEBUG] Displayed status: mode=movement, message=You pass through the door south into a new castle room., HP=12/12, MP=0/0
+2025-05-15 21:16:41,027 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:41,027 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:41,127 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:41,228 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:41,328 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:41,329 [DEBUG] No input detected, idling
+2025-05-15 21:16:41,530 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=1
+2025-05-15 21:16:41,530 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:41,530 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:41,530 [DEBUG] Handling movement: south
+2025-05-15 21:16:41,530 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:41,549 [DEBUG] Displayed map: map=castle, room=99,92, pos=(2, 1)
+2025-05-15 21:16:41,549 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:41,549 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:41,550 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:41,651 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:41,751 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:41,852 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:41,852 [DEBUG] No input detected, idling
+2025-05-15 21:16:42,053 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=1
+2025-05-15 21:16:42,054 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:42,054 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:42,054 [DEBUG] Handling movement: east
+2025-05-15 21:16:42,054 [DEBUG] Transitioned to room 100,92 via door east
+2025-05-15 21:16:42,074 [DEBUG] Displayed map: map=castle, room=100,92, pos=(2, 2)
+2025-05-15 21:16:42,074 [DEBUG] Displayed status: mode=movement, message=You pass through the door east into a new castle room., HP=12/12, MP=0/0
+2025-05-15 21:16:42,074 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:42,074 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:42,175 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:42,276 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:42,377 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:42,377 [DEBUG] No input detected, idling
+2025-05-15 21:16:42,578 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:42,579 [DEBUG] No input detected, idling
+2025-05-15 21:16:42,779 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=0
+2025-05-15 21:16:42,780 [DEBUG] No input detected, idling
+2025-05-15 21:16:42,981 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=castle, kbhit=1
+2025-05-15 21:16:42,981 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:42,981 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:42,982 [DEBUG] Handling movement: south
+2025-05-15 21:16:42,982 [DEBUG] Moved south to (2, 1)
+2025-05-15 21:16:43,002 [DEBUG] Displayed map: map=castle, room=100,92, pos=(2, 1)
+2025-05-15 21:16:43,002 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:43,003 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:43,003 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:43,104 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:43,205 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=1
+2025-05-15 21:16:43,306 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=castle, kbhit=0
+2025-05-15 21:16:43,307 [DEBUG] Handling movement: east
+2025-05-15 21:16:43,307 [DEBUG] Exited None to world map via door
+2025-05-15 21:16:43,327 [DEBUG] Displayed map: map=None, room=None, pos=(100, 92)
+2025-05-15 21:16:43,327 [DEBUG] Displayed status: mode=movement, message=You exit the None through the door to the world map., HP=12/12, MP=0/0
+2025-05-15 21:16:43,327 [DEBUG] Keyboard key pressed: right/d
+2025-05-15 21:16:43,327 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=0
+2025-05-15 21:16:43,428 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=0
+2025-05-15 21:16:43,529 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=0
+2025-05-15 21:16:43,629 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=0
+2025-05-15 21:16:43,630 [DEBUG] No input detected, idling
+2025-05-15 21:16:43,831 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=0
+2025-05-15 21:16:43,831 [DEBUG] No input detected, idling
+2025-05-15 21:16:44,032 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=0
+2025-05-15 21:16:44,033 [DEBUG] No input detected, idling
+2025-05-15 21:16:44,233 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=0
+2025-05-15 21:16:44,234 [DEBUG] No input detected, idling
+2025-05-15 21:16:44,435 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=1
+2025-05-15 21:16:44,435 [DEBUG] msvcrt key pressed: b'M'
+2025-05-15 21:16:44,435 [DEBUG] Ignored key: b'M'
+2025-05-15 21:16:44,436 [DEBUG] No input detected, idling
+2025-05-15 21:16:44,636 [DEBUG] Main loop iteration: mode=movement, pos=(100, 92), map=None, kbhit=1
+2025-05-15 21:16:44,637 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:44,637 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:44,637 [DEBUG] Handling movement: east
+2025-05-15 21:16:44,638 [DEBUG] Moved east to Forest at (101,92) at (101, 92)
+2025-05-15 21:16:44,638 [DEBUG] Entered mini-map: forest
+2025-05-15 21:16:44,658 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 2)
+2025-05-15 21:16:44,658 [DEBUG] Displayed status: mode=movement, message=A dense forest with tall trees and underbrush., HP=12/12, MP=0/0
+2025-05-15 21:16:44,658 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:44,659 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:44,759 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:44,860 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:44,961 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:44,961 [DEBUG] No input detected, idling
+2025-05-15 21:16:45,162 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:45,162 [DEBUG] No input detected, idling
+2025-05-15 21:16:45,363 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=1
+2025-05-15 21:16:45,363 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:45,363 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:45,363 [DEBUG] Handling movement: east
+2025-05-15 21:16:45,363 [DEBUG] Moved east to (3, 2)
+2025-05-15 21:16:45,382 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 2)
+2025-05-15 21:16:45,383 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:45,383 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:45,383 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:45,484 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:45,584 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:45,685 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:45,685 [DEBUG] No input detected, idling
+2025-05-15 21:16:45,886 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=1
+2025-05-15 21:16:45,886 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:45,886 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:45,886 [DEBUG] Handling movement: east
+2025-05-15 21:16:45,886 [DEBUG] Blocked movement east: tree
+2025-05-15 21:16:45,904 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 2)
+2025-05-15 21:16:45,905 [DEBUG] Displayed status: mode=movement, message=You can't move east! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:45,905 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:45,906 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:46,006 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:46,107 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:46,208 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:46,209 [DEBUG] No input detected, idling
+2025-05-15 21:16:46,410 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:46,410 [DEBUG] No input detected, idling
+2025-05-15 21:16:46,611 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=1
+2025-05-15 21:16:46,611 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:46,611 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:46,611 [DEBUG] Handling movement: south
+2025-05-15 21:16:46,611 [DEBUG] Moved south to (3, 1)
+2025-05-15 21:16:46,631 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 1)
+2025-05-15 21:16:46,632 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:16:46,632 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:46,632 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:46,732 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:46,834 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:46,934 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:46,935 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:46,935 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:16:46,935 [DEBUG] Handling movement: south
+2025-05-15 21:16:46,935 [DEBUG] Blocked movement south: tree
+2025-05-15 21:16:46,955 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 1)
+2025-05-15 21:16:46,955 [DEBUG] Displayed status: mode=movement, message=You can't move south! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:46,955 [DEBUG] Moved south via arrow key
+2025-05-15 21:16:46,955 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,056 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,157 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,257 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,258 [DEBUG] No input detected, idling
+2025-05-15 21:16:47,459 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,459 [DEBUG] No input detected, idling
+2025-05-15 21:16:47,660 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:47,660 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:47,660 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:47,660 [DEBUG] Handling movement: east
+2025-05-15 21:16:47,660 [DEBUG] Blocked movement east: tree
+2025-05-15 21:16:47,678 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 1)
+2025-05-15 21:16:47,679 [DEBUG] Displayed status: mode=movement, message=You can't move east! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:47,679 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:47,679 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,780 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,880 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:47,981 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:47,981 [DEBUG] No input detected, idling
+2025-05-15 21:16:48,182 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:48,183 [DEBUG] msvcrt key pressed: b'M'
+2025-05-15 21:16:48,183 [DEBUG] Ignored key: b'M'
+2025-05-15 21:16:48,183 [DEBUG] Handling movement: east
+2025-05-15 21:16:48,183 [DEBUG] Blocked movement east: tree
+2025-05-15 21:16:48,203 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 1)
+2025-05-15 21:16:48,204 [DEBUG] Displayed status: mode=movement, message=You can't move east! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:48,204 [DEBUG] Keyboard key pressed: right/d
+2025-05-15 21:16:48,204 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:48,305 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:48,405 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:48,506 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:48,506 [DEBUG] No input detected, idling
+2025-05-15 21:16:48,707 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:48,707 [DEBUG] msvcrt key pressed: b'M'
+2025-05-15 21:16:48,707 [DEBUG] Ignored key: b'M'
+2025-05-15 21:16:48,707 [DEBUG] No input detected, idling
+2025-05-15 21:16:48,908 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:48,909 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:48,909 [DEBUG] Arrow key second byte: b'K'
+2025-05-15 21:16:48,909 [DEBUG] Handling movement: west
+2025-05-15 21:16:48,909 [DEBUG] Moved west to (2, 1)
+2025-05-15 21:16:48,928 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 1)
+2025-05-15 21:16:48,928 [DEBUG] Displayed status: mode=movement, message=You move west., HP=12/12, MP=0/0
+2025-05-15 21:16:48,928 [DEBUG] Moved west via arrow key
+2025-05-15 21:16:48,928 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,029 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,130 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,231 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,231 [DEBUG] No input detected, idling
+2025-05-15 21:16:49,432 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,433 [DEBUG] No input detected, idling
+2025-05-15 21:16:49,634 [DEBUG] Main loop iteration: mode=movement, pos=(2, 1), map=forest, kbhit=1
+2025-05-15 21:16:49,634 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:49,634 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:49,634 [DEBUG] Handling movement: east
+2025-05-15 21:16:49,634 [DEBUG] Moved east to (3, 1)
+2025-05-15 21:16:49,654 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 1)
+2025-05-15 21:16:49,654 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:16:49,654 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:49,654 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,755 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,856 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,956 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:49,957 [DEBUG] No input detected, idling
+2025-05-15 21:16:50,158 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:50,159 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:50,159 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:16:50,159 [DEBUG] Handling movement: east
+2025-05-15 21:16:50,159 [DEBUG] Blocked movement east: tree
+2025-05-15 21:16:50,181 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 1)
+2025-05-15 21:16:50,181 [DEBUG] Displayed status: mode=movement, message=You can't move east! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:50,181 [DEBUG] Moved east via arrow key
+2025-05-15 21:16:50,182 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:50,282 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:50,383 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:50,483 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:50,484 [DEBUG] No input detected, idling
+2025-05-15 21:16:50,685 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=0
+2025-05-15 21:16:50,685 [DEBUG] No input detected, idling
+2025-05-15 21:16:50,886 [DEBUG] Main loop iteration: mode=movement, pos=(3, 1), map=forest, kbhit=1
+2025-05-15 21:16:50,886 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:50,886 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:16:50,886 [DEBUG] Handling movement: north
+2025-05-15 21:16:50,886 [DEBUG] Moved north to (3, 2)
+2025-05-15 21:16:50,907 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 2)
+2025-05-15 21:16:50,908 [DEBUG] Displayed status: mode=movement, message=You move north., HP=12/12, MP=0/0
+2025-05-15 21:16:50,908 [DEBUG] Moved north via arrow key
+2025-05-15 21:16:50,908 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,008 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,109 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,210 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,210 [DEBUG] No input detected, idling
+2025-05-15 21:16:51,411 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=1
+2025-05-15 21:16:51,412 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:51,412 [DEBUG] Arrow key second byte: b'K'
+2025-05-15 21:16:51,412 [DEBUG] Handling movement: west
+2025-05-15 21:16:51,412 [DEBUG] Moved west to (2, 2)
+2025-05-15 21:16:51,431 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 2)
+2025-05-15 21:16:51,431 [DEBUG] Displayed status: mode=movement, message=You move west., HP=12/12, MP=0/0
+2025-05-15 21:16:51,431 [DEBUG] Moved west via arrow key
+2025-05-15 21:16:51,432 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,533 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,633 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,735 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,735 [DEBUG] Handling movement: west
+2025-05-15 21:16:51,735 [DEBUG] Moved west to (1, 2)
+2025-05-15 21:16:51,754 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:51,755 [DEBUG] Displayed status: mode=movement, message=You move west., HP=12/12, MP=0/0
+2025-05-15 21:16:51,755 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:51,755 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=0
+2025-05-15 21:16:51,856 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:51,956 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,057 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,057 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:52,057 [DEBUG] Arrow key second byte: b'K'
+2025-05-15 21:16:52,057 [DEBUG] Handling movement: west
+2025-05-15 21:16:52,057 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:52,076 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:52,076 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:52,076 [DEBUG] Moved west via arrow key
+2025-05-15 21:16:52,077 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=0
+2025-05-15 21:16:52,178 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,278 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,380 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,380 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:52,380 [DEBUG] Arrow key second byte: b'K'
+2025-05-15 21:16:52,380 [DEBUG] Handling movement: west
+2025-05-15 21:16:52,380 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:52,399 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:52,399 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:52,399 [DEBUG] Moved west via arrow key
+2025-05-15 21:16:52,399 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,500 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,600 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,701 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,701 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:52,701 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:52,701 [DEBUG] Handling movement: west
+2025-05-15 21:16:52,701 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:52,720 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:52,721 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:52,721 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:52,721 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,821 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:52,922 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,024 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,024 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:53,024 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:53,024 [DEBUG] Handling movement: west
+2025-05-15 21:16:53,024 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:53,043 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:53,044 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:53,044 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:53,044 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,144 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,245 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,345 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,346 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:53,346 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:53,346 [DEBUG] Handling movement: west
+2025-05-15 21:16:53,346 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:53,366 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:53,366 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:53,366 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:53,366 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,467 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,567 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,668 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,668 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:53,668 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:53,668 [DEBUG] Handling movement: west
+2025-05-15 21:16:53,668 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:53,688 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:53,688 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:53,688 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:53,689 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,789 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,890 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,991 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:53,991 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:53,991 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:53,992 [DEBUG] Handling movement: west
+2025-05-15 21:16:53,992 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:54,012 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:54,013 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:54,013 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:54,013 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,113 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,214 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,315 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,315 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:54,315 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:54,315 [DEBUG] Handling movement: west
+2025-05-15 21:16:54,315 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:54,335 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:54,335 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:54,335 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:54,335 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,435 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,536 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,637 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,637 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:54,637 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:54,638 [DEBUG] Handling movement: west
+2025-05-15 21:16:54,638 [DEBUG] Blocked movement west: tree
+2025-05-15 21:16:54,657 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 2)
+2025-05-15 21:16:54,657 [DEBUG] Displayed status: mode=movement, message=You can't move west! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:54,657 [DEBUG] Keyboard key pressed: left/a
+2025-05-15 21:16:54,657 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,757 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,858 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:54,959 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=0
+2025-05-15 21:16:54,959 [DEBUG] No input detected, idling
+2025-05-15 21:16:55,160 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=0
+2025-05-15 21:16:55,160 [DEBUG] No input detected, idling
+2025-05-15 21:16:55,361 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=0
+2025-05-15 21:16:55,362 [DEBUG] No input detected, idling
+2025-05-15 21:16:55,563 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=0
+2025-05-15 21:16:55,563 [DEBUG] No input detected, idling
+2025-05-15 21:16:55,764 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=0
+2025-05-15 21:16:55,764 [DEBUG] No input detected, idling
+2025-05-15 21:16:55,965 [DEBUG] Main loop iteration: mode=movement, pos=(1, 2), map=forest, kbhit=1
+2025-05-15 21:16:55,966 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:16:55,966 [DEBUG] Ignored key: b'K'
+2025-05-15 21:16:55,966 [DEBUG] Handling movement: north
+2025-05-15 21:16:55,966 [DEBUG] Moved north to (1, 3)
+2025-05-15 21:16:55,988 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 3)
+2025-05-15 21:16:55,988 [DEBUG] Displayed status: mode=movement, message=You move north., HP=12/12, MP=0/0
+2025-05-15 21:16:55,988 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:16:55,988 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:56,089 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:56,190 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:56,291 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:56,291 [DEBUG] Handling movement: north
+2025-05-15 21:16:56,291 [DEBUG] Blocked movement north: tree
+2025-05-15 21:16:56,311 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 3)
+2025-05-15 21:16:56,311 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:56,311 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:16:56,311 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:56,412 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:56,512 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:56,613 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:56,614 [DEBUG] No input detected, idling
+2025-05-15 21:16:56,814 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:56,815 [DEBUG] No input detected, idling
+2025-05-15 21:16:57,015 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:57,016 [DEBUG] No input detected, idling
+2025-05-15 21:16:57,217 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:57,217 [DEBUG] No input detected, idling
+2025-05-15 21:16:57,418 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:57,418 [DEBUG] No input detected, idling
+2025-05-15 21:16:57,619 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:57,620 [DEBUG] No input detected, idling
+2025-05-15 21:16:57,821 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:57,822 [DEBUG] No input detected, idling
+2025-05-15 21:16:58,023 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,024 [DEBUG] msvcrt key pressed: b'H'
+2025-05-15 21:16:58,024 [DEBUG] Ignored key: b'H'
+2025-05-15 21:16:58,024 [DEBUG] Handling movement: north
+2025-05-15 21:16:58,024 [DEBUG] Blocked movement north: tree
+2025-05-15 21:16:58,044 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 3)
+2025-05-15 21:16:58,044 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:58,044 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:16:58,044 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,145 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:58,246 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:58,347 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:58,347 [DEBUG] Handling movement: north
+2025-05-15 21:16:58,347 [DEBUG] Blocked movement north: tree
+2025-05-15 21:16:58,367 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 3)
+2025-05-15 21:16:58,367 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:58,367 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:16:58,367 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:58,468 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:58,569 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,670 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,670 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:58,670 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:16:58,670 [DEBUG] Handling movement: north
+2025-05-15 21:16:58,670 [DEBUG] Blocked movement north: tree
+2025-05-15 21:16:58,691 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 3)
+2025-05-15 21:16:58,691 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:58,691 [DEBUG] Moved north via arrow key
+2025-05-15 21:16:58,691 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,791 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,892 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,993 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:58,993 [DEBUG] msvcrt key pressed: b'H'
+2025-05-15 21:16:58,993 [DEBUG] Ignored key: b'H'
+2025-05-15 21:16:58,993 [DEBUG] Handling movement: north
+2025-05-15 21:16:58,993 [DEBUG] Blocked movement north: tree
+2025-05-15 21:16:59,013 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 3)
+2025-05-15 21:16:59,014 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:59,014 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:16:59,014 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:59,115 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:59,216 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:59,316 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:59,317 [DEBUG] msvcrt key pressed: b'H'
+2025-05-15 21:16:59,317 [DEBUG] Ignored key: b'H'
+2025-05-15 21:16:59,317 [DEBUG] No input detected, idling
+2025-05-15 21:16:59,518 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:16:59,518 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:16:59,518 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:16:59,518 [DEBUG] Handling movement: north
+2025-05-15 21:16:59,518 [DEBUG] Blocked movement north: tree
+2025-05-15 21:16:59,537 [DEBUG] Displayed map: map=forest, room=None, pos=(1, 3)
+2025-05-15 21:16:59,537 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:16:59,538 [DEBUG] Moved north via arrow key
+2025-05-15 21:16:59,538 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:59,638 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:59,740 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:59,841 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=0
+2025-05-15 21:16:59,841 [DEBUG] No input detected, idling
+2025-05-15 21:17:00,042 [DEBUG] Main loop iteration: mode=movement, pos=(1, 3), map=forest, kbhit=1
+2025-05-15 21:17:00,042 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:00,042 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:17:00,042 [DEBUG] Handling movement: east
+2025-05-15 21:17:00,042 [DEBUG] Moved east to (2, 3)
+2025-05-15 21:17:00,062 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:00,062 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:17:00,062 [DEBUG] Moved east via arrow key
+2025-05-15 21:17:00,063 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:00,164 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:00,264 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:00,365 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:00,366 [DEBUG] No input detected, idling
+2025-05-15 21:17:00,566 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:00,567 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:00,567 [DEBUG] Arrow key second byte: b'P'
+2025-05-15 21:17:00,567 [DEBUG] Handling movement: south
+2025-05-15 21:17:00,567 [DEBUG] Moved south to (2, 2)
+2025-05-15 21:17:00,585 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 2)
+2025-05-15 21:17:00,585 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:17:00,585 [DEBUG] Moved south via arrow key
+2025-05-15 21:17:00,585 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:17:00,686 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=1
+2025-05-15 21:17:00,787 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:17:00,888 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:17:00,889 [DEBUG] No input detected, idling
+2025-05-15 21:17:01,090 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=1
+2025-05-15 21:17:01,090 [DEBUG] msvcrt key pressed: b'K'
+2025-05-15 21:17:01,090 [DEBUG] Ignored key: b'K'
+2025-05-15 21:17:01,090 [DEBUG] Handling movement: north
+2025-05-15 21:17:01,090 [DEBUG] Moved north to (2, 3)
+2025-05-15 21:17:01,110 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:01,110 [DEBUG] Displayed status: mode=movement, message=You move north., HP=12/12, MP=0/0
+2025-05-15 21:17:01,110 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:17:01,110 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:01,210 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:01,314 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:01,414 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:01,415 [DEBUG] No input detected, idling
+2025-05-15 21:17:01,616 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:01,616 [DEBUG] msvcrt key pressed: b'H'
+2025-05-15 21:17:01,616 [DEBUG] Ignored key: b'H'
+2025-05-15 21:17:01,616 [DEBUG] Handling movement: east
+2025-05-15 21:17:01,616 [DEBUG] Moved east to (3, 3)
+2025-05-15 21:17:01,636 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 3)
+2025-05-15 21:17:01,636 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:17:01,636 [DEBUG] Keyboard key pressed: right/d
+2025-05-15 21:17:01,636 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=1
+2025-05-15 21:17:01,736 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=0
+2025-05-15 21:17:01,837 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=0
+2025-05-15 21:17:01,938 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=1
+2025-05-15 21:17:01,938 [DEBUG] msvcrt key pressed: b'M'
+2025-05-15 21:17:01,938 [DEBUG] Ignored key: b'M'
+2025-05-15 21:17:01,938 [DEBUG] Handling movement: south
+2025-05-15 21:17:01,938 [DEBUG] Moved south to (3, 2)
+2025-05-15 21:17:01,958 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 2)
+2025-05-15 21:17:01,958 [DEBUG] Displayed status: mode=movement, message=You move south., HP=12/12, MP=0/0
+2025-05-15 21:17:01,959 [DEBUG] Keyboard key pressed: down/s
+2025-05-15 21:17:01,959 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=1
+2025-05-15 21:17:02,059 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=0
+2025-05-15 21:17:02,160 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=1
+2025-05-15 21:17:02,260 [DEBUG] Main loop iteration: mode=movement, pos=(3, 2), map=forest, kbhit=1
+2025-05-15 21:17:02,261 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:02,261 [DEBUG] Arrow key second byte: b'K'
+2025-05-15 21:17:02,261 [DEBUG] Handling movement: west
+2025-05-15 21:17:02,261 [DEBUG] Moved west to (2, 2)
+2025-05-15 21:17:02,282 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 2)
+2025-05-15 21:17:02,282 [DEBUG] Displayed status: mode=movement, message=You move west., HP=12/12, MP=0/0
+2025-05-15 21:17:02,282 [DEBUG] Moved west via arrow key
+2025-05-15 21:17:02,282 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:17:02,383 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:17:02,483 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:17:02,584 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=0
+2025-05-15 21:17:02,585 [DEBUG] No input detected, idling
+2025-05-15 21:17:02,785 [DEBUG] Main loop iteration: mode=movement, pos=(2, 2), map=forest, kbhit=1
+2025-05-15 21:17:02,786 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:02,786 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:17:02,786 [DEBUG] Handling movement: north
+2025-05-15 21:17:02,786 [DEBUG] Moved north to (2, 3)
+2025-05-15 21:17:02,806 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:02,806 [DEBUG] Displayed status: mode=movement, message=You move north., HP=12/12, MP=0/0
+2025-05-15 21:17:02,806 [DEBUG] Moved north via arrow key
+2025-05-15 21:17:02,806 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:02,907 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,007 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,108 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:03,108 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:03,108 [DEBUG] Arrow key second byte: b'M'
+2025-05-15 21:17:03,108 [DEBUG] Handling movement: east
+2025-05-15 21:17:03,108 [DEBUG] Moved east to (3, 3)
+2025-05-15 21:17:03,128 [DEBUG] Displayed map: map=forest, room=None, pos=(3, 3)
+2025-05-15 21:17:03,128 [DEBUG] Displayed status: mode=movement, message=You move east., HP=12/12, MP=0/0
+2025-05-15 21:17:03,128 [DEBUG] Moved east via arrow key
+2025-05-15 21:17:03,128 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,229 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,329 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,430 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,430 [DEBUG] No input detected, idling
+2025-05-15 21:17:03,631 [DEBUG] Main loop iteration: mode=movement, pos=(3, 3), map=forest, kbhit=1
+2025-05-15 21:17:03,632 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:03,632 [DEBUG] Arrow key second byte: b'K'
+2025-05-15 21:17:03,632 [DEBUG] Handling movement: west
+2025-05-15 21:17:03,632 [DEBUG] Moved west to (2, 3)
+2025-05-15 21:17:03,652 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:03,652 [DEBUG] Displayed status: mode=movement, message=You move west., HP=12/12, MP=0/0
+2025-05-15 21:17:03,653 [DEBUG] Moved west via arrow key
+2025-05-15 21:17:03,653 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,753 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,854 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,955 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:03,956 [DEBUG] No input detected, idling
+2025-05-15 21:17:04,157 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:04,157 [DEBUG] No input detected, idling
+2025-05-15 21:17:04,358 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:04,358 [DEBUG] No input detected, idling
+2025-05-15 21:17:04,558 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:04,559 [DEBUG] No input detected, idling
+2025-05-15 21:17:04,760 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:04,760 [DEBUG] No input detected, idling
+2025-05-15 21:17:04,961 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:04,962 [DEBUG] No input detected, idling
+2025-05-15 21:17:05,162 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:05,164 [DEBUG] No input detected, idling
+2025-05-15 21:17:05,365 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:05,366 [DEBUG] No input detected, idling
+2025-05-15 21:17:05,566 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:05,567 [DEBUG] No input detected, idling
+2025-05-15 21:17:05,767 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:05,768 [DEBUG] No input detected, idling
+2025-05-15 21:17:05,970 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:05,971 [DEBUG] No input detected, idling
+2025-05-15 21:17:06,172 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:06,173 [DEBUG] No input detected, idling
+2025-05-15 21:17:06,374 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:06,375 [DEBUG] No input detected, idling
+2025-05-15 21:17:06,576 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:06,576 [DEBUG] No input detected, idling
+2025-05-15 21:17:06,777 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:06,778 [DEBUG] No input detected, idling
+2025-05-15 21:17:06,979 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:06,980 [DEBUG] No input detected, idling
+2025-05-15 21:17:07,181 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:07,182 [DEBUG] No input detected, idling
+2025-05-15 21:17:07,383 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:07,383 [DEBUG] No input detected, idling
+2025-05-15 21:17:07,584 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:07,585 [DEBUG] No input detected, idling
+2025-05-15 21:17:07,785 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:07,786 [DEBUG] No input detected, idling
+2025-05-15 21:17:07,987 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:07,987 [DEBUG] No input detected, idling
+2025-05-15 21:17:08,188 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:08,189 [DEBUG] No input detected, idling
+2025-05-15 21:17:08,389 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:08,390 [DEBUG] No input detected, idling
+2025-05-15 21:17:08,591 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:08,592 [DEBUG] No input detected, idling
+2025-05-15 21:17:08,793 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:08,795 [DEBUG] No input detected, idling
+2025-05-15 21:17:08,995 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:08,996 [DEBUG] No input detected, idling
+2025-05-15 21:17:09,196 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:09,197 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:09,197 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:17:09,197 [DEBUG] Handling movement: north
+2025-05-15 21:17:09,197 [DEBUG] Blocked movement north: tree
+2025-05-15 21:17:09,216 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:09,217 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:17:09,217 [DEBUG] Moved north via arrow key
+2025-05-15 21:17:09,217 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:09,317 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:09,418 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:09,518 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:09,519 [DEBUG] Handling movement: north
+2025-05-15 21:17:09,519 [DEBUG] Blocked movement north: tree
+2025-05-15 21:17:09,537 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:09,538 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:17:09,538 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:17:09,538 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:09,638 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:09,739 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:09,839 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:09,840 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:09,840 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:17:09,840 [DEBUG] Handling movement: north
+2025-05-15 21:17:09,840 [DEBUG] Blocked movement north: tree
+2025-05-15 21:17:09,859 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:09,859 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:17:09,859 [DEBUG] Moved north via arrow key
+2025-05-15 21:17:09,859 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:09,960 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:10,062 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:10,163 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:10,163 [DEBUG] No input detected, idling
+2025-05-15 21:17:10,364 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:10,364 [DEBUG] No input detected, idling
+2025-05-15 21:17:10,565 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:10,565 [DEBUG] No input detected, idling
+2025-05-15 21:17:10,766 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:10,766 [DEBUG] No input detected, idling
+2025-05-15 21:17:10,967 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:10,967 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:10,967 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:17:10,967 [DEBUG] Handling movement: north
+2025-05-15 21:17:10,968 [DEBUG] Blocked movement north: tree
+2025-05-15 21:17:10,989 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:10,989 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:17:10,989 [DEBUG] Moved north via arrow key
+2025-05-15 21:17:10,989 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,090 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,191 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,291 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,292 [DEBUG] Handling movement: north
+2025-05-15 21:17:11,292 [DEBUG] Blocked movement north: tree
+2025-05-15 21:17:11,312 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:11,312 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:17:11,312 [DEBUG] Keyboard key pressed: up/w
+2025-05-15 21:17:11,312 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,413 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:11,514 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:11,614 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=1
+2025-05-15 21:17:11,615 [DEBUG] msvcrt key pressed: b'\xc3\xa0'
+2025-05-15 21:17:11,615 [DEBUG] Arrow key second byte: b'H'
+2025-05-15 21:17:11,615 [DEBUG] Handling movement: north
+2025-05-15 21:17:11,615 [DEBUG] Blocked movement north: tree
+2025-05-15 21:17:11,643 [DEBUG] Displayed map: map=forest, room=None, pos=(2, 3)
+2025-05-15 21:17:11,643 [DEBUG] Displayed status: mode=movement, message=You can't move north! A tree blocks your path., HP=12/12, MP=0/0
+2025-05-15 21:17:11,643 [DEBUG] Moved north via arrow key
+2025-05-15 21:17:11,643 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,744 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,845 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,945 [DEBUG] Main loop iteration: mode=movement, pos=(2, 3), map=forest, kbhit=0
+2025-05-15 21:17:11,946 [DEBUG] No input detected, idling
