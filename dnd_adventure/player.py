@@ -13,6 +13,11 @@ class Player:
         level: int = 1,
         features: List[str] = None,
         subclass: Optional[str] = None,
+        hit_points: int = 1,
+        max_hit_points: int = 1,
+        mp: int = 0,
+        max_mp: int = 0,
+        xp: int = 0,
     ):
         self.name = name
         self.race = race
@@ -23,6 +28,11 @@ class Player:
         self.level = level
         self.features = features or []
         self.subclass = subclass
+        self.hit_points = hit_points
+        self.max_hit_points = max_hit_points
+        self.mp = mp
+        self.max_mp = max_mp
+        self.xp = xp
         self.race_manager = RaceManager()
         self._apply_racial_modifiers()
 
@@ -48,4 +58,9 @@ class Player:
             "level": self.level,
             "features": self.features,
             "subclass": self.subclass,
+            "hit_points": self.hit_points,
+            "max_hit_points": self.max_hit_points,
+            "mp": self.mp,
+            "max_mp": self.max_mp,
+            "xp": self.xp,
         }

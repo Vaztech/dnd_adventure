@@ -42,6 +42,11 @@ class PlayerManager:
                         level=player_data.get("level", 1),
                         features=player_data.get("features", []),
                         subclass=player_data.get("subclass", None),
+                        hit_points=player_data.get("hit_points", 1),
+                        max_hit_points=player_data.get("max_hit_points", 1),
+                        mp=player_data.get("mp", 0),
+                        max_mp=player_data.get("max_mp", 0),
+                        xp=player_data.get("xp", 0),
                     )
                     starting_room = player_data.get("current_room")
                     logger.debug(f"Loaded player: {player_data['name']}, room: {starting_room}")
@@ -71,6 +76,11 @@ class PlayerManager:
             level=player_data.get("level", 1),
             features=player_data["features"],
             subclass=player_data.get("subclass", None),
+            hit_points=player_data["max_hp"],
+            max_hit_points=player_data["max_hp"],
+            mp=player_data["max_mp"],
+            max_mp=player_data["max_mp"],
+            xp=0,
         )
         starting_room = self.find_starting_position(game)
         logger.debug("Player initialization complete")
@@ -196,6 +206,8 @@ class PlayerManager:
                     "spells": spells,
                     "features": features,
                     "level": level,
+                    "max_hp": max_hp,
+                    "max_mp": max_mp,
                 }
             else:
                 console_print("Invalid choice. Please select 1-5.", color="red")
