@@ -1,22 +1,22 @@
 {
-    "name": "Vaz",
-    "race": "Dwarf",
-    "subrace_name": "Mountain Dwarf",
-    "class_name": "Wizard",
+    "name": "Josh",
+    "race": "Changeling",
+    "subrace_name": null,
+    "class_name": "Sorcerer",
     "stats": {
-        "Strength": 8,
-        "Dexterity": 13,
-        "Constitution": 16,
-        "Intelligence": 8,
+        "Strength": 15,
+        "Dexterity": 11,
+        "Constitution": 12,
+        "Intelligence": 13,
         "Wisdom": 14,
-        "Charisma": 13
+        "Charisma": 14
     },
     "known_spells": {
         "0": [
             "Acid Splash",
-            "Detect Magic",
             "Dancing Lights",
-            "Mage Hand"
+            "Detect Magic",
+            "Ray of Frost"
         ],
         "1": [
             "Magic Missile",
@@ -42,8 +42,8 @@
     "domain": null,
     "current_room": null,
     "player_pos": [
-        95,
-        94
+        100,
+        89
     ],
     "world_seed": null
 }

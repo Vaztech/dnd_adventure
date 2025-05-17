@@ -2,7 +2,8 @@ from enum import Enum
 from typing import Dict, List, Optional, Callable
 import logging
 from dnd_adventure.dnd35e.core.monsters import Monster
-from dnd_adventure.dnd35e.core import Item, Trap, Puzzle, LightSource, NPC
+from dnd_adventure.dnd35e.core import Item, Trap, Puzzle, LightSource
+from dnd_adventure.npc import NPC
 
 logger = logging.getLogger(__name__)
 

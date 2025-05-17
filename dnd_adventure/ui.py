@@ -2,11 +2,11 @@ import os
 from typing import List, Optional, Tuple
 from colorama import Fore, Style
 import logging
-from dnd_adventure.game import Game
 
 logger = logging.getLogger(__name__)
 
 def display_start_menu() -> Tuple[Optional[str], Optional[str]]:
+    from dnd_adventure.game import Game  # Local import
     options = ["Start New Game", "Continue Game", "Delete Save", "Exit"]
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -83,7 +83,8 @@ def select_save_file(save_files: List[str]) -> Optional[str]:
             print(f"{Fore.RED}Invalid input! Please enter a number or 'q' to cancel.{Style.RESET_ALL}")
             input(f"{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")
 
-def display_current_map(game: Game):
+def display_current_map(game):
+    from dnd_adventure.game import Game  # Local import
     os.system('cls' if os.name == 'nt' else 'clear')
     tile = game.world.get_location(*game.last_world_pos)
     country_id = tile.get("country")
@@ -179,7 +180,8 @@ def display_current_map(game: Game):
                 game.current_room = None
     logger.debug(f"Displayed map: map={game.current_map}, room={game.current_room}, pos={game.player_pos}")
 
-def display_status(game: Game):
+def display_status(game):
+    from dnd_adventure.game import Game  # Local import
     if game.player is None:
         print(f"{Fore.YELLOW}No character created. Please create a character to continue.{Style.RESET_ALL}")
         logger.warning("Attempted to display status with no player")
