@@ -5,9 +5,20 @@ from dnd_adventure.ui import display_current_map, display_status
 
 logger = logging.getLogger(__name__)
 
+# Import globals from logging_config.py
+from dnd_adventure.logging_config import DEBUG_MODE, CONSOLE_HANDLER
+
 # Cache keyboard module and track failures
 keyboard_module = None
 failed_attempts = 0
+
+def toggle_debug_mode():
+    global DEBUG_MODE
+    DEBUG_MODE = not DEBUG_MODE
+    CONSOLE_HANDLER.setLevel(logging.DEBUG if key == '\x7f' else logging.INFO)
+    status = "enabled" if DEBUG_MODE else "disabled"
+    logger.debug(f"Debug console output {status}")
+    print(f"{Fore.CYAN}Debug console output {status}{Style.RESET_ALL}")
 
 def handle_keyboard_input(game, current_time: float, last_key_time: float) -> tuple[bool, float, float] | None:
     global keyboard_module, failed_attempts
@@ -56,13 +67,19 @@ def handle_keyboard_input(game, current_time: float, last_key_time: float) -> tu
                 game.mode = "command"
                 display_current_map(game)
                 display_status(game)
-                logger.debug("Switched to command mode via keyboard")
-                return game.running, current_time, current_time
+            logger.debug("Switched to command mode via keyboard")
+            return game.running, current_time, current_time
         elif keyboard_module.is_pressed("esc"):
             display_current_map(game)
             print(f"{Fore.YELLOW}Available commands: {', '.join(game.commands)}{Style.RESET_ALL}")
             display_status(game)
             logger.debug("Displayed help commands via keyboard")
+            return game.running, current_time, current_time
+        elif keyboard_module.is_pressed("f12"):
+            toggle_debug_mode()
+            display_current_map(game)
+            display_status(game)
+            logger.debug("Toggled debug mode via F12")
             return game.running, current_time, current_time
         return None
     except Exception as e:

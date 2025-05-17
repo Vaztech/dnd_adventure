@@ -14,7 +14,14 @@ from dnd_adventure.dnd35e.core.monsters import Monster, Attack
 from dnd_adventure.quest_manager import QuestManager
 from dnd_adventure.save_manager import SaveManager
 from dnd_adventure.utils import load_graphics
+from dnd_adventure.leveling import level_up, load_classes
 
+# Configure logging
+logging.basicConfig(
+    filename="dnd_adventure/dnd_adventure.log",
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 class Game:
@@ -22,26 +29,18 @@ class Game:
         logger.debug(f"Initializing Game object for player: {player_name}")
         print("DEBUG: Initializing Game...")
         self.player_name = player_name
-        logger.debug("Loading graphics...")
         self.graphics = load_graphics()
-        logger.debug("Creating World...")
         self.world = World(seed=None, graphics=self.graphics)
-        logger.debug("Creating GameWorld...")
         self.game_world = GameWorld(self.world)
-        logger.debug("Creating QuestManager...")
         self.quest_manager = QuestManager(self.world)
-        logger.debug("Creating SaveManager...")
         self.save_manager = SaveManager()
-        logger.debug("Initializing player...")
+        self.classes = load_classes()
         self.player, self.starting_room = self.initialize_player(save_file)
-        logger.debug("Setting current room...")
         self.current_room = self.starting_room
-        logger.debug("Finding starting position...")
         self.player_pos = self.find_starting_position()
-        logger.debug("Setting game state...")
         self.running = True
         self.mode = "movement"
-        self.debug_mode = False  # Added for trap testing
+        self.debug_mode = False
         self.previous_menu = None
         self.commands = [
             "look", "lore", "attack", "cast", "rest",
@@ -51,7 +50,6 @@ class Game:
         self.last_world_pos = self.player_pos
         self.message = ""
         self.last_enter_time = 0
-        logger.debug("Setting initial map and room...")
         tile = self.world.get_location(*self.player_pos)
         if tile["type"] in self.graphics["maps"]:
             self.current_map = tile["type"]
@@ -68,20 +66,9 @@ class Game:
         return 300 * (3 ** inoculated_level)
 
     def check_level_up(self):
-        current_level = self.player.level
-        next_level = current_level + 1
-        xp_required = self.get_xp_for_level(next_level)
-        while self.player.xp >= xp_required and next_level <= 20:
-            self.player.level = next_level
-            self.player.max_hit_points += 5
-            self.player.hit_points = self.player.max_hit_points
-            self.player.max_mp += 3
-            self.player.mp = self.player.max_mp
-            print(f"{Fore.GREEN}Congratulations! {self.player.name} has reached level {self.player.level}!{Style.RESET_ALL}")
-            print(f"HP increased to {self.player.max_hit_points}, MP increased to {self.player.max_mp}.")
-            logger.info(f"Player {self.player.name} leveled up to {self.player.level}")
-            next_level += 1
-            xp_required = self.get_xp_for_level(next_level)
+        if level_up(self.player, self.classes):
+            # Level-up handled in leveling.py
+            pass
 
     def calculate_monster_difficulty(self, monster: Monster) -> float:
         hp_score = monster.hit_points
@@ -135,7 +122,7 @@ class Game:
         return (x, y)
 
     def initialize_player(self, save_file: Optional[str]) -> Tuple[Character, Optional[str]]:
-        from dnd_adventure.character_creator import create_player, display_initial_lore
+        from dnd_adventure.character_creator import create_player
         logger.debug(f"Initializing player, save_file={save_file}")
         if save_file:
             try:
@@ -150,12 +137,9 @@ class Game:
                 print(f"{Fore.RED}Failed to load save: {e}. Starting new game.{Style.RESET_ALL}")
         logger.debug("Creating new player")
         player = create_player(self.player_name, self)
-        logger.debug("Finding starting room")
         starting_room = next((room_id for room_id in self.game_world.rooms if self.game_world.world.get_location(*map(int, room_id.split(',')))["type"] == "dungeon"), None)
         if starting_room:
             self.player_pos = tuple(map(int, starting_room.split(",")))
-        logger.debug("Displaying initial lore")
-        display_initial_lore(player, self.world)
         logger.debug("Player initialization complete")
         return player, starting_room
 
@@ -199,6 +183,12 @@ class Game:
         elif cmd == "help":
             print(f"{Fore.YELLOW}Available commands: {', '.join(self.commands)}{Style.RESET_ALL}")
             logger.debug("Displayed help commands")
+        elif cmd == "debug":
+            self.debug_mode = not self.debug_mode
+            print(f"Debug mode: {'ON' if self.debug_mode else 'OFF'}")
+        elif cmd == "clear path" and self.debug_mode:
+            self.world.map["locations"][101][96]["type"] = "forest"
+            print("Path cleared at (101, 96)")
         elif cmd:
             print(f"{Fore.RED}Unknown command '{cmd}'. Try: {', '.join(self.commands)}{Style.RESET_ALL}")
             logger.warning(f"Unknown command: {cmd}")

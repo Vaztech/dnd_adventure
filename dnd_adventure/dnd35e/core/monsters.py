@@ -5,9 +5,9 @@ from typing import List, Dict, Optional
 class Attack:
     def __init__(self, name: str, damage: str, attack_bonus: int = 0, special: Optional[str] = None):
         self.name = name
-        self.damage = damage  # e.g., "1d6"
+        self.damage = damage
         self.attack_bonus = attack_bonus
-        self.special = special  # e.g., "Poison", "Stun", etc.
+        self.special = special
 
     def __repr__(self):
         return f"Attack({self.name}, DMG: {self.damage}, Bonus: {self.attack_bonus}, Special: {self.special})"
@@ -40,7 +40,7 @@ class Monster:
         }
         self.attacks = attacks or []
         self.spell_like_abilities = spell_like_abilities or {}
-        self.abilities_list = abilities_list or []  # Other special attacks
+        self.abilities_list = abilities_list or []
 
     def __repr__(self):
         return (f"Monster({self.name}, Type: {self.type}, CR: {self.challenge_rating}, "
@@ -62,8 +62,8 @@ class MonsterTemplate:
 def load_monsters_from_json() -> List[Monster]:
     """Load monsters from a JSON file and convert to Monster objects."""
     try:
-        base_path = Path(__file__).resolve().parent
-        json_path = base_path / 'data' / 'srd_monsters.json'  # Corrected path
+        base_path = Path(__file__).resolve().parent.parent.parent
+        json_path = base_path / 'data' / 'srd_monsters.json'
 
         if not json_path.exists():
             print(f"Error: The file {json_path} does not exist.")
@@ -123,10 +123,8 @@ def load_monsters_from_json() -> List[Monster]:
         print(f"Error processing monster JSON: {e}")
         return []
 
-# Monster pool
 SRD_MONSTERS = load_monsters_from_json()
 
-# Monster lookups
 def get_monsters_by_cr(cr: float) -> List[Monster]:
     return [m for m in SRD_MONSTERS if m.challenge_rating == cr]
 

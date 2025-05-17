@@ -1,576 +1,428 @@
 {
-  "Barbarian": {
-    "name": "Barbarian",
-    "description": "A fierce warrior fueled by rage, excelling in melee combat with high durability and strength.",
-    "hit_die": 12,
-    "base_attack_bonus": "good",
-    "saving_throws": {
-      "Fort": "good",
-      "Ref": "poor",
-      "Will": "poor"
-    },
-    "skill_points": 4,
-    "class_skills": ["Climb", "Craft", "Handle Animal", "Intimidate", "Jump", "Listen", "Ride", "Survival", "Swim"],
-    "spellcasting": null,
-    "features": [
-      {"name": "Rage", "level": 1, "description": "Gain +4 Strength, +4 Constitution, +2 Will saves, -2 AC for limited rounds"},
-      {"name": "Fast Movement", "level": 1, "description": "+10 ft. to base speed"}
-    ],
-    "subclasses": {
-      "Bear Warrior": {
-        "description": "A barbarian who channels the spirit of a bear, gaining the ability to transform during rage.",
+    "Barbarian": {
+        "description": "A fierce warrior fueled by rage, excelling in melee combat with high durability and strength.",
         "hit_die": 12,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "poor"},
-        "skill_points": 4,
-        "class_skills": ["Climb", "Intimidate", "Survival"],
-        "spellcasting": null,
+        "bab_progression": "fast",
+        "spellcasting": false,
+        "class_skills": [
+            "Climb",
+            "Craft",
+            "Handle Animal",
+            "Intimidate",
+            "Jump",
+            "Listen",
+            "Ride",
+            "Survival",
+            "Swim"
+        ],
         "features": [
-          {"name": "Bear Form", "level": 1, "description": "Transform into a bear during rage"}
-        ]
-      },
-      "Frenzied Berserker": {
-        "description": "A barbarian who enters an uncontrollable frenzy, gaining devastating combat prowess.",
-        "hit_die": 12,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "poor"},
-        "skill_points": 4,
-        "class_skills": ["Climb", "Intimidate", "Survival"],
-        "spellcasting": null,
-        "features": [
-          {"name": "Frenzy", "level": 1, "description": "Enter a more powerful rage with additional attacks"}
-        ]
-      }
-    }
-  },
-  "Bard": {
-    "name": "Bard",
-    "description": "A charismatic performer who weaves magic through music and excels in social interactions.",
-    "hit_die": 6,
-    "base_attack_bonus": "average",
-    "saving_throws": {
-      "Fort": "poor",
-      "Ref": "good",
-      "Will": "good"
+            {"name": "Rage", "level": 1, "description": "Gain +4 Strength, +4 Constitution, +2 Will saves, -2 AC for limited rounds"},
+            {"name": "Fast Movement", "level": 1, "description": "+10 ft. to base speed"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 6,
-    "class_skills": ["Appraise", "Balance", "Bluff", "Climb", "Concentration", "Craft", "Decipher Script", "Diplomacy", "Disguise", "Escape Artist", "Gather Information", "Hide", "Jump", "Knowledge (all)", "Listen", "Move Silently", "Perform", "Profession", "Sense Motive", "Sleight of Hand", "Speak Language", "Spellcraft", "Swim", "Tumble", "Use Magic Device"],
-    "spellcasting": {
-      "type": "arcane",
-      "ability": "Charisma",
-      "spells_known": "spontaneous"
-    },
-    "features": [
-      {"name": "Bardic Music", "level": 1, "description": "Inspire courage, fascinate, and other effects"},
-      {"name": "Bardic Knowledge", "level": 1, "description": "Bonus to Knowledge checks"}
-    ],
-    "subclasses": {
-      "Sublime Chord": {
-        "description": "A bard who masters advanced musical magic, enhancing their spellcasting abilities.",
+    "Bard": {
+        "description": "A charismatic performer who weaves magic through music and excels in social interactions.",
         "hit_die": 6,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "poor", "Ref": "good", "Will": "good"},
-        "skill_points": 6,
-        "class_skills": ["Concentration", "Diplomacy", "Perform", "Spellcraft"],
-        "spellcasting": {
-          "type": "arcane",
-          "ability": "Charisma",
-          "spells_known": "spontaneous"
-        },
+        "bab_progression": "medium",
+        "spellcasting": true,
+        "spellcasting_stat": "Charisma",
+        "class_skills": [
+            "Appraise",
+            "Balance",
+            "Bluff",
+            "Climb",
+            "Concentration",
+            "Craft",
+            "Decipher Script",
+            "Diplomacy",
+            "Disguise",
+            "Escape Artist",
+            "Gather Information",
+            "Hide",
+            "Jump",
+            "Knowledge (all)",
+            "Listen",
+            "Move Silently",
+            "Perform",
+            "Profession",
+            "Sense Motive",
+            "Sleight of Hand",
+            "Speak Language",
+            "Spellcraft",
+            "Swim",
+            "Tumble",
+            "Use Magic Device"
+        ],
         "features": [
-          {"name": "Enhanced Bardic Music", "level": 1, "description": "Advanced musical abilities"}
-        ]
-      },
-      "Virtuoso": {
-        "description": "A bard who specializes in captivating performances, amplifying their musical effects.",
-        "hit_die": 6,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "poor", "Ref": "good", "Will": "good"},
-        "skill_points": 6,
-        "class_skills": ["Bluff", "Diplomacy", "Perform"],
-        "spellcasting": {
-          "type": "arcane",
-          "ability": "Charisma",
-          "spells_known": "spontaneous"
-        },
-        "features": [
-          {"name": "Masterful Performance", "level": 1, "description": "Enhanced bardic music effects"}
-        ]
-      }
-    }
-  },
-  "Cleric": {
-    "name": "Cleric",
-    "description": "A divine spellcaster who channels the power of their deity to heal and protect allies.",
-    "hit_die": 8,
-    "base_attack_bonus": "average",
-    "saving_throws": {
-      "Fort": "good",
-      "Ref": "poor",
-      "Will": "good"
+            {"name": "Bardic Music", "level": 1, "description": "Inspire courage, fascinate, and other effects"},
+            {"name": "Bardic Knowledge", "level": 1, "description": "Bonus to Knowledge checks"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 2,
-    "class_skills": ["Concentration", "Craft", "Diplomacy", "Heal", "Knowledge (arcana)", "Knowledge (history)", "Knowledge (religion)", "Knowledge (the planes)", "Profession", "Spellcraft"],
-    "spellcasting": {
-      "type": "divine",
-      "ability": "Wisdom",
-      "spells_known": "prepared"
-    },
-    "features": [
-      {"name": "Turn Undead", "level": 1, "description": "Channel divine energy to turn undead"},
-      {"name": "Domains", "level": 1, "description": "Choose two domains for bonus spells and powers"}
-    ],
-    "subclasses": {
-      "Radiant Servant": {
-        "description": "A cleric devoted to light, with enhanced abilities to combat undead.",
+    "Cleric": {
+        "description": "A divine spellcaster who channels the power of their deity to heal and protect allies.",
         "hit_die": 8,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "good"},
-        "skill_points": 2,
-        "class_skills": ["Heal", "Knowledge (religion)", "Spellcraft"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
+        "bab_progression": "medium",
+        "spellcasting": true,
+        "spellcasting_stat": "Wisdom",
+        "class_skills": [
+            "Concentration",
+            "Craft",
+            "Diplomacy",
+            "Heal",
+            "Knowledge (arcana)",
+            "Knowledge (history)",
+            "Knowledge (religion)",
+            "Knowledge (the planes)",
+            "Profession",
+            "Spellcraft"
+        ],
         "features": [
-          {"name": "Radiant Turning", "level": 1, "description": "Enhanced turning against undead"}
-        ]
-      },
-      "Divine Oracle": {
-        "description": "A cleric gifted with foresight, specializing in divination magic.",
-        "hit_die": 8,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "good"},
-        "skill_points": 2,
-        "class_skills": ["Knowledge (religion)", "Spellcraft"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
-        "features": [
-          {"name": "Divination Mastery", "level": 1, "description": "Bonus to divination spells"}
-        ]
-      }
-    }
-  },
-  "Druid": {
-    "name": "Druid",
-    "description": "A nature-bound spellcaster who draws power from the wilderness and bonds with animals.",
-    "hit_die": 8,
-    "base_attack_bonus": "average",
-    "saving_throws": {
-      "Fort": "good",
-      "Ref": "poor",
-      "Will": "good"
+            {"name": "Turn Undead", "level": 1, "description": "Channel divine energy to turn undead"},
+            {"name": "Domains", "level": 1, "description": "Choose two domains for bonus spells and powers"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 4,
-    "class_skills": ["Concentration", "Craft", "Diplomacy", "Handle Animal", "Heal", "Knowledge (nature)", "Listen", "Profession", "Ride", "Spellcraft", "Spot", "Survival", "Swim"],
-    "spellcasting": {
-      "type": "divine",
-      "ability": "Wisdom",
-      "spells_known": "prepared"
-    },
-    "features": [
-      {"name": "Animal Companion", "level": 1, "description": "Gain a loyal animal companion"},
-      {"name": "Nature Sense", "level": 1, "description": "Bonus to Knowledge (nature) and Survival"}
-    ],
-    "subclasses": {
-      "Planar Shepherd": {
-        "description": "A druid attuned to other planes, gaining unique abilities tied to specific realms.",
+    "Druid": {
+        "description": "A nature-bound spellcaster who draws power from the wilderness and bonds with animals.",
         "hit_die": 8,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "good"},
-        "skill_points": 4,
-        "class_skills": ["Handle Animal", "Knowledge (nature)", "Survival"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
+        "bab_progression": "medium",
+        "spellcasting": true,
+        "spellcasting_stat": "Wisdom",
+        "class_skills": [
+            "Concentration",
+            "Craft",
+            "Diplomacy",
+            "Handle Animal",
+            "Heal",
+            "Knowledge (nature)",
+            "Listen",
+            "Profession",
+            "Ride",
+            "Spellcraft",
+            "Spot",
+            "Survival",
+            "Swim"
+        ],
         "features": [
-          {"name": "Planar Attunement", "level": 1, "description": "Attune to a specific plane"}
-        ]
-      },
-      "Moonspeaker": {
-        "description": "A druid who harnesses lunar energy, enhancing spells with celestial power.",
-        "hit_die": 8,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "good"},
-        "skill_points": 4,
-        "class_skills": ["Knowledge (nature)", "Spellcraft", "Survival"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
-        "features": [
-          {"name": "Lunar Magic", "level": 1, "description": "Enhanced spells tied to lunar cycles"}
-        ]
-      }
-    }
-  },
-  "Fighter": {
-    "name": "Fighter",
-    "description": "A versatile combatant skilled in a wide array of weapons and tactics.",
-    "hit_die": 10,
-    "base_attack_bonus": "good",
-    "saving_throws": {
-      "Fort": "good",
-      "Ref": "poor",
-      "Will": "poor"
+            {"name": "Animal Companion", "level": 1, "description": "Gain a loyal animal companion"},
+            {"name": "Nature Sense", "level": 1, "description": "Bonus to Knowledge (nature) and Survival"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 2,
-    "class_skills": ["Climb", "Craft", "Handle Animal", "Intimidate", "Jump", "Ride", "Swim"],
-    "spellcasting": null,
-    "features": [
-      {"name": "Bonus Feat", "level": 1, "description": "Gain a bonus feat at 1st level and every even level"}
-    ],
-    "subclasses": {
-      "Warblade": {
-        "description": "A fighter who blends martial maneuvers with tactical combat expertise.",
-        "hit_die": 12,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "poor"},
-        "skill_points": 4,
-        "class_skills": ["Balance", "Intimidate", "Jump", "Tumble"],
-        "spellcasting": null,
-        "features": [
-          {"name": "Battle Clarity", "level": 1, "description": "Bonus to Reflex saves based on Intelligence"}
-        ]
-      },
-      "Knight": {
-        "description": "A disciplined fighter who excels in mounted combat and issuing challenges.",
+    "Fighter": {
+        "description": "A versatile combatant skilled in a wide array of weapons and tactics.",
         "hit_die": 10,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "poor"},
-        "skill_points": 2,
-        "class_skills": ["Intimidate", "Ride"],
-        "spellcasting": null,
+        "bab_progression": "fast",
+        "spellcasting": false,
+        "class_skills": [
+            "Climb",
+            "Craft",
+            "Handle Animal",
+            "Intimidate",
+            "Jump",
+            "Ride",
+            "Swim"
+        ],
         "features": [
-          {"name": "Knight's Challenge", "level": 1, "description": "Challenge enemies to combat"}
-        ]
-      }
-    }
-  },
-  "Monk": {
-    "name": "Monk",
-    "description": "A martial artist who masters unarmed combat and spiritual discipline.",
-    "hit_die": 8,
-    "base_attack_bonus": "average",
-    "saving_throws": {
-      "Fort": "good",
-      "Ref": "good",
-      "Will": "good"
+            {"name": "Bonus Feat", "level": 1, "description": "Gain a bonus feat at 1st level and every even level"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 4,
-    "class_skills": ["Balance", "Climb", "Concentration", "Craft", "Diplomacy", "Escape Artist", "Hide", "Jump", "Knowledge (arcana)", "Knowledge (religion)", "Listen", "Move Silently", "Perform", "Profession", "Sense Motive", "Spot", "Swim", "Tumble"],
-    "spellcasting": null,
-    "features": [
-      {"name": "Flurry of Blows", "level": 1, "description": "Extra attack with unarmed strikes"},
-      {"name": "Unarmed Strike", "level": 1, "description": "Improved unarmed damage"}
-    ],
-    "subclasses": {
-      "Tattooed Monk": {
-        "description": "A monk who gains mystical powers through magical tattoos.",
+    "Monk": {
+        "description": "A martial artist who masters unarmed combat and spiritual discipline.",
         "hit_die": 8,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "good", "Ref": "good", "Will": "good"},
-        "skill_points": 4,
-        "class_skills": ["Balance", "Concentration", "Jump"],
-        "spellcasting": null,
+        "bab_progression": "medium",
+        "spellcasting": false,
+        "class_skills": [
+            "Balance",
+            "Climb",
+            "Concentration",
+            "Craft",
+            "Diplomacy",
+            "Escape Artist",
+            "Hide",
+            "Jump",
+            "Knowledge (arcana)",
+            "Knowledge (religion)",
+            "Listen",
+            "Move Silently",
+            "Perform",
+            "Profession",
+            "Sense Motive",
+            "Spot",
+            "Swim",
+            "Tumble"
+        ],
         "features": [
-          {"name": "Tattoo Magic", "level": 1, "description": "Gain magical abilities from tattoos"}
-        ]
-      },
-      "Sacred Fist": {
-        "description": "A monk who blends divine magic with martial prowess for sacred combat.",
-        "hit_die": 8,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "good", "Ref": "good", "Will": "good"},
-        "skill_points": 4,
-        "class_skills": ["Concentration", "Jump", "Tumble"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
-        "features": [
-          {"name": "Sacred Strikes", "level": 1, "description": "Unarmed strikes count as magic"}
-        ]
-      }
-    }
-  },
-  "Paladin": {
-    "name": "Paladin",
-    "description": "A holy warrior dedicated to righteousness, wielding divine magic and smiting evil.",
-    "hit_die": 10,
-    "base_attack_bonus": "good",
-    "saving_throws": {
-      "Fort": "good",
-      "Ref": "poor",
-      "Will": "poor"
+            {"name": "Flurry of Blows", "level": 1, "description": "Extra attack with unarmed strikes"},
+            {"name": "Unarmed Strike", "level": 1, "description": "Improved unarmed damage"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 2,
-    "class_skills": ["Concentration", "Craft", "Diplomacy", "Handle Animal", "Heal", "Knowledge (nobility)", "Knowledge (religion)", "Profession", "Ride", "Sense Motive"],
-    "spellcasting": {
-      "type": "divine",
-      "ability": "Wisdom",
-      "spells_known": "prepared"
-    },
-    "features": [
-      {"name": "Smite Evil", "level": 1, "description": "Bonus damage against evil creatures"},
-      {"name": "Divine Grace", "level": 2, "description": "Add Charisma to saves"}
-    ],
-    "subclasses": {
-      "Holy Liberator": {
-        "description": "A paladin who fights for freedom, smiting chaotic foes with divine power.",
+    "Paladin": {
+        "description": "A holy warrior dedicated to righteousness, wielding divine magic and smiting evil.",
         "hit_die": 10,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "poor"},
-        "skill_points": 2,
-        "class_skills": ["Diplomacy", "Heal", "Ride"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
+        "bab_progression": "fast",
+        "spellcasting": true,
+        "spellcasting_stat": "Wisdom",
+        "class_skills": [
+            "Concentration",
+            "Craft",
+            "Diplomacy",
+            "Handle Animal",
+            "Heal",
+            "Knowledge (nobility)",
+            "Knowledge (religion)",
+            "Profession",
+            "Ride",
+            "Sense Motive"
+        ],
         "features": [
-          {"name": "Chaotic Smite", "level": 1, "description": "Smite chaotic creatures"}
-        ]
-      },
-      "Shadowbane Inquisitor": {
-        "description": "A paladin who hunts evil outsiders and undead with relentless zeal.",
-        "hit_die": 10,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "poor"},
-        "skill_points": 2,
-        "class_skills": ["Knowledge (religion)", "Sense Motive"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
-        "features": [
-          {"name": "Shadowbane Smite", "level": 1, "description": "Smite evil outsiders and undead"}
-        ]
-      }
-    }
-  },
-  "Ranger": {
-    "name": "Ranger",
-    "description": "A skilled tracker and wilderness expert, adept at hunting specific foes.",
-    "hit_die": 8,
-    "base_attack_bonus": "good",
-    "saving_throws": {
-      "Fort": "good",
-      "Ref": "good",
-      "Will": "poor"
+            {"name": "Smite Evil", "level": 1, "description": "Bonus damage against evil creatures"},
+            {"name": "Divine Grace", "level": 2, "description": "Add Charisma to saves"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 6,
-    "class_skills": ["Climb", "Concentration", "Craft", "Handle Animal", "Heal", "Hide", "Jump", "Knowledge (dungeoneering)", "Knowledge (geography)", "Knowledge (nature)", "Listen", "Move Silently", "Profession", "Ride", "Search", "Spot", "Survival", "Swim", "Use Rope"],
-    "spellcasting": {
-      "type": "divine",
-      "ability": "Wisdom",
-      "spells_known": "prepared"
-    },
-    "features": [
-      {"name": "Favored Enemy", "level": 1, "description": "Bonus against specific creature types"},
-      {"name": "Track", "level": 1, "description": "Enhanced tracking ability"}
-    ],
-    "subclasses": {
-      "Arcane Hunter": {
-        "description": "A ranger specialized in tracking and combating spellcasters.",
+    "Ranger": {
+        "description": "A skilled tracker and wilderness expert, adept at hunting specific foes.",
         "hit_die": 8,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "good", "Will": "poor"},
-        "skill_points": 6,
-        "class_skills": ["Hide", "Knowledge (arcana)", "Survival"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
+        "bab_progression": "fast",
+        "spellcasting": true,
+        "spellcasting_stat": "Wisdom",
+        "class_skills": [
+            "Climb",
+            "Concentration",
+            "Craft",
+            "Handle Animal",
+            "Heal",
+            "Hide",
+            "Jump",
+            "Knowledge (dungeoneering)",
+            "Knowledge (geography)",
+            "Knowledge (nature)",
+            "Listen",
+            "Move Silently",
+            "Profession",
+            "Ride",
+            "Search",
+            "Spot",
+            "Survival",
+            "Swim",
+            "Use Rope"
+        ],
         "features": [
-          {"name": "Favored Enemy (Arcanists)", "level": 1, "description": "Bonus against spellcasters"}
-        ]
-      },
-      "Horizon Walker": {
-        "description": "A ranger who masters specific terrains, gaining environmental advantages.",
-        "hit_die": 8,
-        "base_attack_bonus": "good",
-        "saving_throws": {"Fort": "good", "Ref": "good", "Will": "poor"},
-        "skill_points": 6,
-        "class_skills": ["Knowledge (geography)", "Survival"],
-        "spellcasting": {
-          "type": "divine",
-          "ability": "Wisdom",
-          "spells_known": "prepared"
-        },
-        "features": [
-          {"name": "Terrain Mastery", "level": 1, "description": "Bonuses in specific terrains"}
-        ]
-      }
-    }
-  },
-  "Rogue": {
-    "name": "Rogue",
-    "description": "A cunning operative skilled in stealth, traps, and precise strikes.",
-    "hit_die": 6,
-    "base_attack_bonus": "average",
-    "saving_throws": {
-      "Fort": "poor",
-      "Ref": "good",
-      "Will": "poor"
+            {"name": "Favored Enemy", "level": 1, "description": "Bonus against specific creature types"},
+            {"name": "Track", "level": 1, "description": "Enhanced tracking ability"}
+        ],
+        "subclasses": {}
     },
-    "skill_points": 8,
-    "class_skills": ["Appraise", "Balance", "Bluff", "Climb", "Craft", "Decipher Script", "Diplomacy", "Disable Device", "Disguise", "Escape Artist", "Forgery", "Gather Information", "Hide", "Intimidate", "Jump", "Knowledge (local)", "Listen", "Move Silently", "Open Lock", "Perform", "Profession", "Search", "Sense Motive", "Sleight of Hand", "Spot", "Swim", "Tumble", "Use Magic Device", "Use Rope"],
-    "spellcasting": null,
-    "features": [
-      {"name": "Sneak Attack", "level": 1, "description": "+1d6 damage against flanked or flat-footed enemies"},
-      {"name": "Trapfinding", "level": 1, "description": "Find and disarm traps"}
-    ],
-    "subclasses": {
-      "Assassin": {
-        "description": "A rogue trained in lethal precision, capable of deadly sneak attacks.",
+    "Rogue": {
+        "description": "A cunning operative skilled in stealth, traps, and precise strikes.",
         "hit_die": 6,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "poor", "Ref": "good", "Will": "poor"},
-        "skill_points": 4,
-        "class_skills": ["Bluff", "Disguise", "Hide", "Move Silently"],
-        "spellcasting": {
-          "type": "arcane",
-          "ability": "Intelligence",
-          "spells_known": "prepared"
-        },
+        "bab_progression": "medium",
+        "spellcasting": false,
+        "class_skills": [
+            "Appraise",
+            "Balance",
+            "Bluff",
+            "Climb",
+            "Craft",
+            "Decipher Script",
+            "Diplomacy",
+            "Disable Device",
+            "Disguise",
+            "Escape Artist",
+            "Forgery",
+            "Gather Information",
+            "Hide",
+            "Intimidate",
+            "Jump",
+            "Knowledge (local)",
+            "Listen",
+            "Move Silently",
+            "Open Lock",
+            "Perform",
+            "Profession",
+            "Search",
+            "Sense Motive",
+            "Sleight of Hand",
+            "Spot",
+            "Swim",
+            "Tumble",
+            "Use Magic Device",
+            "Use Rope"
+        ],
         "features": [
-          {"name": "Death Attack", "level": 1, "description": "Paralyze or kill with sneak attack"}
-        ]
-      },
-      "Shadowdancer": {
-        "description": "A rogue who manipulates shadows for stealth and teleportation.",
-        "hit_die": 6,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "poor", "Ref": "good", "Will": "poor"},
-        "skill_points": 6,
-        "class_skills": ["Hide", "Move Silently", "Perform (dance)"],
-        "spellcasting": null,
-        "features": [
-          {"name": "Shadow Jump", "level": 1, "description": "Teleport between shadows"}
-        ]
-      }
-    }
-  },
-  "Sorcerer": {
-    "name": "Sorcerer",
-    "description": "An innate arcane caster who wields powerful magic through charisma and bloodline.",
-    "hit_die": 4,
-    "base_attack_bonus": "poor",
-    "saving_throws": {
-      "Fort": "poor",
-      "Ref": "poor",
-      "Will": "good"
+            {"name": "Sneak Attack", "level": 1, "description": "+1d6 damage against flanked or flat-footed enemies"},
+            {"name": "Trapfinding", "level": 1, "description": "Find and disarm traps"}
+        ],
+        "subclasses": {
+            "Assassin": {
+                "description": "A stealthy killer who uses magic and precision to eliminate targets.",
+                "hit_die": 6,
+                "bab_progression": "medium",
+                "spellcasting": true,
+                "spellcasting_stat": "Intelligence",
+                "class_skills": [
+                    "Balance",
+                    "Bluff",
+                    "Climb",
+                    "Craft",
+                    "Decipher Script",
+                    "Disguise",
+                    "Escape Artist",
+                    "Hide",
+                    "Jump",
+                    "Listen",
+                    "Move Silently",
+                    "Open Lock",
+                    "Search",
+                    "Sense Motive",
+                    "Sleight of Hand",
+                    "Spot",
+                    "Tumble",
+                    "Use Rope"
+                ],
+                "features": [
+                    {"name": "Sneak Attack", "level": 1, "description": "+1d6 damage against flanked or flat-footed enemies"},
+                    {"name": "Death Attack", "level": 1, "description": "Study target to attempt killing blow"}
+                ],
+                "prerequisites": {
+                    "level": 5,
+                    "stats": {"Dexterity": 12, "Intelligence": 12}
+                }
+            }
+        }
     },
-    "skill_points": 2,
-    "class_skills": ["Bluff", "Concentration", "Craft", "Knowledge (arcana)", "Profession", "Spellcraft"],
-    "spellcasting": {
-      "type": "arcane",
-      "ability": "Charisma",
-      "spells_known": "spontaneous"
-    },
-    "features": [
-      {"name": "Familiar", "level": 1, "description": "Gain a magical familiar"}
-    ],
-    "subclasses": {
-      "Battle Sorcerer": {
-        "description": "A sorcerer trained in martial combat, balancing magic and weaponry.",
-        "hit_die": 6,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "poor", "Ref": "poor", "Will": "good"},
-        "skill_points": 2,
-        "class_skills": ["Concentration", "Knowledge (arcana)", "Spellcraft"],
-        "spellcasting": {
-          "type": "arcane",
-          "ability": "Charisma",
-          "spells_known": "spontaneous"
-        },
-        "features": [
-          {"name": "Martial Proficiency", "level": 1, "description": "Proficiency with martial weapons"}
-        ]
-      },
-      "Dragon Disciple": {
-        "description": "A sorcerer who embraces draconic heritage, gaining dragon-like abilities.",
-        "hit_die": 8,
-        "base_attack_bonus": "average",
-        "saving_throws": {"Fort": "good", "Ref": "poor", "Will": "good"},
-        "skill_points": 2,
-        "class_skills": ["Knowledge (arcana)", "Spellcraft"],
-        "spellcasting": {
-          "type": "arcane",
-          "ability": "Charisma",
-          "spells_known": "spontaneous"
-        },
-        "features": [
-          {"name": "Draconic Heritage", "level": 1, "description": "Gain draconic abilities"}
-        ]
-      }
-    }
-  },
-  "Wizard": {
-    "name": "Wizard",
-    "description": "A scholarly arcane caster who masters magic through study and spellbooks.",
-    "hit_die": 4,
-    "base_attack_bonus": "poor",
-    "saving_throws": {
-      "Fort": "poor",
-      "Ref": "poor",
-      "Will": "good"
-    },
-    "skill_points": 2,
-    "class_skills": ["Concentration", "Craft", "Decipher Script", "Knowledge (all)", "Profession", "Spellcraft"],
-    "spellcasting": {
-      "type": "arcane",
-      "ability": "Intelligence",
-      "spells_known": "prepared"
-    },
-    "features": [
-      {"name": "Spellbook", "level": 1, "description": "Prepare spells from a spellbook"},
-      {"name": "Familiar", "level": 1, "description": "Gain a magical familiar"}
-    ],
-    "subclasses": {
-      "Abjurer": {
-        "description": "A wizard specializing in protective and warding spells.",
+    "Sorcerer": {
+        "description": "An innate arcane caster who wields powerful magic through charisma and bloodline.",
         "hit_die": 4,
-        "base_attack_bonus": "poor",
-        "saving_throws": {"Fort": "poor", "Ref": "poor", "Will": "good"},
-        "skill_points": 2,
-        "class_skills": ["Concentration", "Knowledge (arcana)", "Spellcraft"],
-        "spellcasting": {
-          "type": "arcane",
-          "ability": "Intelligence",
-          "spells_known": "prepared"
-        },
+        "bab_progression": "slow",
+        "spellcasting": true,
+        "spellcasting_stat": "Charisma",
+        "class_skills": [
+            "Bluff",
+            "Concentration",
+            "Craft",
+            "Knowledge (arcana)",
+            "Profession",
+            "Spellcraft"
+        ],
         "features": [
-          {"name": "Abjuration Focus", "level": 1, "description": "Bonus to abjuration spells"}
-        ]
-      },
-      "Archmage": {
-        "description": "A wizard who sacrifices versatility for unparalleled arcane power.",
+            {"name": "Familiar", "level": 1, "description": "Gain a magical familiar"}
+        ],
+        "subclasses": {}
+    },
+    "Wizard": {
+        "description": "A scholarly arcane caster who masters magic through study and spellbooks.",
         "hit_die": 4,
-        "base_attack_bonus": "poor",
-        "saving_throws": {"Fort": "poor", "Ref": "poor", "Will": "good"},
-        "skill_points": 2,
-        "class_skills": ["Concentration", "Knowledge (arcana)", "Spellcraft"],
-        "spellcasting": {
-          "type": "arcane",
-          "ability": "Intelligence",
-          "spells_known": "prepared"
-        },
+        "bab_progression": "slow",
+        "spellcasting": true,
+        "spellcasting_stat": "Intelligence",
+        "class_skills": [
+            "Concentration",
+            "Craft",
+            "Decipher Script",
+            "Knowledge (all)",
+            "Profession",
+            "Spellcraft"
+        ],
         "features": [
-          {"name": "High Arcana", "level": 1, "description": "Sacrifice spell slots for powerful abilities"}
-        ]
-      }
+            {"name": "Spellbook", "level": 1, "description": "Prepare spells from a spellbook"},
+            {"name": "Familiar", "level": 1, "description": "Gain a magical familiar"}
+        ],
+        "subclasses": {
+            "Abjurer": {
+                "description": "A wizard specializing in protective and warding spells.",
+                "hit_die": 4,
+                "bab_progression": "slow",
+                "spellcasting": true,
+                "spellcasting_stat": "Intelligence",
+                "class_skills": [
+                    "Concentration",
+                    "Knowledge (arcana)",
+                    "Spellcraft"
+                ],
+                "features": [
+                    {"name": "Abjuration Focus", "level": 1, "description": "Gain +1 abjuration spell slot per spell level"}
+                ],
+                "prerequisites": {
+                    "level": 1,
+                    "stats": {}
+                }
+            },
+            "Evoker": {
+                "description": "A wizard specializing in destructive and energy-based spells.",
+                "hit_die": 4,
+                "bab_progression": "slow",
+                "spellcasting": true,
+                "spellcasting_stat": "Intelligence",
+                "class_skills": [
+                    "Concentration",
+                    "Knowledge (arcana)",
+                    "Spellcraft"
+                ],
+                "features": [
+                    {"name": "Evocation Focus", "level": 1, "description": "Gain +1 evocation spell slot per spell level"}
+                ],
+                "prerequisites": {
+                    "level": 1,
+                    "stats": {}
+                }
+            },
+            "Archmage": {
+                "description": "A wizard who sacrifices versatility for unparalleled arcane power.",
+                "hit_die": 4,
+                "bab_progression": "slow",
+                "spellcasting": true,
+                "spellcasting_stat": "Intelligence",
+                "class_skills": [
+                    "Concentration",
+                    "Knowledge (arcana)",
+                    "Spellcraft"
+                ],
+                "features": [
+                    {"name": "High Arcana", "level": 1, "description": "Sacrifice spell slots for powerful abilities"}
+                ],
+                "prerequisites": {
+                    "level": 14,
+                    "stats": {"Intelligence": 15, "Wisdom": 15}
+                }
+            }
+        }
+    },
+    "Assassin": {
+        "description": "A stealthy killer who uses magic and precision to eliminate targets.",
+        "hit_die": 6,
+        "bab_progression": "medium",
+        "spellcasting": true,
+        "spellcasting_stat": "Intelligence",
+        "class_skills": [
+            "Balance",
+            "Bluff",
+            "Climb",
+            "Craft",
+            "Decipher Script",
+            "Disguise",
+            "Escape Artist",
+            "Hide",
+            "Jump",
+            "Listen",
+            "Move Silently",
+            "Open Lock",
+            "Search",
+            "Sense Motive",
+            "Sleight of Hand",
+            "Spot",
+            "Tumble",
+            "Use Rope"
+        ],
+        "features": [
+            {"name": "Sneak Attack", "level": 1, "description": "+1d6 damage against flanked or flat-footed enemies"},
+            {"name": "Death Attack", "level": 1, "description": "Study target to attempt killing blow"}
+        ],
+        "subclasses": {}
     }
-  }
 }

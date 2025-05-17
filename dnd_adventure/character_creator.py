@@ -1,9 +1,9 @@
 import logging
 from typing import Dict
 from colorama import Fore, Style
-from dnd_adventure.character import Character
+from dnd_adventure.classes import Character
 from dnd_adventure.races import get_races
-from dnd_adventure.classes import get_all_classes
+from dnd_adventure.leveling import load_classes
 from dnd_adventure.race_selector import select_race, select_subrace
 from dnd_adventure.class_selector import select_class
 from dnd_adventure.stat_roller import roll_stats
@@ -28,32 +28,43 @@ def create_player(name: str, game) -> Character:
         selections["subrace"] = select_subrace(subrace_names, selected_race)
     else:
         selections["subrace"] = None
-    classes = get_all_classes()
+    classes = load_classes()
     selections["class"] = select_class(classes)
-    selections["stats"] = roll_stats(selected_race, selections["subrace"], classes, selections["class"])
-    spellcasting_classes = ["Wizard", "Sorcerer", "Cleric", "Druid", "Bard", "Paladin", "Ranger"]
-    if selections["class"] in spellcasting_classes:
-        selections["spells"] = select_spells(selections["class"])
+    stat_list, stat_dict = roll_stats(selected_race, selections["subrace"], classes, selections["class"], subclass_name=None, character_level=1)
+    selections["stats"] = stat_list
+    selections["stat_dict"] = stat_dict
+    selected_class = classes.get(selections["class"], {})
+    if selected_class.get("spellcasting"):
+        selections["spells"] = select_spells(selections["class"], character_level=1, stat_dict=stat_dict)
     else:
         selections["spells"] = {0: [], 1: []}
     selections = review_selections(selections, races, classes)
     race = next((r for r in races if r.name == selections["race"]), None)
     if selections["subrace"] and selections["subrace"] != "Base " + selections["race"]:
         race.subrace = selections["subrace"]
-    dnd_class = next((c for c in classes if c["name"] == selections["class"]), None)
+    dnd_class = selected_class
     stats = selections["stats"]
+    stat_dict = selections["stat_dict"]
     spells = selections.get("spells", {0: [], 1: []})
     if not race or not dnd_class:
         logger.error("Selected race or class not found")
         raise ValueError("Selected race or class not found")
     character = Character(
         name=name,
-        race_name=selections["race"] if not selections["subrace"] or selections["subrace"] == "Base " + selections["race"] else selections["subrace"],
+        race_name=selections["race"],
+        subrace_name=selections["subrace"] if selections["subrace"] and selections["subrace"] != "Base " + selections["race"] else None,
         class_name=selections["class"],
+        subclass_name=None,
+        level=1,
+        xp=0,
         stats=stats,
-        known_spells=spells
+        stat_dict=stat_dict,
+        class_skills=dnd_class.get("class_skills", []),
+        features=dnd_class.get("features", []),
+        class_data=selected_class
     )
     race.apply_modifiers(character)
+    character.known_spells = spells
     display_character_sheet(character, race, dnd_class)
     logger.debug(f"Character created: {character.name}, {character.race_name}, {character.class_name}")
     display_initial_lore(character, game.world)

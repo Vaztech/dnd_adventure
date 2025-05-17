@@ -6,6 +6,17 @@ from dnd_adventure.ui import display_current_map, display_status
 
 logger = logging.getLogger(__name__)
 
+# Import globals from logging_config.py
+from dnd_adventure.logging_config import DEBUG_MODE, CONSOLE_HANDLER
+
+def toggle_debug_mode():
+    global DEBUG_MODE
+    DEBUG_MODE = not DEBUG_MODE
+    CONSOLE_HANDLER.setLevel(logging.DEBUG if DEBUG_MODE else logging.INFO)
+    status = "enabled" if DEBUG_MODE else "disabled"
+    logger.debug(f"Debug console output {status}")
+    print(f"{Fore.CYAN}Debug console output {status}{Style.RESET_ALL}")
+
 def handle_msvcrt_input(game, current_time: float, last_key_time: float) -> tuple[bool, float, float] | None:
     try:
         if msvcrt.kbhit():
@@ -60,7 +71,7 @@ def handle_msvcrt_input(game, current_time: float, last_key_time: float) -> tupl
                 game.handle_movement("east")
                 display_current_map(game)
                 display_status(game)
-                logger.debug("Moved east via D key")
+                logger.debug("Moved north via D key")
             elif key == '\r':
                 if current_time - game.last_enter_time > 0.3:
                     game.last_enter_time = current_time
@@ -73,6 +84,11 @@ def handle_msvcrt_input(game, current_time: float, last_key_time: float) -> tupl
                 print(f"{Fore.YELLOW}Available commands: {', '.join(game.commands)}{Style.RESET_ALL}")
                 display_status(game)
                 logger.debug("Displayed help commands via Esc")
+            elif key == '\x7f':  # F12 key
+                toggle_debug_mode()
+                display_current_map(game)
+                display_status(game)
+                logger.debug("Toggled debug mode via F12")
             else:
                 logger.debug(f"Ignored key: {repr(key.encode())}")
                 return None

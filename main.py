@@ -7,19 +7,14 @@ from colorama import init, Fore, Style
 from dnd_adventure.game import Game
 from dnd_adventure.ui import display_start_menu, display_current_map, display_status
 from dnd_adventure.input_handler import handle_input
+from dnd_adventure.logging_config import setup_logging
 
 # Initialize colorama for colored output
 init()
 
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s [%(levelname)s] %(message)s',
-    handlers=[
-        logging.FileHandler('dnd_adventure\\dnd_adventure.log'),
-        logging.StreamHandler()
-    ]
-)
+# Initialize logging
+setup_logging()
+
 logger = logging.getLogger(__name__)
 
 def main():

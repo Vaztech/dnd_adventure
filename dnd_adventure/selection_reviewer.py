@@ -9,10 +9,18 @@ from dnd_adventure.spell_selector import select_spells
 
 logger = logging.getLogger(__name__)
 
-def review_selections(selections: Dict, races: List, classes: List[Dict]) -> Dict:
-    selections = selections or {"race": None, "subrace": None, "class": None, "stats": [], "spells": {0: [], 1: []}}
+def review_selections(selections: Dict, races: List, classes: Dict[str, dict]) -> Dict:
+    selections = selections or {
+        "race": None,
+        "subrace": None,
+        "class": None,
+        "stats": [],
+        "stat_dict": {},
+        "spells": {0: [], 1: []}
+    }
     stat_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
     options = ["Change race", "Change class", "Reroll stats", "Change spells", "Confirm selections"]
+    character_level = 1  # Default for new characters
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f"{Fore.CYAN}=== Review Your Selections ==={Style.RESET_ALL}")
@@ -27,7 +35,7 @@ def review_selections(selections: Dict, races: List, classes: List[Dict]) -> Dic
             subrace_desc = race_obj.subraces[selections["subrace"]]["description"]
             subrace_desc = subrace_desc[:100] + "..." if len(subrace_desc) > 100 else subrace_desc
             print(f"  {Fore.LIGHTYELLOW_EX}Subrace: {subrace_desc}{Style.RESET_ALL}")
-        class_obj = next((c for c in classes if c["name"] == selections["class"]), None)
+        class_obj = classes.get(selections["class"], None)
         class_desc = class_obj["description"] if class_obj else "Not selected"
         class_desc = class_desc[:100] + "..." if len(class_desc) > 100 else class_desc
         print(f"\n{Fore.YELLOW}Class: {selections['class'] or 'Not selected'}{Style.RESET_ALL}")
@@ -37,7 +45,7 @@ def review_selections(selections: Dict, races: List, classes: List[Dict]) -> Dic
             print(f"  {stat_names[i]}: {stat}")
         spells_display = "None"
         if selections["spells"] and any(selections["spells"].values()):
-            spells_display = ", ".join([f"Level {k}: {', '.join(v)}" for k, v in selections["spells"].items() if v])
+            spells_display = ", ".join([f"Level {k}: {', '.join([s.name if hasattr(s, 'name') else str(s) for s in v])}" for k, v in selections["spells"].items() if v])
         print(f"\n{Fore.YELLOW}Spells: {spells_display}{Style.RESET_ALL}")
         print(f"\n{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
         print(f"{Fore.CYAN}Options:{Style.RESET_ALL}")
@@ -70,13 +78,15 @@ def review_selections(selections: Dict, races: List, classes: List[Dict]) -> Dic
         elif selected_index == 2:
             selected_race = next((r for r in races if r.name == selections["race"]), None)
             if selected_race:
-                selections["stats"] = roll_stats(selected_race, selections["subrace"], classes, selections["class"])
+                selections["stats"], selections["stat_dict"] = roll_stats(selected_race, selections["subrace"], classes, selections["class"], subclass_name=None, character_level=character_level)
         elif selected_index == 3:
-            spellcasting_classes = ["Wizard", "Sorcerer", "Cleric", "Druid", "Bard", "Paladin", "Ranger"]
+            spellcasting_classes = ["Wizard", "Sorcerer", "Cleric", "Druid", "Bard", "Paladin", "Ranger", "Psion"]
             if selections["class"] in spellcasting_classes:
-                selections["spells"] = select_spells(selections["class"])
+                selections["spells"] = select_spells(selections["class"], character_level, selections["stat_dict"])
+                logger.debug(f"Spells reselected for {selections['class']}: {selections['spells']}")
             else:
                 selections["spells"] = {0: [], 1: []}
+                logger.debug(f"No spells for non-spellcasting class: {selections['class']}")
         elif selected_index == 4:
             logger.debug(f"Selections confirmed: {selections}")
             return selections

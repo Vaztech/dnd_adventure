@@ -1,65 +1,57 @@
-import os
-import random
 import logging
+from typing import Dict
 from colorama import Fore, Style
 from dnd_adventure.character import Character
+from dnd_adventure.races import Race
 
 logger = logging.getLogger(__name__)
 
-def display_character_sheet(character: Character, race_obj, dnd_class: dict) -> None:
-    print(f"\n{Fore.CYAN}=== Character Sheet ==={Style.RESET_ALL}")
-    print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Name: {Fore.WHITE}{character.name}{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Health: {Fore.WHITE}{character.hit_points}/{character.max_hit_points}{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Magic Points: {Fore.WHITE}{character.mp}/{character.max_mp}{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Level: {Fore.WHITE}{character.level}{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Experience Points: {Fore.WHITE}{character.xp}{Style.RESET_ALL}")
-    race_display = character.race_name
-    print(f"{Fore.YELLOW}Race: {Fore.WHITE}{race_display}{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Class: {Fore.WHITE}{character.class_name}{Style.RESET_ALL}")
+def display_character_sheet(character: Character, race: Race, dnd_class: Dict):
+    print(f"\n{Fore.CYAN}=== Character Sheet: {character.name} ==={Style.RESET_ALL}")
+    print(f"Race: {character.race_name}")
+    if character.subrace_name:
+        print(f"Subrace: {character.subrace_name}")
+    print(f"Class: {character.class_name}")
+    if character.subclass_name:
+        print(f"Subclass: {character.subclass_name}")
+    print(f"Level: {character.level} (XP: {character.xp})")
+    print(f"Hit Points: {character.hit_points}/{character.max_hit_points}")
+    print(f"Mana Points: {character.mp}/{character.max_mp}")
     stat_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
-    print(f"\n{Fore.YELLOW}Stats:{Style.RESET_ALL}")
-    for i, stat in enumerate(character.stats):
-        print(f"  {Fore.WHITE}{stat_names[i]}: {stat}{Style.RESET_ALL}")
-    print(f"\n{Fore.YELLOW}Racial Traits:{Style.RESET_ALL}")
-    for trait in race_obj.racial_traits:
-        print(f"  {Fore.WHITE}{trait.name}: {Fore.LIGHTYELLOW_EX}{trait.description}{Style.RESET_ALL}")
-    if race_obj.subrace and race_obj.subrace in race_obj.subraces:
-        subrace_traits = race_obj.subraces[race_obj.subrace].get("racial_traits", [])
-        for trait in subrace_traits:
-            print(f"  {Fore.WHITE}{trait['name']}: {Fore.LIGHTYELLOW_EX}{trait['description']}{Style.RESET_ALL}")
-    print(f"\n{Fore.YELLOW}Class Features:{Style.RESET_ALL}")
-    for feature in dnd_class.get("features", []):
-        if feature["level"] == 1:
-            print(f"  {Fore.WHITE}{feature['name']}: {Fore.LIGHTYELLOW_EX}{feature['description']}{Style.RESET_ALL}")
-    print(f"\n{Fore.YELLOW}Spells:{Style.RESET_ALL}")
-    if not character.known_spells or all(len(spells) == 0 for spells in character.known_spells.values()):
-        print(f"  {Fore.WHITE}None{Style.RESET_ALL}")
-    else:
-        for level in sorted(character.known_spells.keys()):
-            spells = character.known_spells[level]
+    print("\nStats:")
+    for stat_name in stat_names:
+        stat_value = character.stat_dict.get(stat_name, 10)
+        modifier = (stat_value - 10) // 2
+        print(f"  {stat_name}: {stat_value} ({'+' if modifier >= 0 else ''}{modifier})")
+    if character.class_skills:
+        print("\nClass Skills:")
+        print(f"  {', '.join(character.class_skills)}")
+    if character.features:
+        print("\nFeatures:")
+        for feature in character.features:
+            name = feature.get("name", "Unknown")
+            desc = feature.get("description", "No description")
+            print(f"  - {name}: {desc}")
+    if character.known_spells and any(character.known_spells.values()):
+        print("\nKnown Spells:")
+        for level, spells in character.known_spells.items():
             if spells:
-                print(f"  {Fore.WHITE}Level {level}: {', '.join(spells)}{Style.RESET_ALL}")
-    print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
+                print(f"  Level {level}: {', '.join(spells)}")
+    print(f"\nBase Attack Bonus: {character.bab}")
+    print(f"Armor Class: {character.armor_class}")
     input(f"\n{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")
     logger.debug(f"Displayed character sheet for {character.name}")
 
 def display_initial_lore(character: Character, world):
-    random.seed(hash(character.name + world.name))
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"{Fore.CYAN}=== The Prophecy of {world.name} ==={Style.RESET_ALL}")
-    print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
-    era = random.choice(world.history)
-    event = random.choice(era["events"])
-    prophecies = [
-        f"In the {era['name']}, the seers foretold that {character.name}, a {character.race_name} {character.class_name}, would rise to reclaim {event['desc'].split('discovers the ')[-1]} and restore balance.",
-        f"Legends from {event['year']} speak of {character.name}, born under the stars of {world.name}, destined to confront the {random.choice(['dragon', 'lich', 'demon'])} that threatens {world.name}.",
-        f"The chronicles of {era['name']} whisper of {character.name}, a {character.class_name}, who will forge a new era by fulfilling the legacy of {event['desc'].split('is founded by ')[-1]}."
-    ]
-    prophecy = random.choice(prophecies)
-    print(f"{Fore.LIGHTYELLOW_EX}{prophecy}{Style.RESET_ALL}")
-    print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
-    print(f"\n{Fore.YELLOW}Your journey begins, {character.name}. The fate of {world.name} rests in your hands.{Style.RESET_ALL}")
-    input(f"\n{Fore.CYAN}Press Enter to embark on your adventure...{Style.RESET_ALL}")
-    logger.debug(f"Displayed initial lore: {prophecy}")
-    random.seed(None)
+    print(f"\n{Fore.YELLOW}=== Welcome to {world.name}, {character.name}! ==={Style.RESET_ALL}")
+    if world.history:
+        print(f"\nA brief history of {world.name}:")
+        for era in world.history[:2]:
+            print(f"\n{Fore.LIGHTYELLOW_EX}{era['name']}:{Style.RESET_ALL}")
+            for event in era["events"][:2]:
+                print(f"  {event['year']}: {event['desc']}")
+    else:
+        print(f"The world of {world.name} is shrouded in mystery...")
+    print(f"\nYour adventure begins in {world.get_location(*world.starting_position)['name']}.")
+    input(f"\n{Fore.YELLOW}Press Enter to begin your journey...{Style.RESET_ALL}")
+    logger.debug(f"Displayed initial lore for {character.name} in {world.name}")
