@@ -180,6 +180,10 @@ def display_current_map(game: Game):
     logger.debug(f"Displayed map: map={game.current_map}, room={game.current_room}, pos={game.player_pos}")
 
 def display_status(game: Game):
+    if game.player is None:
+        print(f"{Fore.YELLOW}No character created. Please create a character to continue.{Style.RESET_ALL}")
+        logger.warning("Attempted to display status with no player")
+        return
     print(f"\n{Fore.YELLOW}HP: {game.player.hit_points}/{game.player.max_hit_points} | MP: {game.player.mp}/{game.player.max_mp} | Level: {game.player.level} | XP: {game.player.xp}{Style.RESET_ALL}")
     if game.message:
         print(f"{Fore.LIGHTYELLOW_EX}{game.message}{Style.RESET_ALL}")

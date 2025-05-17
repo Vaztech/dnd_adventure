@@ -1,57 +1,82 @@
 import logging
-from typing import Dict
-from colorama import Fore, Style
+from typing import Dict, Optional
+from dnd_adventure.race_selector import select_race, select_subrace
+from dnd_adventure.class_selector import select_class
+from dnd_adventure.stat_roller import roll_stats
+from dnd_adventure.spell_selector import select_spells
+from dnd_adventure.selection_reviewer import review_selections
 from dnd_adventure.character import Character
-from dnd_adventure.races import Race
 
 logger = logging.getLogger(__name__)
 
-def display_character_sheet(character: Character, race: Race, dnd_class: Dict):
-    print(f"\n{Fore.CYAN}=== Character Sheet: {character.name} ==={Style.RESET_ALL}")
-    print(f"Race: {character.race_name}")
-    if character.subrace_name:
-        print(f"Subrace: {character.subrace_name}")
-    print(f"Class: {character.class_name}")
-    if character.subclass_name:
-        print(f"Subclass: {character.subclass_name}")
-    print(f"Level: {character.level} (XP: {character.xp})")
-    print(f"Hit Points: {character.hit_points}/{character.max_hit_points}")
-    print(f"Mana Points: {character.mp}/{character.max_mp}")
-    stat_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
-    print("\nStats:")
-    for stat_name in stat_names:
-        stat_value = character.stat_dict.get(stat_name, 10)
-        modifier = (stat_value - 10) // 2
-        print(f"  {stat_name}: {stat_value} ({'+' if modifier >= 0 else ''}{modifier})")
-    if character.class_skills:
-        print("\nClass Skills:")
-        print(f"  {', '.join(character.class_skills)}")
-    if character.features:
-        print("\nFeatures:")
-        for feature in character.features:
-            name = feature.get("name", "Unknown")
-            desc = feature.get("description", "No description")
-            print(f"  - {name}: {desc}")
-    if character.known_spells and any(character.known_spells.values()):
-        print("\nKnown Spells:")
-        for level, spells in character.known_spells.items():
-            if spells:
-                print(f"  Level {level}: {', '.join(spells)}")
-    print(f"\nBase Attack Bonus: {character.bab}")
-    print(f"Armor Class: {character.armor_class}")
-    input(f"\n{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")
-    logger.debug(f"Displayed character sheet for {character.name}")
-
-def display_initial_lore(character: Character, world):
-    print(f"\n{Fore.YELLOW}=== Welcome to {world.name}, {character.name}! ==={Style.RESET_ALL}")
-    if world.history:
-        print(f"\nA brief history of {world.name}:")
-        for era in world.history[:2]:
-            print(f"\n{Fore.LIGHTYELLOW_EX}{era['name']}:{Style.RESET_ALL}")
-            for event in era["events"][:2]:
-                print(f"  {event['year']}: {event['desc']}")
-    else:
-        print(f"The world of {world.name} is shrouded in mystery...")
-    print(f"\nYour adventure begins in {world.get_location(*world.starting_position)['name']}.")
-    input(f"\n{Fore.YELLOW}Press Enter to begin your journey...{Style.RESET_ALL}")
-    logger.debug(f"Displayed initial lore for {character.name} in {world.name}")
+def create_player(player_name: str, game: 'Game') -> Character:
+    races = game.races
+    classes = game.classes
+    selections = {
+        "race": None,
+        "subrace": None,
+        "class": None,
+        "stats": [],
+        "stat_dict": {},
+        "spells": {0: [], 1: []},
+        "domain": None
+    }
+    
+    # Race selection
+    selections["race"] = select_race(races)
+    selected_race = next((r for r in races if r.name == selections["race"]), None)
+    if selected_race and selected_race.subraces:
+        subrace_names = list(selected_race.subraces.keys()) + ["Base " + selections["race"]]
+        selections["subrace"] = select_subrace(subrace_names, selected_race)
+    
+    # Class selection
+    selections["class"] = select_class(classes)
+    
+    # Domain selection for Cleric
+    if selections["class"] == "Cleric":
+        domains = ["Air", "Death", "Healing", "War"]
+        print("\nSelect a Cleric Domain:")
+        for i, domain in enumerate(domains, 1):
+            print(f"{i}. {domain}")
+        while True:
+            try:
+                choice = int(input("Enter number: ")) - 1
+                if 0 <= choice < len(domains):
+                    selections["domain"] = domains[choice]
+                    break
+                print("Invalid choice. Try again.")
+            except ValueError:
+                print("Invalid input. Enter a number.")
+    
+    # Stats
+    selections["stats"], selections["stat_dict"] = roll_stats(
+        selected_race, selections["subrace"], classes, selections["class"],
+        subclass_name=None, character_level=1
+    )
+    
+    # Spells
+    spellcasting_classes = ["Wizard", "Sorcerer", "Cleric", "Druid", "Bard", "Paladin", "Ranger", "Psion"]
+    if selections["class"] in spellcasting_classes:
+        selections["spells"] = select_spells(
+            selections["class"], character_level=1, stat_dict=selections["stat_dict"],
+            domain=selections["domain"]
+        )
+    
+    # Review selections
+    selections = review_selections(selections, races, classes)
+    
+    # Create character
+    character = Character(
+        name=player_name,
+        race_name=selections["race"],
+        subrace_name=selections["subrace"],
+        class_name=selections["class"],
+        subclass_name=None,
+        level=1,
+        stat_dict=selections["stat_dict"],
+        known_spells=selections["spells"],
+        domain=selections["domain"]
+    )
+    
+    logger.debug(f"Character created: {player_name}, {selections['race']}, {selections['class']}")
+    return character

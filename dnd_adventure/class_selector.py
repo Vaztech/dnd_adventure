@@ -21,7 +21,7 @@ def select_class(classes: Dict[str, dict]) -> str:
         choice = input().strip().lower()
         if choice == 'q':
             logger.info("Game exited during class selection")
-            exit()
+            raise SystemExit("Class selection cancelled")
         try:
             choice_index = int(choice) - 1
             if 0 <= choice_index < len(class_list):

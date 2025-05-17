@@ -1,25 +1,28 @@
+import os
 import json
 import logging
-from dnd_adventure.paths import get_resource_path
 
 logger = logging.getLogger(__name__)
 
-# Cache for graphics data
-_graphics_cache = None
-
-def load_graphics():
-    global _graphics_cache
-    if _graphics_cache is not None:
-        logger.debug("Using cached graphics data")
-        return _graphics_cache
-    graphics_path = get_resource_path("graphics.json")
+def load_graphics() -> dict:
+    graphics_path = os.path.join(os.path.dirname(__file__), '..', 'resources', 'graphics.json')
     logger.debug(f"Reading graphics.json from {graphics_path}")
-    print(f"DEBUG: Loading graphics from {graphics_path}...")
     try:
-        with open(graphics_path, "r", encoding="utf-8") as f:
-            _graphics_cache = json.load(f)
+        with open(graphics_path, 'r') as f:
+            graphics = json.load(f)
         logger.debug("Graphics loaded and cached")
-        return _graphics_cache
-    except Exception as e:
+        return graphics
+    except (FileNotFoundError, json.JSONDecodeError) as e:
         logger.error(f"Failed to load graphics: {e}")
+        raise
+
+def load_json_file(file_path: str) -> dict:
+    logger.debug(f"Reading JSON from {file_path}")
+    try:
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+        logger.debug(f"JSON loaded from {file_path}")
+        return data
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        logger.error(f"Failed to load JSON from {file_path}: {e}")
         raise

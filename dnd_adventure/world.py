@@ -1,7 +1,10 @@
+import logging
 import random
 from typing import Dict, List, Tuple, Optional
 from colorama import Fore, Style
 from dnd_adventure.map_generator import MapGenerator
+
+logger = logging.getLogger(__name__)
 
 class World:
     def __init__(self, seed: Optional[int] = None, graphics: Dict = None):
@@ -10,7 +13,26 @@ class World:
         self.name = self.map_generator.generate_name()
         self.graphics = graphics if graphics else {}
         self.map = self.map_generator.load_or_generate_map()
+        if not self.map or "locations" not in self.map or not self.map["locations"]:
+            logger.error("Map initialization failed: No valid locations found")
+            self.map = {"width": 100, "height": 100, "locations": [[{"type": "void", "name": "Void", "country": None} for _ in range(100)] for _ in range(100)]}
+        self.starting_position = self.get_default_starting_position()
         self.history = self.generate_history()
+        logger.debug(f"World initialized with starting position: {self.starting_position}")
+
+    def get_default_starting_position(self) -> Tuple[int, int]:
+        # Prefer a dungeon as the starting point
+        try:
+            for y in range(self.map["height"]):
+                for x in range(self.map["width"]):
+                    if self.map["locations"][y][x].get("type") == "dungeon":
+                        logger.debug(f"Found dungeon at ({x}, {y}) for starting position")
+                        return (x, y)
+        except (KeyError, IndexError, TypeError) as e:
+            logger.error(f"Error accessing map locations: {e}")
+        # Fallback to (5, 0)
+        logger.warning("No dungeon found, using default starting position (5, 0)")
+        return (5, 0)
 
     def generate_history(self) -> List[Dict]:
         history = []

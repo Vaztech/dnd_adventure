@@ -12,14 +12,17 @@ def select_race(races: List) -> str:
         print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
         for i, race in enumerate(races, 1):
             desc = race.description[:100] + "..." if len(race.description) > 100 else race.description
+            modifiers = getattr(race, 'stat_bonuses', getattr(race, 'ability_modifiers', {}))
+            modifiers_str = ", ".join(f"{k}: {v:+d}" for k, v in modifiers.items()) or "No modifiers"
             print(f"{Fore.YELLOW}{i}. {race.name}{Style.RESET_ALL}")
             print(f"     {Fore.LIGHTYELLOW_EX}{desc}{Style.RESET_ALL}")
+            print(f"     {Fore.LIGHTYELLOW_EX}Modifiers: {modifiers_str}{Style.RESET_ALL}")
             print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
         print(f"\n{Fore.CYAN}Enter the number of your chosen race (or 'q' to quit):{Style.RESET_ALL}")
         choice = input().strip().lower()
         if choice == 'q':
             logger.info("Game exited during race selection")
-            exit()
+            raise SystemExit("Race selection cancelled")
         try:
             choice_index = int(choice) - 1
             if 0 <= choice_index < len(races):
@@ -41,18 +44,22 @@ def select_subrace(subrace_names: List[str], race) -> str:
         print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
         for i, subrace in enumerate(subrace_names, 1):
             if subrace.startswith("Base "):
-                desc = race.description
+                desc = f"Standard {race.name} with no subrace-specific traits."
+                modifiers = "No additional modifiers"
             else:
                 desc = race.subraces[subrace]["description"]
-            desc = desc[:100] + "..." if len(desc) > 100 else desc
+                desc = desc[:100] + "..." if len(desc) > 100 else desc
+                modifiers = race.subraces[subrace].get("stat_bonuses", race.subraces[subrace].get("ability_modifiers", {}))
+                modifiers_str = ", ".join(f"{k}: {v:+d}" for k, v in modifiers.items()) or "No modifiers"
             print(f"{Fore.YELLOW}{i}. {subrace}{Style.RESET_ALL}")
             print(f"     {Fore.LIGHTYELLOW_EX}{desc}{Style.RESET_ALL}")
+            print(f"     {Fore.LIGHTYELLOW_EX}Modifiers: {modifiers_str}{Style.RESET_ALL}")
             print(f"{Fore.LIGHTBLACK_EX}----------------------------------------{Style.RESET_ALL}")
         print(f"\n{Fore.CYAN}Enter the number of your chosen subrace (or 'q' to quit):{Style.RESET_ALL}")
         choice = input().strip().lower()
         if choice == 'q':
             logger.info("Game exited during subrace selection")
-            exit()
+            raise SystemExit("Subrace selection cancelled")
         try:
             choice_index = int(choice) - 1
             if 0 <= choice_index < len(subrace_names):

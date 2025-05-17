@@ -13,8 +13,9 @@ from dnd_adventure.game_world import GameWorld
 from dnd_adventure.dnd35e.core.monsters import Monster, Attack
 from dnd_adventure.quest_manager import QuestManager
 from dnd_adventure.save_manager import SaveManager
-from dnd_adventure.utils import load_graphics
+from dnd_adventure.utils import load_graphics, load_json_file
 from dnd_adventure.leveling import level_up, load_classes
+from dnd_adventure.races import Race
 
 # Configure logging
 logging.basicConfig(
@@ -34,8 +35,14 @@ class Game:
         self.game_world = GameWorld(self.world)
         self.quest_manager = QuestManager(self.world)
         self.save_manager = SaveManager()
+        self.races = self.load_races()
         self.classes = load_classes()
         self.player, self.starting_room = self.initialize_player(save_file)
+        if self.player is None:
+            logger.error("Game cannot start without a player")
+            self.running = False
+            print(f"{Fore.YELLOW}Game cannot start without a character. Returning to main menu.{Style.RESET_ALL}")
+            return
         self.current_room = self.starting_room
         self.player_pos = self.find_starting_position()
         self.running = True
@@ -56,6 +63,32 @@ class Game:
             self.player_pos = (2, 2)
         self.current_room = f"{self.last_world_pos[0]},{self.last_world_pos[1]}" if tile["type"] in ["dungeon", "castle"] else None
         logger.debug(f"Game initialized: map={self.current_map}, room={self.current_room}, pos={self.player_pos}")
+
+    def load_races(self) -> List[Race]:
+        races_path = os.path.join(os.path.dirname(__file__), "data", "races.json")
+        logger.debug(f"Loading races from {races_path}...")
+        try:
+            races_data = load_json_file(races_path)
+            return [Race(**race) for race in races_data]
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            logger.error(f"Failed to load races: {e}. Using fallback races.")
+            return [
+                Race(
+                    name="Gnome",
+                    subraces={
+                        "Svirfneblin": {"stat_bonuses": {"Dexterity": 2, "Wisdom": 2}, "features": ["Darkvision", "Stone Camouflage"]},
+                        "Forest": {"stat_bonuses": {"Intelligence": 2}, "features": ["Natural Illusionist"]}
+                    },
+                    features=["Gnome Cunning"]
+                ),
+                Race(
+                    name="Aasimar",
+                    subraces={
+                        "Base Aasimar": {"stat_bonuses": {"Charisma": 2}, "features": ["Celestial Resistance"]}
+                    },
+                    features=["Darkvision"]
+                )
+            ]
 
     def get_xp_for_level(self, level: int) -> int:
         if level <= 1:
@@ -513,8 +546,9 @@ if __name__ == "__main__":
     player_name, save_file = display_start_menu()
     if player_name:
         game = Game(player_name, save_file)
-        from dnd_adventure.input_handler import handle_input
-        last_refresh_time = time.time()
-        last_key_time = last_refresh_time
-        while game.running:
-            game.running, last_refresh_time, last_key_time = handle_input(game, last_refresh_time, last_key_time)
+        if game.running:
+            from dnd_adventure.input_handler import handle_input
+            last_refresh_time = time.time()
+            last_key_time = last_refresh_time
+            while game.running:
+                game.running, last_refresh_time, last_key_time = handle_input(game, last_refresh_time, last_key_time)
