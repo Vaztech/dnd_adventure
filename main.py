@@ -1,13 +1,13 @@
 import logging
 import os
 from dnd_adventure.game import Game
-from dnd_adventure.player_manager import PlayerManager
+from player_manager.player_manager import PlayerManager
 from dnd_adventure.ui import display_start_menu, display_current_map, display_status
 from dnd_adventure.msvcrt_input import handle_input
 from colorama import Fore, Style
 
 logging.basicConfig(
-    filename=os.path.join(os.path.dirname(__file__), 'dnd_adventure', 'dnd_adventure.log'),
+    filename=os.path.join(os.path.dirname(__file__), 'dnd_adventure.log'),
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )

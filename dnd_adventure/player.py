@@ -1,4 +1,5 @@
 from typing import Dict, List, Optional
+from player_manager.race_manager import RaceManager
 
 class Player:
     def __init__(
@@ -10,7 +11,8 @@ class Player:
         stats: Dict[str, int],
         spells: Dict[int, List[str]],
         level: int = 1,
-        features: Optional[List[str]] = None,
+        features: List[str] = None,
+        subclass: Optional[str] = None,
     ):
         self.name = name
         self.race = race
@@ -20,15 +22,20 @@ class Player:
         self.spells = spells
         self.level = level
         self.features = features or []
-        # Combat attributes
-        self.max_hit_points = 6 + (stats["Constitution"] - 10) // 2  # Rogue hit die 6
-        self.hit_points = self.max_hit_points
-        self.max_mp = 0  # Rogue has no MP
-        self.mp = 0
-        self.bab = 0  # Base attack bonus (Rogue level 1)
-        self.armor_class = 10 + (stats["Dexterity"] - 10) // 2  # Base AC + Dex
-        self.xp = 0
-        self.known_spells = spells  # Alias for compatibility
+        self.subclass = subclass
+        self.race_manager = RaceManager()
+        self._apply_racial_modifiers()
+
+    def _apply_racial_modifiers(self):
+        race_data = self.race_manager.get_race_data(self.race)
+        subrace_data = race_data.get("subraces", {}).get(self.subrace, {}) if self.subrace else {}
+        modifiers = race_data.get("ability_modifiers", {})
+        subrace_modifiers = subrace_data.get("ability_modifiers", {})
+        
+        for stat, value in modifiers.items():
+            self.stats[stat] = self.stats.get(stat, 10) + value
+        for stat, value in subrace_modifiers.items():
+            self.stats[stat] = self.stats.get(stat, 10) + value
 
     def to_dict(self) -> Dict:
         return {
@@ -40,27 +47,5 @@ class Player:
             "spells": self.spells,
             "level": self.level,
             "features": self.features,
-            "hit_points": self.hit_points,
-            "max_hit_points": self.max_hit_points,
-            "mp": self.mp,
-            "max_mp": self.max_mp,
-            "xp": self.xp,
+            "subclass": self.subclass,
         }
-
-    def get_stat_modifier(self, stat_index: int) -> int:
-        stat_names = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
-        return (self.stats[stat_names[stat_index]] - 10) // 2
-
-    def gain_xp(self, xp: int):
-        self.xp += xp
-        # Placeholder: Level-up check delegated to PlayerManager
-
-    def cast_spell(self, spell_name: str, target: Optional[object]) -> str:
-        if spell_name not in sum(self.known_spells.values(), []):
-            return f"{self.name} does not know {spell_name}!"
-        # Placeholder: Rogue has no spells
-        return f"{self.name} cannot cast spells!"
-
-    def check_level_up(self):
-        # Placeholder: Level-up logic in PlayerManager
-        pass

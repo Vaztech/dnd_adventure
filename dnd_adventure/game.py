@@ -2,7 +2,7 @@ import logging
 import time
 from typing import Optional, List
 from colorama import Fore, Style
-from dnd_adventure.player_manager import PlayerManager
+from player_manager.player_manager import PlayerManager
 from dnd_adventure.movement_handler import MovementHandler
 from dnd_adventure.combat_manager import CombatManager
 from dnd_adventure.lore_manager import LoreManager
@@ -27,7 +27,7 @@ class Game:
         self.game_world = GameWorld(self.world)
         self.quest_manager = QuestManager(self.world)
         self.player_manager = player_manager
-        self.races = self.player_manager.races
+        self.races = self.player_manager.race_manager.races
         classes_path = os.path.join(os.path.dirname(__file__), 'data', 'classes.json')
         logger.debug(f"Loading classes from {classes_path}...")
         try:
@@ -69,7 +69,8 @@ class Game:
         self.message = ""
         self.last_enter_time = 0
         tile_key = f"{self.player_pos[0]},{self.player_pos[1]}"
-        tile = self.world.map["locations"].get(tile_key, {"type": "plains"})
+        x, y = map(int, tile_key.split(","))
+        tile = self.world.map["locations"][y][x] if 0 <= y < self.world.map["height"] and 0 <= x < self.world.map["width"] else {"type": "plains"}
         if tile["type"] in self.graphics["maps"]:
             self.current_map = tile["type"]
             self.player_pos = (2, 2)
