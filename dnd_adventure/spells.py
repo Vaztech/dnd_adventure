@@ -12,7 +12,7 @@ class Spell:
     subschool: Optional[str]
     descriptor: Optional[List[str]]
     casting_time: str
-    components: Dict[str, bool]  # verbal, somatic, material, focus, divine_focus
+    components: Dict[str, bool]
     spell_range: str
     area: Optional[str]
     target: Optional[str]
@@ -20,19 +20,25 @@ class Spell:
     saving_throw: Optional[str]
     spell_resistance: Optional[bool]
     description: str
-    classes: Dict[str, int]  # {"Wizard": 3, "Sorcerer": 3}
+    classes: Dict[str, int]
+    mp_cost: int
+    min_level: int
+    stat_requirement: Dict[str, int]
+    primary_stat: Optional[str] = None
+    domain: Optional[str] = None
     
     def can_cast(self, caster_level: int, ability_score: int) -> bool:
-        """Check if a spell can be cast based on caster level and ability score"""
-        min_level = self.level * 2 - 1
-        return caster_level >= min_level and ability_score >= 10 + self.level
+        if not self.primary_stat or not self.stat_requirement:
+            logger.warning(f"No primary_stat or stat_requirement for {self.name}, assuming minimum")
+            return caster_level >= self.min_level
+        return caster_level >= self.min_level and ability_score >= self.stat_requirement.get(self.primary_stat, 10)
     
     def __str__(self) -> str:
-        return f"{self.name} (Level {self.level} {self.school})"
+        return f"{self.name} (Level {self.level} {self.school}, {self.mp_cost} MP)"
     
     def get_full_description(self) -> str:
-        """Return a formatted description of the spell."""
         descriptors = ", ".join(self.descriptor) if self.descriptor else "None"
+        stat_req = ", ".join(f"{k}: {v}" for k, v in self.stat_requirement.items())
         return f"""
 {self.name}
 Level: {self.level}
@@ -45,6 +51,10 @@ Area: {self.area or 'N/A'}
 Duration: {self.duration}
 Saving Throw: {self.saving_throw or 'None'}
 Spell Resistance: {'Yes' if self.spell_resistance else 'No'}
+MP Cost: {self.mp_cost}
+Minimum Level: {self.min_level}
+Primary Stat: {self.primary_stat or 'None'}
+Stat Requirement: {stat_req}
 Description: {self.description}
 """
 
@@ -64,7 +74,11 @@ CORE_SPELLS = {
         saving_throw="None",
         spell_resistance=True,
         description="A missile of magical energy darts forth and strikes its target.",
-        classes={"Wizard": 1, "Sorcerer": 1}
+        classes={"Wizard": 1, "Sorcerer": 1},
+        mp_cost=2,
+        min_level=1,
+        stat_requirement={"Intelligence": 11},
+        primary_stat="Intelligence"
     ),
     "Fireball": Spell(
         name="Fireball",
@@ -81,64 +95,28 @@ CORE_SPELLS = {
         saving_throw="Reflex half",
         spell_resistance=True,
         description="A fireball spell generates a searing explosion of flame.",
-        classes={"Wizard": 3, "Sorcerer": 3}
+        classes={"Wizard": 3, "Sorcerer": 3},
+        mp_cost=6,
+        min_level=5,
+        stat_requirement={"Intelligence": 13},
+        primary_stat="Intelligence"
     )
 }
 
-# Utility functions for spell retrieval
 def get_spell_by_name(name: str) -> Optional[Spell]:
-    """
-    Get a spell by name.
-    
-    Args:
-        name: Name of the spell to retrieve
-        
-    Returns:
-        Spell object if found, None otherwise
-    """
     return CORE_SPELLS.get(name)
 
 def get_spells_by_level(level: int) -> List[Spell]:
-    """
-    Get all spells of a specified level.
-    
-    Args:
-        level: Spell level to retrieve
-        
-    Returns:
-        List of spell objects of the requested level
-    """
     return [spell for spell in CORE_SPELLS.values() if spell.level == level]
 
 def get_spells_by_school(school: str) -> List[Spell]:
-    """
-    Get all spells from a specific school of magic.
-    
-    Args:
-        school: School of magic (e.g., "Evocation")
-        
-    Returns:
-        List of spell objects from the requested school
-    """
-    return [spell for spell in CORE_SPELLS.values() if spell.school.lower() == school.lower()]
+    return [spell for spell in CORE_SPELLS.values() if school.lower() == spell.school.lower()]
 
 def get_spells_for_class(class_name: str, max_level: Optional[int] = None) -> List[Spell]:
-    """
-    Get all spells available to a specific class.
-    
-    Args:
-        class_name: Class name (e.g., "Wizard")
-        max_level: Maximum spell level to include (optional)
-        
-    Returns:
-        List of spell objects available to the class
-    """
     spells = [
         spell for spell in CORE_SPELLS.values() 
         if class_name in spell.classes
     ]
-    
     if max_level is not None:
         spells = [spell for spell in spells if spell.classes.get(class_name, 99) <= max_level]
-        
     return spells

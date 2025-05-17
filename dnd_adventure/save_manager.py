@@ -1,114 +1,50 @@
-import os
 import json
+import os
+from typing import Dict, Optional
 import logging
-from typing import Optional, Tuple, Callable
-from dnd_adventure.character import Character
-from dnd_adventure.world import GameWorld
-from dnd_adventure.races import Race
-from dnd_adventure.classes import DnDClass
+from dnd_adventure.game_world import GameWorld  # Updated import
 
 logger = logging.getLogger(__name__)
 
-SAVE_DIR = os.path.join(os.path.dirname(__file__), '..', 'saves')
-os.makedirs(SAVE_DIR, exist_ok=True)
-
 class SaveManager:
-    @staticmethod
-    def save_player(player: Character, room_id: int):
-        save_data = {
-            'name': player.name,
-            'race_name': player.race_name,
-            'class_name': player.class_name,
-            'level': player.level,
-            'stats': player.stats,
-            'hit_points': player.hit_points,
-            'skill_points': player.skill_points,
-            'known_spells': player.known_spells,
-            'mp': player.mp,
-            'max_mp': player.max_mp,
-            'equipment': player.equipment,
-            'armor_class': player.armor_class,
-            'room_id': room_id
-        }
-        save_path = os.path.join(SAVE_DIR, f"{player.name}.save")
+    def __init__(self):
+        self.save_dir = os.path.join("dnd_adventure", "saves")
+        os.makedirs(self.save_dir, exist_ok=True)
+
+    def save_game(self, save_data: Dict, filename: str):
+        """Save game data to a file."""
         try:
-            with open(save_path, 'w') as f:
+            save_path = os.path.join(self.save_dir, filename)
+            with open(save_path, 'w', encoding='utf-8') as f:
                 json.dump(save_data, f, indent=4)
-            logger.debug(f"Saving player {player.name}: hit_points={player.hit_points}, skill_points={player.skill_points}, level={player.level}, stats={player.stats}")
+            logger.info(f"Saved game to {save_path}")
         except Exception as e:
-            logger.error(f"Failed to save player {player.name}: {e}")
+            logger.error(f"Failed to save game to {filename}: {e}")
             raise
 
-    @staticmethod
-    def load_player(world: GameWorld, name: str, create_player: Callable[[str], Character]) -> Tuple[Optional[Character], Optional[object]]:
-        save_path = os.path.join(SAVE_DIR, f"{name}.save")
-        if not os.path.exists(save_path):
-            logger.debug(f"No save file found for {name}")
-            return None, None
-
+    def load_game(self, filename: str) -> Dict:
+        """Load game data from a file."""
         try:
-            with open(save_path, 'r') as f:
+            save_path = os.path.join(self.save_dir, filename)
+            with open(save_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-
-            race_name = data.get('race_name', 'Human')
-            race = None
-            for r in world.races:
-                if r.name in race_name or race_name.startswith(r.name):
-                    race = r
-                    break
-            if not race:
-                logger.warning(f"Race {race_name} not found, using default Human")
-                race = next((r for r in world.races if r.name == "Human"), world.races[0])
-
-            class_name = data.get('class_name', 'Fighter')
-            dnd_class = None
-            for c in world.classes:
-                if c.name == class_name:
-                    dnd_class = c
-                    break
-            if not dnd_class:
-                logger.warning(f"Class {class_name} not found, using default class")
-                dnd_class = world.classes[0]
-
-            player = Character(
-                name=name,
-                race=race,
-                dnd_class=dnd_class,
-                race_name=race_name,
-                class_name=class_name,
-                level=data.get('level', 1),
-                stats=data.get('stats', [8, 8, 8, 8, 8, 8]),
-                hit_points=data.get('hit_points', 1),
-                skill_points=data.get('skill_points', 0),
-                known_spells=data.get('known_spells', {0: [], 1: []})
-            )
-            player.mp = data.get('mp', 0)
-            player.max_mp = data.get('max_mp', 0)
-            player.equipment = data.get('equipment', [])
-            player.armor_class = data.get('armor_class', 10)
-            if class_name in ["Wizard", "Sorcerer", "Cleric", "Druid", "Bard"] and not player.known_spells:
-                logger.debug(f"Initializing empty spells for {class_name}")
-                player.known_spells = {0: [], 1: []}
-            player.calculate_mp()
-
-            room_id = data.get('room_id', 0)
-            room = world.get_room(room_id)
-            if not room:
-                logger.warning(f"Room {room_id} not found, using default room 0")
-                room = world.get_room(0)
-
-            logger.debug(f"Loaded player {name}: hit_points={player.hit_points}, skill_points={player.skill_points}, level={player.level}, stats={player.stats}")
-            return player, room
+            logger.info(f"Loaded game from {save_path}")
+            return data
         except Exception as e:
-            logger.error(f"Failed to load player {name}: {e}")
-            return None, None
+            logger.error(f"Failed to load game from {filename}: {e}")
+            raise
 
-    @staticmethod
-    def list_saves() -> list:
+    def list_saves(self) -> list[str]:
+        """List all save files."""
+        return [f for f in os.listdir(self.save_dir) if f.endswith(".save")]
+
+    def delete_save(self, filename: str) -> bool:
+        """Delete a save file."""
         try:
-            saves = [f[:-5] for f in os.listdir(SAVE_DIR) if f.endswith('.save')]
-            logger.debug(f"Listed saves: {saves}")
-            return saves
+            save_path = os.path.join(self.save_dir, filename)
+            os.remove(save_path)
+            logger.info(f"Deleted save file {save_path}")
+            return True
         except Exception as e:
-            logger.error(f"Failed to list saves: {e}")
-            return []
+            logger.error(f"Failed to delete save file {filename}: {e}")
+            return False

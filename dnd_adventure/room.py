@@ -1,88 +1,131 @@
-from typing import Dict, List, Optional, Union, Callable
-from enum import Enum, auto
-import random
+from enum import Enum
+from typing import Dict, List, Optional, Callable
+import logging
 from dnd_adventure.dnd35e.core.monsters import Monster
-from dnd_adventure.dnd35e.core.items import Item, Trap, Puzzle
-from dnd_adventure.dnd35e.core.effects import LightSource
-from dnd_adventure.dnd35e.core.npc import NPC
+from dnd_adventure.dnd35e.core import Item, Trap, Puzzle, LightSource, NPC
+
+logger = logging.getLogger(__name__)
 
 class RoomType(Enum):
-    TOWN = auto()
-    DUNGEON = auto()
-    WILDERNESS = auto()
-    CASTLE = auto()
-    SEWER = auto()
-    TEMPLE = auto()
-    CAVERN = auto()
-    LABYRINTH = auto()
+    TOWN = "town"
+    DUNGEON = "dungeon"
+    WILDERNESS = "wilderness"
+    CASTLE = "castle"
+    TEMPLE = "temple"
+    CAVE = "cave"
 
 class Room:
-    def __init__(self, room_id: int, name: str, description: str,
-                 room_type: RoomType = RoomType.DUNGEON,
-                 exits: Optional[Dict[str, int]] = None,
-                 monsters: Optional[List[Monster]] = None,
-                 items: Optional[List[Union[Item, Trap, Puzzle]]] = None,
-                 light_sources: Optional[List[LightSource]] = None,
-                 npcs: Optional[List[NPC]] = None,
-                 on_enter: Optional[Callable] = None,
-                 on_exit: Optional[Callable] = None):
-
-        self.id = room_id
+    def __init__(
+        self,
+        room_id: int,
+        name: str,
+        description: str,
+        room_type: RoomType,
+        exits: Dict[str, str],
+        monsters: Optional[List[Monster]] = None,
+        items: Optional[List[Item]] = None,
+        traps: Optional[List[Trap]] = None,
+        puzzles: Optional[List[Puzzle]] = None,
+        light_sources: Optional[List[LightSource]] = None,
+        npcs: Optional[List[NPC]] = None,
+        on_enter: Optional[Callable] = None,
+        on_exit: Optional[Callable] = None,
+        visited: bool = False
+    ):
+        self.room_id = room_id
         self.name = name
         self.description = description
-        self.type = room_type
-        self.exits = exits or {}
-        self.monsters = monsters or []
-        self.items = items or []
-        self.light_sources = light_sources or []
-        self.npcs = npcs or []
+        self.room_type = room_type
+        self.exits = exits
+        self.monsters = monsters if monsters is not None else []
+        self.items = items if items is not None else []
+        self.traps = traps if traps is not None else []
+        self.puzzles = puzzles if puzzles is not None else []
+        self.light_sources = light_sources if light_sources is not None else []
+        self.npcs = npcs if npcs is not None else []
         self.on_enter = on_enter
         self.on_exit = on_exit
-        self.visited = False
-        self._is_lit = True
+        self.visited = visited
+        self.is_lit = self._determine_initial_lighting()
+        logger.debug(f"Room initialized: {self.name} (ID: {self.room_id}, Type: {self.room_type.value})")
 
-        self.update_lighting()
+    def _determine_initial_lighting(self) -> bool:
+        if self.room_type in [RoomType.TOWN, RoomType.TEMPLE]:
+            return True
+        return any(light.is_active for light in self.light_sources)
 
-    @property
-    def is_lit(self):
-        return self._is_lit
+    def add_monster(self, monster: Monster):
+        self.monsters.append(monster)
+        logger.debug(f"Added monster {monster.name} to room {self.name}")
 
-    def update_lighting(self):
-        self._is_lit = any(source.is_active for source in self.light_sources) or self.type in (RoomType.TOWN, RoomType.TEMPLE)
-
-    def add_light_source(self, light: LightSource):
-        self.light_sources.append(light)
-        self.update_lighting()
-
-    def extinguish_light(self, index: int):
-        if 0 <= index < len(self.light_sources):
-            self.light_sources[index].is_active = False
-            self.update_lighting()
+    def add_item(self, item: Item):
+        self.items.append(item)
+        logger.debug(f"Added item {item.name} to room {self.name}")
 
     def add_trap(self, trap: Trap):
-        self.items.append(trap)
+        self.traps.append(trap)
+        logger.debug(f"Added trap {trap.name} to room {self.name}")
 
     def add_puzzle(self, puzzle: Puzzle):
-        self.items.append(puzzle)
+        self.puzzles.append(puzzle)
+        logger.debug(f"Added puzzle {puzzle.name} to room {self.name}")
+
+    def add_light_source(self, light_source: LightSource):
+        self.light_sources.append(light_source)
+        self.update_lighting()
+        logger.debug(f"Added light source {light_source.name} to room {self.name}")
+
+    def add_npc(self, npc: NPC):
+        self.npcs.append(npc)
+        logger.debug(f"Added NPC {npc.name} to room {self.name}")
+
+    def remove_monster(self, monster: Monster):
+        if monster in self.monsters:
+            self.monsters.remove(monster)
+            logger.debug(f"Removed monster {monster.name} from room {self.name}")
+
+    def remove_item(self, item: Item):
+        if item in self.items:
+            self.items.remove(item)
+            logger.debug(f"Removed item {item.name} from room {self.name}")
 
     def trigger_traps(self, character):
-        for item in self.items:
-            if isinstance(item, Trap) and not item.disarmed:
-                item.trigger(character)
+        for trap in self.traps:
+            if not trap.disarmed:
+                trap.trigger(character)
+                logger.debug(f"Triggered trap {trap.name} in room {self.name}")
 
-    def attempt_puzzle(self, character, solution):
-        for item in self.items:
-            if isinstance(item, Puzzle) and not item.solved:
-                return item.attempt_solution(character, solution)
+    def attempt_puzzle(self, character, solution: str) -> bool:
+        for puzzle in self.puzzles:
+            if not puzzle.solved:
+                solved = puzzle.attempt_solution(character, solution)
+                if solved:
+                    logger.debug(f"Solved puzzle {puzzle.name} in room {self.name}")
+                    return True
         return False
 
-    def get_room_state(self):
-        if self.is_lit:
-            return self.description
-        else:
-            dark_desc = "Everything is pitch black. You can only see "
-            if any(m for m in self.monsters if m.has_darkvision):
-                dark_desc += "shadowy figures moving in the darkness!"
-            else:
-                dark_desc += "what's immediately in front of you."
-            return dark_desc
+    def update_lighting(self):
+        previous_state = self.is_lit
+        self.is_lit = any(light.is_active for light in self.light_sources) or self.room_type in [RoomType.TOWN, RoomType.TEMPLE]
+        if self.is_lit != previous_state:
+            logger.debug(f"Lighting changed in room {self.name}: is_lit={self.is_lit}")
+
+    def extinguish_light(self, light_source: LightSource):
+        if light_source in self.light_sources:
+            light_source.is_active = False
+            self.update_lighting()
+            logger.debug(f"Extinguished light source {light_source.name} in room {self.name}")
+
+    def enter(self, character):
+        self.visited = True
+        self.trigger_traps(character)
+        if self.on_enter:
+            self.on_enter(character)
+        if not self.is_lit and not any(monster.has_darkvision for monster in self.monsters):
+            logger.debug(f"Room {self.name} is dark, visibility limited")
+        logger.info(f"Character entered room {self.name} (ID: {self.room_id})")
+
+    def exit(self, character):
+        if self.on_exit:
+            self.on_exit(character)
+        logger.info(f"Character exited room {self.name} (ID: {self.room_id})")

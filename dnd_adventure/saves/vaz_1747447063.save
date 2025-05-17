@@ -1,0 +1,49 @@
+{
+    "name": "Vaz",
+    "race": "Dwarf",
+    "subrace_name": "Mountain Dwarf",
+    "class_name": "Wizard",
+    "stats": {
+        "Strength": 8,
+        "Dexterity": 13,
+        "Constitution": 16,
+        "Intelligence": 8,
+        "Wisdom": 14,
+        "Charisma": 13
+    },
+    "known_spells": {
+        "0": [
+            "Acid Splash",
+            "Detect Magic",
+            "Dancing Lights",
+            "Mage Hand"
+        ],
+        "1": [
+            "Magic Missile",
+            "Shield"
+        ],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": [],
+        "9": []
+    },
+    "level": 1,
+    "hit_points": 10,
+    "max_hit_points": 10,
+    "mp": 10,
+    "max_mp": 10,
+    "armor_class": 10,
+    "bab": 0,
+    "xp": 0,
+    "domain": null,
+    "current_room": null,
+    "player_pos": [
+        95,
+        94
+    ],
+    "world_seed": null
+}
