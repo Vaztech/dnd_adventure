@@ -1,0 +1,6 @@
+colorama
+numpy
+pandas
+matplotlib
+rich
+termcolor
