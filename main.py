@@ -1,65 +1,42 @@
-# Ensure dnd_adventure package is in sys.path before any imports
-import os
-import sys
-project_root = os.path.abspath(os.path.dirname(__file__))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-# Initialize basic logging for sys.path debugging
 import logging
-logging.basicConfig(filename=os.path.join('dnd_adventure', 'dnd_adventure.log'), level=logging.DEBUG, format='%(asctime)s [%(levelname)s] %(message)s')
+import os
+from dnd_adventure.game import Game
+from dnd_adventure.player_manager import PlayerManager
+from dnd_adventure.ui import display_start_menu, display_current_map, display_status
+from dnd_adventure.msvcrt_input import handle_input
+from colorama import Fore, Style
+
+logging.basicConfig(
+    filename=os.path.join(os.path.dirname(__file__), 'dnd_adventure', 'dnd_adventure.log'),
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
 logger = logging.getLogger(__name__)
-logger.debug(f"sys.path after fix: {sys.path}")
-
-# Standard imports
-import time
-import msvcrt
-from colorama import init, Fore, Style
-
-# Defer dnd_adventure imports to ensure sys.path is set
-def import_dnd_adventure():
-    from dnd_adventure.game import Game
-    from dnd_adventure.ui import display_start_menu, display_current_map, display_status
-    from dnd_adventure.input_handler import handle_input
-    from dnd_adventure.logging_config import setup_logging
-    return Game, display_start_menu, display_current_map, display_status, handle_input, setup_logging
-
-# Initialize colorama and logging
-init()
-from dnd_adventure.logging_config import setup_logging
-setup_logging()
-Game, display_start_menu, display_current_map, display_status, handle_input, _ = import_dnd_adventure()
 
 def main():
-    print("DEBUG: Starting main...")
-    logger.debug(f"Starting main loop. Terminal: {os.getenv('TERM', 'Unknown')}, stdout: {sys.stdout}")
-    player_name, save_file = display_start_menu()
-    if not player_name:
-        print(f"{Fore.CYAN}Farewell, traveler!{Style.RESET_ALL}")
-        logger.info("Game exited at start menu")
-        return
-
-    game = Game(player_name, save_file)
-    display_current_map(game)
-    display_status(game)
-
-    # Clear input buffer
-    while msvcrt.kbhit():
-        msvcrt.getwch()
-    time.sleep(0.3)
-    logger.debug("Initial input buffer cleared")
-
-    last_refresh_time = time.time()
-    last_key_time = 0
-
-    while game.running:
-        logger.debug(f"Main loop iteration: mode={game.mode}, pos={game.player_pos}, map={game.current_map}, kbhit={msvcrt.kbhit()}")
-        game.running, last_refresh_time, last_key_time = handle_input(game, last_refresh_time, last_key_time)
+    logger.info("Starting D&D Adventure")
+    player_manager = PlayerManager()
+    
+    while True:
+        player_name, save_file = display_start_menu()
+        if player_name is None and save_file is None:
+            logger.info("Exiting game")
+            return
+        game = Game(player_name, player_manager, save_file)
+        if not game.running:
+            continue
+        
+        while game.running:
+            display_current_map(game)
+            display_status(game)
+            cmd = handle_input(game)
+            if cmd == "enter":
+                cmd = input(f"{Fore.CYAN}Enter command: {Style.RESET_ALL}").strip()
+            if cmd:
+                game.handle_command(cmd)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        logger.error(f"Main loop crashed: {e}")
-        print(f"{Fore.RED}Fatal error: {e}{Style.RESET_ALL}")
-        sys.exit(1)
+    from colorama import init
+    init()
+    main()

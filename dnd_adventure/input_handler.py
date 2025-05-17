@@ -20,7 +20,18 @@ def handle_input(game, last_refresh_time: float, last_key_time: float) -> tuple[
         logger.debug("Periodic screen refresh")
 
     if game.mode == "movement":
-        # Try msvcrt input first
+        # Check for movement keys using msvcrt
+        import msvcrt
+        if msvcrt.kbhit():
+            key = msvcrt.getch()
+            if key in [b'w', b'a', b's', b'd']:
+                logger.debug(f"Handling movement key: {key}")
+                game.movement_handler.handle_movement(key)  # Call MovementHandler directly
+                display_current_map(game)
+                display_status(game)
+                return game.running, current_time, current_time
+
+        # Try msvcrt input for other keys
         result = handle_msvcrt_input(game, current_time, last_key_time)
         if result is not None:
             game.running, last_refresh_time, last_key_time = result

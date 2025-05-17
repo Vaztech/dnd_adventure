@@ -1,0 +1,33 @@
+{
+    "name": "Vaz1",
+    "race": "Dwarf",
+    "subrace_name": "Mountain Dwarf",
+    "class_name": "Assassin",
+    "stats": {
+        "Strength": 12,
+        "Dexterity": 12,
+        "Constitution": 12,
+        "Intelligence": 12,
+        "Wisdom": 15,
+        "Charisma": 13
+    },
+    "known_spells": {
+        "0": [],
+        "1": []
+    },
+    "level": 1,
+    "hit_points": 10,
+    "max_hit_points": 10,
+    "mp": 10,
+    "max_mp": 10,
+    "armor_class": 10,
+    "bab": 0,
+    "xp": 0,
+    "domain": null,
+    "current_room": null,
+    "player_pos": [
+        94,
+        94
+    ],
+    "world_seed": null
+}

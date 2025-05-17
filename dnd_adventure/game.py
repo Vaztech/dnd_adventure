@@ -1,6 +1,6 @@
 import logging
 import time
-from typing import Optional
+from typing import Optional, List
 from colorama import Fore, Style
 from dnd_adventure.player_manager import PlayerManager
 from dnd_adventure.movement_handler import MovementHandler
@@ -18,23 +18,16 @@ import os
 logger = logging.getLogger(__name__)
 
 class Game:
-    def __init__(self, player_name: str, save_file: Optional[str] = None):
+    def __init__(self, player_name: str, player_manager: PlayerManager, save_file: Optional[str] = None):
         logger.debug(f"Initializing Game object for player: {player_name}")
         print("DEBUG: Initializing Game...")
         self.player_name = player_name
         self.graphics = load_graphics()
-        races_path = os.path.join(os.path.dirname(__file__), 'data', 'races.json')
-        logger.debug(f"Loading races from {races_path}...")
-        try:
-            with open(races_path, 'r') as f:
-                self.races = json.load(f)
-            logger.debug(f"Loaded races: {self.races}")
-        except FileNotFoundError:
-            logger.error(f"Races file not found at {races_path}")
-            self.races = []
-        except json.JSONDecodeError as e:
-            logger.error(f"Error decoding races.json: {e}")
-            self.races = []
+        self.world = World(seed=None, graphics=self.graphics)
+        self.game_world = GameWorld(self.world)
+        self.quest_manager = QuestManager(self.world)
+        self.player_manager = player_manager
+        self.races = self.player_manager.races
         classes_path = os.path.join(os.path.dirname(__file__), 'data', 'classes.json')
         logger.debug(f"Loading classes from {classes_path}...")
         try:
@@ -47,41 +40,55 @@ class Game:
         except json.JSONDecodeError as e:
             logger.error(f"Error decoding classes.json: {e}")
             self.classes = []
-        self.world = World(seed=None, graphics=self.graphics)
-        self.game_world = GameWorld(self.world)
-        self.quest_manager = QuestManager(self.world)
-        self.player_manager = PlayerManager(self)
         self.movement_handler = MovementHandler(self)
         self.combat_manager = CombatManager(self)
-        self.lore_manager = LoreManager(self)
+        lore_path = os.path.join(os.path.dirname(__file__), 'data', 'lore.json')
+        self.lore_manager = LoreManager(lore_path)
         self.save_manager = SaveManager()
         self.ui_manager = UIManager(self)
-        self.player, self.starting_room = self.player_manager.initialize_player(save_file)
+        self.player, self.starting_room = self.player_manager.initialize_player(self, save_file)
         if self.player is None:
             logger.error("Game cannot start without a player")
             self.running = False
             print(f"{Fore.YELLOW}Game cannot start without a character. Returning to main menu.{Style.RESET_ALL}")
             return
+        self.lore_manager.print_lore()
+        input(f"{Fore.YELLOW}Press Enter to continue...{Style.RESET_ALL}")
         self.current_room = self.starting_room
-        self.player_pos = self.player_manager.find_starting_position()
+        self.player_pos = self.player_manager.find_starting_position(self)
         self.running = True
         self.mode = "movement"
         self.debug_mode = False
         self.previous_menu = None
         self.commands = [
             "look", "lore", "attack", "cast", "rest", "talk",
-            "quest list", "quest start", "quest complete", "save", "quit", "exit"
+            "quest list", "quest start", "quest complete", "save", "quit", "exit", "character"
         ]
         self.current_map = None
         self.last_world_pos = self.player_pos
         self.message = ""
         self.last_enter_time = 0
-        tile = self.world.get_location(*self.player_pos)
+        tile_key = f"{self.player_pos[0]},{self.player_pos[1]}"
+        tile = self.world.map["locations"].get(tile_key, {"type": "plains"})
         if tile["type"] in self.graphics["maps"]:
             self.current_map = tile["type"]
             self.player_pos = (2, 2)
-        self.current_room = f"{self.last_world_pos[0]},{self.last_world_pos[1]}" if tile["type"] in ["dungeon", "castle"] else None
+        self.current_room = tile_key if tile["type"] in ["dungeon", "castle"] else None
         logger.debug(f"Game initialized: map={self.current_map}, room={self.current_room}, pos={self.player_pos}")
+
+    @staticmethod
+    def list_save_files() -> List[str]:
+        """Return a list of save files in the saves directory."""
+        saves_dir = os.path.join(os.path.dirname(__file__), '..', 'saves')
+        try:
+            if not os.path.exists(saves_dir):
+                os.makedirs(saves_dir)
+            save_files = [f for f in os.listdir(saves_dir) if f.endswith('.save')]
+            logger.debug(f"Found save files: {save_files}")
+            return save_files
+        except Exception as e:
+            logger.error(f"Error listing save files: {e}")
+            return []
 
     def handle_command(self, cmd: str):
         self.message = ""
@@ -136,8 +143,40 @@ class Game:
             self.debug_mode = not self.debug_mode
             print(f"Debug mode: {'ON' if self.debug_mode else 'OFF'}")
         elif cmd == "clear path" and self.debug_mode:
-            self.world.map["locations"][101][96]["type"] = "forest"
+            tile_key = "101,96"
+            self.world.map["locations"][tile_key] = {"type": "forest"}
             print("Path cleared at (101, 96)")
+        elif cmd == "character":
+            player_data = self.player.to_dict()
+            stats = player_data["stats"]
+            modifiers = {
+                "Strength": (stats["Strength"] - 10) // 2,
+                "Dexterity": (stats["Dexterity"] - 10) // 2,
+                "Constitution": (stats["Constitution"] - 10) // 2,
+                "Intelligence": (stats["Intelligence"] - 10) // 2,
+                "Wisdom": (stats["Wisdom"] - 10) // 2,
+                "Charisma": (stats["Charisma"] - 10) // 2,
+            }
+            hp = 6 + modifiers["Constitution"]  # Rogue hit die 6
+            mp = 0  # Rogue has no MP
+            spells = ", ".join(player_data["spells"].get(0, []) + player_data["spells"].get(1, [])) or "None"
+            features = ", ".join(player_data["features"]) or "None"
+            print(f"{Fore.CYAN}Character: {player_data['name']}{Style.RESET_ALL}")
+            print(f"Race: {player_data['race']} ({player_data['subrace']})")
+            print(f"Class: {player_data['class']} (Level {player_data['level']})")
+            print(f"HP: {hp}/{hp}")
+            print(f"MP: {mp}/{mp}")
+            print(
+                f"Stats: Strength {stats['Strength']} ({modifiers['Strength']:+d}), "
+                f"Dexterity {stats['Dexterity']} ({modifiers['Dexterity']:+d}), "
+                f"Constitution {stats['Constitution']} ({modifiers['Constitution']:+d}), "
+                f"Intelligence {stats['Intelligence']} ({modifiers['Intelligence']:+d}), "
+                f"Wisdom {stats['Wisdom']} ({modifiers['Wisdom']:+d}), "
+                f"Charisma {stats['Charisma']} ({modifiers['Charisma']:+d})"
+            )
+            print(f"Features: {features}")
+            print(f"Spells: {spells}")
+            logger.debug(f"Displayed character sheet for {player_data['name']}")
         elif cmd:
             print(f"{Fore.RED}Unknown command '{cmd}'. Try: {', '.join(self.commands)}{Style.RESET_ALL}")
             logger.warning(f"Unknown command: {cmd}")
