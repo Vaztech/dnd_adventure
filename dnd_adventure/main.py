@@ -1,34 +1,21 @@
-# Ensure dnd_adventure package is in sys.path before any imports
 import os
 import sys
-project_root = os.path.abspath(os.path.dirname(__file__))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-# Initialize basic logging for sys.path debugging
-import logging
-logging.basicConfig(filename=os.path.join('dnd_adventure', 'dnd_adventure.log'), level=logging.DEBUG, format='%(asctime)s [%(levelname)s] %(message)s')
-logger = logging.getLogger(__name__)
-logger.debug(f"sys.path after fix: {sys.path}")
-
-# Standard imports
 import time
+import logging
 import msvcrt
 from colorama import init, Fore, Style
-
-# Defer dnd_adventure imports to ensure sys.path is set
-def import_dnd_adventure():
-    from dnd_adventure.game import Game
-    from dnd_adventure.ui import display_start_menu, display_current_map, display_status
-    from dnd_adventure.input_handler import handle_input
-    from dnd_adventure.logging_config import setup_logging
-    return Game, display_start_menu, display_current_map, display_status, handle_input, setup_logging
-
-# Initialize colorama and logging
-init()
+from dnd_adventure.game import Game
+from dnd_adventure.ui import display_start_menu, display_current_map, display_status
+from dnd_adventure.input_handler import handle_input
 from dnd_adventure.logging_config import setup_logging
+
+# Initialize colorama for colored output
+init()
+
+# Initialize logging
 setup_logging()
-Game, display_start_menu, display_current_map, display_status, handle_input, _ = import_dnd_adventure()
+
+logger = logging.getLogger(__name__)
 
 def main():
     print("DEBUG: Starting main...")
