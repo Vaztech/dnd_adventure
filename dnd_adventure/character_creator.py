@@ -8,12 +8,17 @@ from dnd_adventure.stat_roller import roll_stats
 from dnd_adventure.spell_selector import select_spells
 from dnd_adventure.selection_reviewer import review_selections
 from dnd_adventure.character import Character
+from dnd_adventure.race_models import Race  # Added import
 
 logger = logging.getLogger(__name__)
 
 def create_player(name: str, game: object) -> 'Character':
     logger.debug("Creating new player")
-    races = game.races
+    # Convert races to Race objects if they're dictionaries
+    races = [
+        Race(**r) if isinstance(r, dict) else r
+        for r in game.races
+    ]
     classes = game.classes
     selections = {
         "race": None,
