@@ -115,7 +115,7 @@ def create_player(name: str, game: object) -> 'Character':
             domain=selections["domain"]
         )
 
-        confirmed = review_selections(selections)
+        confirmed = review_selections(selections, races, classes)
         if not confirmed:
             print(f"{Fore.YELLOW}Character creation cancelled.{Style.RESET_ALL}")
             logger.info("Character creation cancelled by user")
