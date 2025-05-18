@@ -9,8 +9,8 @@ class MovementHandler:
         self.game = game
         self.graphics = load_graphics()
         self.directions = {
-            'w': (0, 1),   # Down (was Up)
-            's': (0, -1),  # Up (was Down)
+            'w': (0, -1),  # Up
+            's': (0, 1),   # Down
             'a': (-1, 0),  # Left
             'd': (1, 0)    # Right
         }
@@ -25,6 +25,11 @@ class MovementHandler:
         current_x, current_y = self.game.player_pos
         dx, dy = self.directions[direction]
         new_x, new_y = current_x + dx, current_y + dy
+
+        # Enforce 5x5 grid bounds (0-4)
+        if not (0 <= new_x <= 4 and 0 <= new_y <= 4):
+            logger.debug(f"Movement out of bounds: ({new_x}, {new_y})")
+            return False
 
         # Get the current room's map layout
         room = self.game.game_world.rooms.get(self.game.current_room)
