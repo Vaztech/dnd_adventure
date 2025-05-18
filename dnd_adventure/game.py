@@ -96,7 +96,11 @@ class Game:
         self.message = ""
         logger.debug(f"Handling command: {cmd}")
         cmd = cmd.lower().strip()
-        if cmd == "look":
+        if cmd in ["w", "s", "a", "d"]:
+            logger.debug(f"Processing movement command: {cmd}")
+            self.movement_handler.handle_movement(cmd)
+            logger.debug(f"Player position after movement: {self.player_pos}")
+        elif cmd == "look":
             self.ui_manager.display_current_map()
         elif cmd == "lore":
             self.lore_manager.print_lore()
@@ -135,7 +139,7 @@ class Game:
         elif cmd in ["quit", "exit"]:
             self.running = False
             logger.info("Game quit by user")
-        elif cmd in ["north", "south", "east", "west", "n", "s", "e", "w"]:
+        elif cmd in ["north", "south", "east", "west", "n", "s", "e"]:
             print(f"{Fore.RED}Movement is controlled with arrow keys or WASD only.{Style.RESET_ALL}")
             logger.debug(f"Attempted movement command: {cmd}")
         elif cmd == "help":

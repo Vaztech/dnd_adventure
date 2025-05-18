@@ -98,32 +98,60 @@ def main():
         else:
             print(f"{Fore.RED}Invalid option! Please select 1-5.{Style.RESET_ALL}")
 
+    # Track Enter presses for double-press detection
+    last_enter_time = 0
+    enter_press_count = 0
+    DOUBLE_PRESS_TIMEOUT = 0.5  # Time (seconds) to detect double press
+
     # Main game loop
     while game.running:
         logger.debug(f"Game mode: {game.mode}")
         if game.mode == "movement":
             command = handle_input(game)
             logger.debug(f"Received command: {command}")
-            if command in ["w", "s", "a", "d"]:
+            if command == "enter":
+                current_time = time.time()
+                if current_time - last_enter_time < DOUBLE_PRESS_TIMEOUT:
+                    enter_press_count += 1
+                else:
+                    enter_press_count = 1
+                last_enter_time = current_time
+                logger.debug(f"Enter press count: {enter_press_count}, last enter time: {last_enter_time}")
+                if enter_press_count == 1:
+                    game.mode = "command"
+                    print(f"{Fore.YELLOW}Enter command: {Style.RESET_ALL}", end="", flush=True)
+            elif command in ["w", "s", "a", "d"]:
                 logger.debug(f"Processing movement command: {command}")
                 game.handle_command(command)
                 game.ui_manager.display_current_map()
                 from dnd_adventure.ui import display_status
                 display_status(game)
-                logger.debug(f"Player position after movement: {game.player_position}")
-            elif command in ["enter", "help", "debug"]:
+                logger.debug(f"Player position after movement: {game.player_pos}")
+            elif command in ["help", "debug"]:
                 game.handle_command(command)
                 game.ui_manager.display_current_map()
                 from dnd_adventure.ui import display_status
                 display_status(game)
         elif game.mode == "command":
-            cmd = input(f"{Fore.YELLOW}Enter command: {Style.RESET_ALL}").strip()
+            cmd = input().strip()
             logger.debug(f"Command mode input: {cmd}")
-            game.handle_command(cmd)
+            if cmd:
+                game.handle_command(cmd)
+                game.mode = "movement"
+                enter_press_count = 0  # Reset on valid command
+            else:
+                current_time = time.time()
+                if current_time - last_enter_time < DOUBLE_PRESS_TIMEOUT and enter_press_count >= 1:
+                    logger.debug("Double Enter detected, returning to movement mode")
+                    game.mode = "movement"
+                    enter_press_count = 0
+                else:
+                    enter_press_count = 1
+                    last_enter_time = current_time
+                    print(f"{Fore.YELLOW}Enter command: {Style.RESET_ALL}", end="", flush=True)
             game.ui_manager.display_current_map()
             from dnd_adventure.ui import display_status
             display_status(game)
-            game.mode = "movement"
         time.sleep(0.01)  # Reduce CPU load
 
 if __name__ == "__main__":
