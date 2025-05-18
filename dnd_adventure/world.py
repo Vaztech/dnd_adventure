@@ -15,7 +15,11 @@ class World:
         self.map = self.map_generator.load_or_generate_map()
         if not self.map or "locations" not in self.map or not self.map["locations"]:
             logger.error("Map initialization failed: No valid locations found")
-            self.map = {"width": 100, "height": 100, "locations": [[{"type": "void", "name": "Void", "country": None} for _ in range(100)] for _ in range(100)]}
+            self.map = {
+                "width": 100,
+                "height": 100,
+                "locations": [[{"x": x, "y": y, "type": "void", "name": "Void", "country": None} for x in range(100)] for y in range(100)]
+            }
         self.starting_position = self.get_default_starting_position()
         self.history = self.generate_history()
         logger.debug(f"World initialized with starting position: {self.starting_position}")
@@ -25,7 +29,8 @@ class World:
         try:
             for y in range(self.map["height"]):
                 for x in range(self.map["width"]):
-                    if self.map["locations"][y][x].get("type") == "dungeon":
+                    loc = self.map["locations"][y][x]
+                    if loc.get("type") == "dungeon":
                         logger.debug(f"Found dungeon at ({x}, {y}) for starting position")
                         return (x, y)
         except (KeyError, IndexError, TypeError) as e:
@@ -73,7 +78,7 @@ class World:
             for dx in range(-view_radius, view_radius + 1):
                 map_x, map_y = x + dx, y + dy
                 if 0 <= map_x < self.map["width"] and 0 <= map_y < self.map["height"]:
-                    tile = self.map["locations"][map_y][map_x]
+                    tile = self.get_location(map_x, map_y)
                     terrain_type = tile["type"]
                     if (map_x, map_y) == (x, y):
                         row += Fore.RED + "@" + Style.RESET_ALL

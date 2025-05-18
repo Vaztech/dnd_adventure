@@ -17,61 +17,71 @@ def toggle_debug_mode():
     logger.debug(f"Debug console output {status}")
     print(f"{Fore.CYAN}Debug console output {status}{Style.RESET_ALL}")
 
-def handle_msvcrt_input(game, current_time: float, last_key_time: float) -> tuple[bool, float, float] | None:
+def handle_input(game) -> str | None:
+    """Handle keyboard input for movement and commands, compatible with main.py."""
     try:
+        current_time = time.time()
         if msvcrt.kbhit():
-            if current_time - last_key_time < 0.3:
+            if current_time - game.last_key_time < 0.3:
                 msvcrt.getwch()
                 time.sleep(0.1)
-                return game.running, current_time, last_key_time
+                return None
             key = msvcrt.getwch()
             logger.debug(f"msvcrt key pressed: {repr(key.encode())}")
             if key in ('\xe0', '\x00'):  # Arrow key prefix
                 key = msvcrt.getwch()
                 logger.debug(f"Arrow key second byte: {repr(key.encode())}")
                 if key == 'H':
-                    game.handle_movement("north")
+                    game.movement_handler.handle_movement(b'w')  # Map to WASD
                     display_current_map(game)
                     display_status(game)
                     logger.debug("Moved north via arrow key")
+                    return "w"
                 elif key == 'P':
-                    game.handle_movement("south")
+                    game.movement_handler.handle_movement(b's')
                     display_current_map(game)
                     display_status(game)
                     logger.debug("Moved south via arrow key")
+                    return "s"
                 elif key == 'K':
-                    game.handle_movement("west")
+                    game.movement_handler.handle_movement(b'a')
                     display_current_map(game)
                     display_status(game)
                     logger.debug("Moved west via arrow key")
+                    return "a"
                 elif key == 'M':
-                    game.handle_movement("east")
+                    game.movement_handler.handle_movement(b'd')
                     display_current_map(game)
                     display_status(game)
                     logger.debug("Moved east via arrow key")
+                    return "d"
                 else:
                     logger.debug(f"Invalid arrow key second byte: {repr(key.encode())}")
                     return None
             elif key.lower() == 'w':
-                game.handle_movement("north")
+                game.movement_handler.handle_movement(b'w')
                 display_current_map(game)
                 display_status(game)
                 logger.debug("Moved north via W key")
+                return "w"
             elif key.lower() == 's':
-                game.handle_movement("south")
+                game.movement_handler.handle_movement(b's')
                 display_current_map(game)
                 display_status(game)
                 logger.debug("Moved south via S key")
+                return "s"
             elif key.lower() == 'a':
-                game.handle_movement("west")
+                game.movement_handler.handle_movement(b'a')
                 display_current_map(game)
                 display_status(game)
                 logger.debug("Moved west via A key")
+                return "a"
             elif key.lower() == 'd':
-                game.handle_movement("east")
+                game.movement_handler.handle_movement(b'd')
                 display_current_map(game)
                 display_status(game)
-                logger.debug("Moved north via D key")
+                logger.debug("Moved east via D key")
+                return "d"
             elif key == '\r':
                 if current_time - game.last_enter_time > 0.3:
                     game.last_enter_time = current_time
@@ -79,20 +89,22 @@ def handle_msvcrt_input(game, current_time: float, last_key_time: float) -> tupl
                     display_current_map(game)
                     display_status(game)
                     logger.debug("Switched to command mode via Enter")
+                    return "enter"
             elif key == '\x1b':
                 display_current_map(game)
                 print(f"{Fore.YELLOW}Available commands: {', '.join(game.commands)}{Style.RESET_ALL}")
                 display_status(game)
                 logger.debug("Displayed help commands via Esc")
+                return None
             elif key == '\x7f':  # F12 key
                 toggle_debug_mode()
                 display_current_map(game)
                 display_status(game)
                 logger.debug("Toggled debug mode via F12")
+                return None
             else:
                 logger.debug(f"Ignored key: {repr(key.encode())}")
                 return None
-            return game.running, current_time, current_time
         return None
     except UnicodeDecodeError as e:
         logger.error(f"Ignoring invalid msvcrt key input: {e}")
