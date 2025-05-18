@@ -75,6 +75,7 @@ class Game:
         self.message = ""
         self.last_enter_time = 0
         self.last_key_time = 0.0
+        self.show_status = False  # Flag to control status display
         # Set current_map based on starting room
         room = self.game_world.get_room(self.current_room)
         if room and room.room_type.value in self.graphics["maps"]:
@@ -178,36 +179,12 @@ class Game:
             self.world.map["locations"][tile_key] = {"type": "forest"}
             print("Path cleared at (101, 96)")
         elif cmd == "character":
-            player_data = self.player.to_dict()
-            stats = player_data["stats"]
-            modifiers = {
-                "Strength": (stats["Strength"] - 10) // 2,
-                "Dexterity": (stats["Dexterity"] - 10) // 2,
-                "Constitution": (stats["Constitution"] - 10) // 2,
-                "Intelligence": (stats["Intelligence"] - 10) // 2,
-                "Wisdom": (stats["Wisdom"] - 10) // 2,
-                "Charisma": (stats["Charisma"] - 10) // 2,
-            }
-            hp = player_data.get("hit_points", 6 + modifiers["Constitution"])
-            mp = player_data.get("mp", 0)
-            spells = ", ".join(player_data["spells"].get(0, []) + player_data["spells"].get(1, [])) or "None"
-            features = ", ".join(player_data["features"]) or "None"
-            print(f"{Fore.CYAN}Character: {player_data['name']}{Style.RESET_ALL}")
-            print(f"Race: {player_data['race']} ({player_data['subrace']})")
-            print(f"Class: {player_data['class']} (Level {player_data['level']})")
-            print(f"HP: {hp}/{hp}")
-            print(f"MP: {mp}/{mp}")
-            print(
-                f"Stats: Strength {stats['Strength']} ({modifiers['Strength']:+d}), "
-                f"Dexterity {stats['Dexterity']} ({modifiers['Dexterity']:+d}), "
-                f"Constitution {stats['Constitution']} ({modifiers['Constitution']:+d}), "
-                f"Intelligence {stats['Intelligence']} ({modifiers['Intelligence']:+d}), "
-                f"Wisdom {stats['Wisdom']} ({modifiers['Wisdom']:+d}), "
-                f"Charisma {stats['Charisma']} ({modifiers['Charisma']:+d})"
-            )
-            print(f"Features: {features}")
-            print(f"Spells: {spells}")
-            logger.debug(f"Displayed character sheet for {player_data['name']}")
+            self.show_status = True
+            self.ui_manager.display_current_map()
+            from dnd_adventure.ui import display_status
+            display_status(self)
+            self.show_status = False
+            logger.debug(f"Displayed character sheet for {self.player.to_dict()['name']}")
         elif cmd:
             print(f"{Fore.RED}Unknown command '{cmd}'. Try: {', '.join(self.commands)}{Style.RESET_ALL}")
             logger.warning(f"Unknown command: {cmd}")
