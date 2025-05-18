@@ -1,0 +1,43 @@
+{
+    "name": "V",
+    "race": "Dwarf",
+    "subrace": "Mountain Dwarf",
+    "class": "Wizard",
+    "stats": {
+        "Strength": 14,
+        "Dexterity": 11,
+        "Constitution": 16,
+        "Intelligence": 12,
+        "Wisdom": 7,
+        "Charisma": 8
+    },
+    "spells": {
+        "0": [
+            "Prestidigitation",
+            "Mage Hand",
+            "Detect Magic",
+            "Light"
+        ],
+        "1": [
+            "Magic Missile",
+            "Burning Hands"
+        ]
+    },
+    "level": 1,
+    "features": [
+        "Spellbook",
+        "Familiar"
+    ],
+    "subclass": "Evoker",
+    "hit_points": 6,
+    "max_hit_points": 6,
+    "mp": 2,
+    "max_mp": 2,
+    "xp": 0,
+    "current_room": "3,0",
+    "player_pos": [
+        3,
+        0
+    ],
+    "world_seed": null
+}

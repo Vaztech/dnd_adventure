@@ -15,7 +15,7 @@ failed_attempts = 0
 def toggle_debug_mode():
     global DEBUG_MODE
     DEBUG_MODE = not DEBUG_MODE
-    CONSOLE_HANDLER.setLevel(logging.DEBUG if key == '\x7f' else logging.INFO)
+    CONSOLE_HANDLER.setLevel(logging.DEBUG if DEBUG_MODE else logging.INFO)
     status = "enabled" if DEBUG_MODE else "disabled"
     logger.debug(f"Debug console output {status}")
     print(f"{Fore.CYAN}Debug console output {status}{Style.RESET_ALL}")
@@ -38,25 +38,25 @@ def handle_keyboard_input(game, current_time: float, last_key_time: float) -> tu
             time.sleep(0.1)
             return game.running, current_time, last_key_time
         if keyboard_module.is_pressed("up") or keyboard_module.is_pressed("w"):
-            game.handle_movement("north")
+            game.movement_handler.handle_movement("w")
             display_current_map(game)
             display_status(game)
             logger.debug("Keyboard key pressed: up/w")
             return game.running, current_time, current_time
         elif keyboard_module.is_pressed("down") or keyboard_module.is_pressed("s"):
-            game.handle_movement("south")
+            game.movement_handler.handle_movement("s")
             display_current_map(game)
             display_status(game)
             logger.debug("Keyboard key pressed: down/s")
             return game.running, current_time, current_time
         elif keyboard_module.is_pressed("left") or keyboard_module.is_pressed("a"):
-            game.handle_movement("west")
+            game.movement_handler.handle_movement("a")
             display_current_map(game)
             display_status(game)
             logger.debug("Keyboard key pressed: left/a")
             return game.running, current_time, current_time
         elif keyboard_module.is_pressed("right") or keyboard_module.is_pressed("d"):
-            game.handle_movement("east")
+            game.movement_handler.handle_movement("d")
             display_current_map(game)
             display_status(game)
             logger.debug("Keyboard key pressed: right/d")
