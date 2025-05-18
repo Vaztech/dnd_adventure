@@ -7,13 +7,14 @@ from dnd_adventure.movement_handler import MovementHandler
 from dnd_adventure.combat_manager import CombatManager
 from dnd_adventure.lore_manager import LoreManager
 from dnd_adventure.save_manager import SaveManager
-from dnd_adventure.ui_manager import UIManager
+from dnd_adventure.ui import UIManager
 from dnd_adventure.world import World
 from dnd_adventure.game_world import GameWorld
 from dnd_adventure.quest_manager import QuestManager
 from dnd_adventure.utils import load_graphics
 import json
 import os
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -23,11 +24,9 @@ class Game:
         print("DEBUG: Initializing Game...")
         self.player_name = player_name
         self.graphics = load_graphics()
+        # Initialize World
         self.world = World(seed=None, graphics=self.graphics)
-        self.game_world = GameWorld(self.world)
-        self.quest_manager = QuestManager(self.world)
-        self.player_manager = player_manager
-        self.races = self.player_manager.race_manager.races
+        # Initialize classes
         classes_path = os.path.join(os.path.dirname(__file__), 'data', 'classes.json')
         logger.debug(f"Loading classes from {classes_path}...")
         try:
@@ -40,22 +39,29 @@ class Game:
         except json.JSONDecodeError as e:
             logger.error(f"Error decoding classes.json: {e}")
             self.classes = []
-        self.movement_handler = MovementHandler(self)
-        self.combat_manager = CombatManager(self)
-        lore_path = os.path.join(os.path.dirname(__file__), 'data', 'lore.json')
-        self.lore_manager = LoreManager(lore_path)
-        self.save_manager = SaveManager()
-        self.ui_manager = UIManager(self)
-        self.player, self.starting_room = self.player_manager.initialize_player(self, save_file)
+        # Initialize GameWorld
+        theme = "fantasy" if not save_file else self._get_theme_from_save(save_file)
+        self.game_world = GameWorld(self.world, character_name=self.player_name.lower(), theme=theme)
+        self.world_state = self.game_world.world_state
+        # Initialize player
+        self.player, self.starting_room = player_manager.initialize_player(self, save_file)
         if self.player is None:
             logger.error("Game cannot start without a player")
             self.running = False
             print(f"{Fore.YELLOW}Game cannot start without a character. Returning to main menu.{Style.RESET_ALL}")
             return
-        self.lore_manager.print_lore()
-        input(f"{Fore.YELLOW}Press Enter to continue...{Style.RESET_ALL}")
-        self.current_room = self.starting_room
-        self.player_pos = self.player_manager.find_starting_position(self)
+        self.races = player_manager.race_manager.races
+        self.quest_manager = QuestManager(self.world)
+        self.movement_handler = MovementHandler(self)
+        self.combat_manager = CombatManager(self)
+        themes_dir = os.path.join(os.path.dirname(__file__), 'data', 'themes')
+        self.lore_manager = LoreManager(themes_dir)
+        self.save_manager = SaveManager()
+        self.ui_manager = UIManager(self)
+        # Display lore screen
+        self.ui_manager.display_lore_screen(theme)
+        self.current_room = self._get_starting_room()
+        self.player_pos = (2, 2)
         self.running = True
         self.mode = "movement"
         self.debug_mode = False
@@ -68,15 +74,33 @@ class Game:
         self.last_world_pos = self.player_pos
         self.message = ""
         self.last_enter_time = 0
-        self.last_key_time = 0.0  # Added for input debouncing
-        tile_key = f"{self.player_pos[0]},{self.player_pos[1]}"
-        x, y = map(int, tile_key.split(","))
-        tile = self.world.map["locations"][y][x] if 0 <= y < self.world.map["height"] and 0 <= x < self.world.map["width"] else {"type": "plains"}
-        if tile["type"] in self.graphics["maps"]:
-            self.current_map = tile["type"]
-            self.player_pos = (2, 2)
-        self.current_room = tile_key if tile["type"] in ["dungeon", "castle"] else None
+        self.last_key_time = 0.0
+        # Set current_map based on starting room
+        room = self.game_world.get_room(self.current_room)
+        if room and room.room_type.value in self.graphics["maps"]:
+            self.current_map = room.room_type.value
+        else:
+            self.current_map = "dungeon"
         logger.debug(f"Game initialized: map={self.current_map}, room={self.current_room}, pos={self.player_pos}")
+
+    def _get_theme_from_save(self, save_file: str) -> str:
+        """Extract theme from save file."""
+        try:
+            save_data = self.save_manager.load_game(save_file)
+            return save_data.get("theme", "fantasy")
+        except Exception as e:
+            logger.error(f"Failed to load theme from save {save_file}: {e}")
+            return "fantasy"
+
+    def _get_starting_room(self) -> str:
+        """Start in a random civilization capital, overriding world.py's dungeon."""
+        if self.world_state.civilizations:
+            civ = random.choice(self.world_state.civilizations)
+            x, y = civ['capital']['x'], civ['capital']['y']
+            logger.debug(f"Selected capital at ({x}, {y}) as starting room")
+            return f"{x},{y}"
+        logger.warning("No civilizations found, defaulting to (0, 0)")
+        return "0,0"
 
     @staticmethod
     def list_save_files() -> List[str]:
@@ -103,7 +127,8 @@ class Game:
         elif cmd == "look":
             self.ui_manager.display_current_map()
         elif cmd == "lore":
-            self.lore_manager.print_lore()
+            theme = self.player.to_dict().get("theme", "fantasy")
+            self.ui_manager.display_lore_screen(theme)
         elif cmd == "attack":
             self.combat_manager.handle_attack_command()
         elif cmd.startswith("cast "):
@@ -113,7 +138,7 @@ class Game:
         elif cmd == "rest":
             self.combat_manager.handle_rest_command()
         elif cmd == "talk":
-            room = self.game_world.rooms.get(self.current_room)
+            room = self.game_world.get_room(self.current_room)
             if room and hasattr(room, 'npcs') and room.npcs:
                 print(room.npcs[0].talk())
             else:
@@ -163,8 +188,8 @@ class Game:
                 "Wisdom": (stats["Wisdom"] - 10) // 2,
                 "Charisma": (stats["Charisma"] - 10) // 2,
             }
-            hp = 6 + modifiers["Constitution"]  # Rogue hit die 6
-            mp = 0  # Rogue has no MP
+            hp = player_data.get("hit_points", 6 + modifiers["Constitution"])
+            mp = player_data.get("mp", 0)
             spells = ", ".join(player_data["spells"].get(0, []) + player_data["spells"].get(1, [])) or "None"
             features = ", ".join(player_data["features"]) or "None"
             print(f"{Fore.CYAN}Character: {player_data['name']}{Style.RESET_ALL}")
