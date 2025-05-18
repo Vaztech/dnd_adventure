@@ -91,19 +91,24 @@ class SpellManager:
                 spell_data = json.load(f)
             logger.debug(f"Loaded spells.json: {spell_data}")
         except FileNotFoundError:
-            logger.error(f"Spells file not found at {spells_path}")
+            logger.warning(f"Spells file not found at {spells_path}, using default spells")
             spell_data = {}
         except json.JSONDecodeError as e:
-            logger.error(f"Error decoding spells.json: {e}")
+            logger.error(f"Error decoding spells.json: {e}, using default spells")
             spell_data = {}
         
+        # Use default_spells if spells.json is empty or lacks class spells
         available_spells = spell_data.get(character_class, self.default_spells.get(character_class, {}))
+        if not available_spells:
+            available_spells = self.default_spells.get(character_class, {})
+            logger.warning(f"No spells defined for {character_class} in spells.json, using defaults: {available_spells}")
         
         if not available_spells:
-            logger.warning(f"No spells defined for {character_class} in spells.json or defaults")
+            logger.warning(f"No spells available for {character_class} in defaults")
             console_print(f"No spells available for {character_class} at level {player_level}.", color="yellow")
             return spells
         
+        logger.debug(f"Stat dict for spell selection: {stat_dict}")
         for level in [0, 1]:
             level_spells = available_spells.get(str(level), [])
             if not level_spells:
@@ -116,6 +121,7 @@ class SpellManager:
                 if spell.get("min_level", 0) <= player_level and
                    stat_dict.get(spell.get("primary_stat", "Intelligence"), 10) >= spell.get("min_stat", 10)
             ]
+            logger.debug(f"Eligible level {level} spells: {[s['name'] for s in eligible_spells]}")
             if not eligible_spells:
                 logger.debug(f"No eligible level {level} spells for {character_class} at player level {player_level}")
                 console_print(f"No level {level} spells available (check level or stat requirements).", color="yellow")

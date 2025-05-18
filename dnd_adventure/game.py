@@ -68,6 +68,7 @@ class Game:
         self.last_world_pos = self.player_pos
         self.message = ""
         self.last_enter_time = 0
+        self.last_key_time = 0.0  # Added for input debouncing
         tile_key = f"{self.player_pos[0]},{self.player_pos[1]}"
         x, y = map(int, tile_key.split(","))
         tile = self.world.map["locations"][y][x] if 0 <= y < self.world.map["height"] and 0 <= x < self.world.map["width"] else {"type": "plains"}
